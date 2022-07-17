@@ -15,16 +15,23 @@ class ProfileSearch(admin.ModelAdmin):
 
 
 class SubjectSearch(admin.ModelAdmin):
-    search_fields = ('name', 'teacher_id')
-    list_display = ('name', 'description', 'teacher_id')
+    search_fields = ('name', )
+    list_display = ('name', 'description', )
 
 
 class TeacherSearch(admin.ModelAdmin):
     search_fields = ('profile', 'teacher_id')
-    list_display = ('profile', 'teacher_id', 'subjects')
+    list_display = ('profile', 'teacher_id', 'subject')
 
+class AssignSearch(admin.ModelAdmin):
+    list_display = ('teacher', 'subject')
+
+class TeacherTimeTabelSearch(admin.ModelAdmin):
+    list_display = ['teacher', 'subject', 'day', 'time']
 
 admin.site.register(AutoUsername, UsernameSearch)
 admin.site.register(Profile, ProfileSearch)
 admin.site.register(Subjects, SubjectSearch)
 admin.site.register(Teacher, TeacherSearch)
+admin.site.register(TeacherSubjectAssign, AssignSearch)
+admin.site.register(TimeTabel, TeacherTimeTabelSearch)

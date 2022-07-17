@@ -1,0 +1,70 @@
+{% extends 'dashboard/base.html' %}
+{% block main %}
+<div class="row">
+    <div class="col-md-12">
+        <div class="card">
+            <div class="card-body">
+                <div class="col-md-12">
+                    <h4>Sunday</h4>
+                </div>
+				<form class="validate-form" action="" method="POST" enctype="multipart/form-data">
+					{% csrf_token %}
+                    {% for j in time %}
+                    <div class="row border-bottom pb-3 pt-3">
+                        <div class="col-md-12">
+                            <h6>{{j}}</h6>
+                        </div>
+                        <div class="col-md-6 form-group">
+                            <label for="subject_{{j}}">Subject <span class="required">*</span></label>
+                            <select id="subject_{{j}}" name="subject" class="form-control select2" required>
+                                <option value="" selected disabled>-- Please Select --</option>
+                                {% for i in subjects %}
+                                <option value="{{i.id}}">{{i.name}}</option>
+                                {% endfor %}
+                            </select>
+                        </div>
+                        <div class="col-md-6 form-group">
+                            <label for="teacher_{{j}}">Teacher <span class="required">*</span></label>
+                            <select id="teacher_{{j}}" name="teacher" class="form-control select2" required>
+                                <option value="" selected disabled>-- Please Select --</option>
+                            </select>
+                        </div>
+                    </div>
+                    {% endfor %}
+                    <div class="col-md-12 pt-3 form-group">
+                        <button type="submit" class="btn btn-success form-control">Submit</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+{% block script %}
+<script>
+{% for j in time %}
+$('#subject_{{j}}').change(function(){
+    $csrf = $('[name="csrfmiddlewaretoken"]').val();
+    $.ajax({
+      type: "POST",
+      url: "get-subject",
+      data: {
+        id: this.value,
+        csrfmiddlewaretoken: $csrf
+      },
+      success: function(data) {
+        var teachers = eval('(' + data + ')');
+        options = "<option value='' selected disabled>-- Please Select --</option>"
+        for (var i = 0; i < teachers.length; i++ ){
+            options += "<option value="+teachers[i].id+">"+teachers[i].name+"</option>";
+        }
+        $("#teacher_{{j}}").html(options);
+      },
+      error:function(e){
+          alert("something wrong "+ e) // this will alert an error
+      }
+    });
+});
+{% endfor %}
+</script>
+{% endblock %}

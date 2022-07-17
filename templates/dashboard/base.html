@@ -7,7 +7,7 @@
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-	<link rel="icon" href="{% static 'assets/dashboard/images/favicon.ico" type="image/ico" />
+	<link rel="icon" href="{% static 'assets/dashboard/images/favicon.ico' %}" type="image/ico" />
 
     <title>Dhad LMS</title>
 
@@ -29,8 +29,16 @@
 
     <!-- Custom Theme Style -->
     <link href="{% static 'assets/dashboard/build/css/custom.css' %}" rel="stylesheet">
+
+    <!--  Select 2  -->
+    <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
     {% block style %}
     {% endblock %}
+    <style>
+      .select2 {
+        width: 100% !important;
+      }
+    </style>
   </head>
 
   <body class="nav-md">
@@ -68,6 +76,18 @@
                     <ul class="nav child_menu">
                       <li><a href="/add-user">Add User</a></li>
                       <li><a href="/view-user">View Users</a></li>
+                    </ul>
+                  </li>
+                  <li><a><i class="fa fa-book"></i> Subjects <span class="fa fa-chevron-down"></span></a>
+                    <ul class="nav child_menu">
+                      <li><a href="/add-subjects">Add Subject</a></li>
+                      <li><a href="/view-subjects">View Subjects</a></li>
+                    </ul>
+                  </li>
+                  <li><a><i class="fa fa-table"></i> Time Table <span class="fa fa-chevron-down"></span></a>
+                    <ul class="nav child_menu">
+                      <li><a href="/add-time-table">Add / Edit Time Table</a></li>
+                      <li><a href="/view-subjects">View Time Table</a></li>
                     </ul>
                   </li>
                   <li><a href="javascript:void(0)"><i class="fa fa-gears"></i> Settings</a></li>
@@ -168,7 +188,12 @@
     <!-- Custom Theme Scripts -->
     <script src="{% static 'assets/dashboard/build/js/custom.min.js' %}"></script>
 
+    <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
     <script>
+      $(document).ready(function() {
+          $('.select2').select2();
+      });
+
       {% if messages %}
       {% for i in messages %}
       alert('{{i}}');
