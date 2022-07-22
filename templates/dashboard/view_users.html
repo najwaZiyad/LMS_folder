@@ -1,0 +1,42 @@
+{% extends 'dashboard/base.html' %}
+{% block main %}
+<div class="row">
+    <div class="col-md-12">
+        <div class="card">
+            <div class="card-body">
+                <div class="row">
+                    <div class="col-md-12">
+                        <table id="datatable" class="table table-striped" style="width:100%;">
+                            <thead>
+                                <tr>
+                                    <th>Full Name</th>
+                                    <th>User Name</th>
+                                    <th>Role</th>
+                                    <th>Action</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {% for i in profiles %}
+                                <tr>
+                                    <td>{{i.first_name}} {{i.second_name}} {{i.third_name}} {{i.last_name}} </td>
+                                    <td>{{i.user.username}}</td>
+                                    <td style="text-transform: capitalize;">{{i.role}}</td>
+                                    <td>
+                                        <a href="/edit-user/{{i.id}}" class="btn btn-sm btn-primary">Edit</a>
+                                        <a href="/delete-user/{{i.id}}" class="btn btn-danger" >delete</a>
+                                    </td>
+                                </tr>
+                                {% endfor %}
+                            </tbody>
+                        </table>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+{% block script %}
+
+{% endblock %}

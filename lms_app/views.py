@@ -1,6 +1,7 @@
 import json
 
 from django.contrib import messages
+from django.contrib.auth.hashers import make_password
 from django.http import HttpResponse
 from django.shortcuts import render, redirect
 from .models import *
@@ -8,6 +9,7 @@ from django.contrib.auth import authenticate, login, logout
 
 def IndexPage(request):
     return render(request, 'front/index.html')
+
 
 def LoginPage(request):
     if request.method == 'POST':
@@ -69,6 +71,82 @@ def AddUser(request):
         return render(request, 'dashboard/add_user.html', data)
 
 
+def viewUser(request):
+    data = {'profiles': Profile.objects.all()}
+    return render(request, 'dashboard/view_users.html', data)
+
+def editUser(request, id):
+    if request.method == 'POST':
+        password = request.POST['password']
+        f = request.POST['name1']
+        s = request.POST['name2']
+        t = request.POST['name3']
+        l = request.POST['name4']
+        add = request.POST['address']
+        e = Profile.objects.get(id=id)
+        e.first_name = f
+        e.second_name = s
+        e.third_name = t
+        e.last_name = l
+        e.address = add
+        e.save()
+        if password:
+            user = User.objects.get(user=e.user)
+            user.password = make_password(password)
+            user.save()
+        messages.info(request, 'User information changed successfully!')
+        return redirect('/view-user')
+    else:
+        profile = Profile.objects.get(id=id)
+        data = {'profile': profile}
+        return render(request, 'dashboard/edit_user.html', data)
+
+def ViewSubjects(request):
+    data = {'subjects': Subjects.objects.all()}
+    return render(request, 'dashboard/view_subjects.html', data)
+
+
+def editSubjects(request, id):
+    if request.method == 'POST':
+        name = request.POST['name']
+        description = request.POST['description']
+
+        e = Subjects.objects.get(id=id)
+        e.name = name
+        e.description = description
+        e.save()
+        messages.info(request, 'subject information updated successfully!')
+        return redirect('/view-subjects')
+
+    else:
+        subject = Subjects.objects.get(id=id)
+        data = {'subject': subject}
+        return render(request, 'dashboard/edit_subject.html', data)
+
+
+def DeleteSubjects(request, subject_id):
+    subject = Subjects.objects.get(id=subject_id)
+    name = subject.name
+    subject.delete()
+    messages.success(request, 'Subject '+name+' deleted Successfully!')
+    return redirect('/view-subjects')
+
+
+def DeleteUser(request, user_id):
+    user = Profile.objects.get(id=user_id)
+    name = user.first_name
+    user.delete()
+    messages.success(request, 'user '+name+' deleted Successfully!')
+    return redirect('/view-user')
+
+
+def DeleteTeacherSubjectAssign(request, TeacherSubjectAssign_id):
+    teacher = TeacherSubjectAssign.objects.get(id=TeacherSubjectAssign_id)
+    name = teacher.teacher
+    teacher.delete()
+    messages.success(request, 'teacher '+name+' deleted Successfully!')
+    return redirect('/view-TeacherSubjectAssign')
+
 def AddSubjects(request):
     if request.method == 'POST':
         name = request.POST['name']
@@ -80,6 +158,7 @@ def AddSubjects(request):
         return redirect('/add-subjects')
     else:
         return render(request, 'dashboard/add_subject.html')
+
 
 def AddTimeTable(request):
     if request.method == 'POST':
@@ -101,6 +180,7 @@ def AddTimeTable(request):
         data = {'days': days, 'subjects': subjects, 'time': time}
         return render(request, 'dashboard/add_time_table.html', data)
 
+
 def getSubject(request):
     id = request.POST['id']
     subject = Subjects.objects.get(id=id)
@@ -114,3 +194,25 @@ def getSubject(request):
     return HttpResponse(json.dumps(teacher))
 
 
+
+def ViewTeacherSubjectAssign(request):
+    if request.method == "POST":
+        teacher_id = request.POST['teachers']
+        teacher = Teacher.objects.get(id=teacher_id)
+        subjects = request.POST.getlist('subject')
+        for s in subjects:
+            subject = Subjects.objects.get(id=s)
+            try:
+                TeacherSubjectAssign.objects.get(teacher=teacher, subject=subject)
+            except TeacherSubjectAssign.DoesNotExist:
+                TeacherSubjectAssign.objects.create(
+                    teacher=teacher, subject=subject
+                )
+        messages.info(request, 'Successfully Added')
+        return redirect('/view-TeacherSubjectAssign')
+    else:
+        assignment = TeacherSubjectAssign.objects.all()
+        najwa = Subjects.objects.all()
+        teachers = Teacher.objects.all()
+        data = {'assignments': assignment, 'subjects': najwa, 'teachers': teachers}
+        return render(request, 'dashboard/TeacherSubjectAssign.html', data)
