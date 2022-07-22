@@ -1,4 +1,6 @@
 import json
+import calendar
+from datetime import datetime
 
 from django.contrib import messages
 from django.contrib.auth.hashers import make_password
@@ -11,6 +13,10 @@ def IndexPage(request):
     return render(request, 'front/index.html')
 
 
+def LogoutFun(request):
+    logout(request)
+    return redirect('/login')
+
 def LoginPage(request):
     if request.method == 'POST':
         username = request.POST['username']
@@ -18,20 +24,70 @@ def LoginPage(request):
         user = authenticate(username=username, password=password)
         if user is not None:
             login(request, user)
-            return redirect("/admin-dashboard")
+            return redirect("/dashboard")
         else:
             messages.error(request, 'Invalid user !')
             return redirect("/login")
     else:
         return render(request, 'dashboard/login.html')
 
+def DashboardRedirect(request):
+    role = request.user.profile.role
+    if role == 'student':
+        return redirect('/student-dashboard')
+    elif role == 'teacher':
+        return redirect('/teacher-dashboard')
+    else:
+        return redirect('/admin-dashboard')
+
+
+
 
 def AdminDashboard(request):
-    teacher = AutoUsername.objects.get(type='Teacher').last
-    student = AutoUsername.objects.get(type='Student').last
-    data = {'teacher': teacher, 'student': student}
+    time = []
+    for i in time_slots:
+        time.append(i[0])
+    saturday = TimeTabel.objects.filter(day='Saturday').order_by('time')
+    sunday = TimeTabel.objects.filter(day='Sunday').order_by('time')
+    monday = TimeTabel.objects.filter(day='Monday').order_by('time')
+    tuesday = TimeTabel.objects.filter(day='Tuesday').order_by('time')
+    wednesday = TimeTabel.objects.filter(day='Wednesday').order_by('time')
+    thursday = TimeTabel.objects.filter(day='Thursday').order_by('time')
+    friday = TimeTabel.objects.filter(day='Friday').order_by('time')
+    data = {'saturday': saturday, 'sunday': sunday, 'time': time, 'monday': monday, 'tuesday': tuesday,
+            'wednesday': wednesday, 'thursday': thursday, 'friday': friday}
     return render(request, 'dashboard/admin_dashboard.html', data)
 
+
+def StudentDashboard(request):
+    time = []
+    for i in time_slots:
+        time.append(i[0])
+    saturday = TimeTabel.objects.filter(day='Saturday').order_by('time')
+    sunday = TimeTabel.objects.filter(day='Sunday').order_by('time')
+    monday = TimeTabel.objects.filter(day='Monday').order_by('time')
+    tuesday = TimeTabel.objects.filter(day='Tuesday').order_by('time')
+    wednesday = TimeTabel.objects.filter(day='Wednesday').order_by('time')
+    thursday = TimeTabel.objects.filter(day='Thursday').order_by('time')
+    friday = TimeTabel.objects.filter(day='Friday').order_by('time')
+    data = {'saturday': saturday, 'sunday': sunday, 'time': time, 'monday': monday, 'tuesday': tuesday,
+            'wednesday': wednesday, 'thursday': thursday, 'friday': friday}
+    return render(request, 'dashboard/student/dashboard.html', data)
+
+def TeacherDashboard(request):
+    time = []
+    for i in time_slots:
+        time.append(i[0])
+    saturday = TimeTabel.objects.filter(day='Saturday').order_by('time')
+    sunday = TimeTabel.objects.filter(day='Sunday').order_by('time')
+    monday = TimeTabel.objects.filter(day='Monday').order_by('time')
+    tuesday = TimeTabel.objects.filter(day='Tuesday').order_by('time')
+    wednesday = TimeTabel.objects.filter(day='Wednesday').order_by('time')
+    thursday = TimeTabel.objects.filter(day='Thursday').order_by('time')
+    friday = TimeTabel.objects.filter(day='Friday').order_by('time')
+    data = {'saturday': saturday, 'sunday': sunday, 'time': time, 'monday': monday, 'tuesday': tuesday,
+            'wednesday': wednesday, 'thursday': thursday, 'friday': friday}
+    return render(request, 'dashboard/teacher/dashboard.html', data)
 
 def AddUser(request):
     if request.method == 'POST':
@@ -142,9 +198,9 @@ def DeleteUser(request, user_id):
 
 def DeleteTeacherSubjectAssign(request, TeacherSubjectAssign_id):
     teacher = TeacherSubjectAssign.objects.get(id=TeacherSubjectAssign_id)
-    name = teacher.teacher
+    name = teacher.teacher.profile.first_name
     teacher.delete()
-    messages.success(request, 'teacher '+name+' deleted Successfully!')
+    messages.success(request, 'teacher '+str(name)+' deleted Successfully!')
     return redirect('/view-TeacherSubjectAssign')
 
 def AddSubjects(request):
@@ -162,24 +218,72 @@ def AddSubjects(request):
 
 def AddTimeTable(request):
     if request.method == 'POST':
-        name = request.POST['name']
-        description = request.POST['description']
-        Subjects.objects.create(
-            name=name, description=description
-        )
-        messages.info(request, 'Subject '+name+' added Successfully!')
-        return redirect('/add-subjects')
+        subject_1 = request.POST['subject_1']
+        subject_1 = Subjects.objects.get(id=subject_1)
+        subject_2 = request.POST['subject_2']
+        subject_2 = Subjects.objects.get(id=subject_2)
+        subject_3 = request.POST['subject_3']
+        subject_3 = Subjects.objects.get(id=subject_3)
+        subject_4 = request.POST['subject_4']
+        subject_4 = Subjects.objects.get(id=subject_4)
+        subject_5 = request.POST['subject_5']
+        subject_5 = Subjects.objects.get(id=subject_5)
+        teacher_1 = request.POST['teacher_1']
+        teacher_1 = Teacher.objects.get(id=teacher_1)
+        teacher_2 = request.POST['teacher_2']
+        teacher_2 = Teacher.objects.get(id=teacher_2)
+        teacher_3 = request.POST['teacher_3']
+        teacher_3 = Teacher.objects.get(id=teacher_3)
+        teacher_4 = request.POST['teacher_4']
+        teacher_4 = Teacher.objects.get(id=teacher_4)
+        teacher_5 = request.POST['teacher_5']
+        teacher_5 = Teacher.objects.get(id=teacher_5)
+        day = request.POST['day']
+
+        assign1 = TimeTabel.objects.get(day=day, time='7:00 - 7:30')
+        assign2 = TimeTabel.objects.get(day=day, time='7:30 - 8:05')
+        assign3 = TimeTabel.objects.get(day=day, time='8:05 - 8:45')
+        assign4 = TimeTabel.objects.get(day=day, time='8:45 - 9:00')
+        assign5 = TimeTabel.objects.get(day=day, time='9:00 - 9:15')
+        assign1.subject = subject_1
+        assign2.subject = subject_2
+        assign3.subject = subject_3
+        assign4.subject = subject_4
+        assign5.subject = subject_5
+
+        assign1.teacher = teacher_1
+        assign2.teacher = teacher_2
+        assign3.teacher = teacher_3
+        assign4.teacher = teacher_4
+        assign5.teacher = teacher_5
+        assign1.save()
+        assign2.save()
+        assign3.save()
+        assign4.save()
+        assign5.save()
+        return redirect('/admin-dashboard')
     else:
+        pass
+
+def AssignTimeTable(request):
+    if request.method == 'POST':
         subjects = Subjects.objects.all()
         days = []
         for i in DAYS_OF_WEEK:
             days.append(i[0])
         time = []
+        n = 0
         for i in time_slots:
-            time.append(i[0])
-        data = {'days': days, 'subjects': subjects, 'time': time}
+            n += 1
+            time.append({'n': n, 'time': i[0]})
+        day = request.POST['day']
+        data = {'days': days, 'subjects': subjects, 'time': time, 'day': day}
         return render(request, 'dashboard/add_time_table.html', data)
+    else:
+        return redirect('/add-subjects')
 
+def addClass(request):
+    return render(request, 'dashboard/teacher/classes.html')
 
 def getSubject(request):
     id = request.POST['id']
@@ -189,9 +293,20 @@ def getSubject(request):
     for i in teachers:
         dic = {}
         dic['id'] = i.teacher.id
-        dic['name'] = i.teacher.profile.first_name
+        dic['name'] = i.teacher.profile.first_name +" "+ i.teacher.profile.second_name +" "+ i.teacher.profile.third_name +" "+ i.teacher.profile.last_name
         teacher.append(dic)
     return HttpResponse(json.dumps(teacher))
+
+
+def getTeacherSubject(request):
+    day_date = request.POST['date']
+    day_date = datetime.strptime(day_date, '%Y-%m-%d').weekday()
+    day = calendar.day_name[day_date]
+    time_table = TimeTabel.objects.filter(day=day, teacher=request.user.profile.teacher)
+    time = []
+    for i in time_table:
+        time.append(i.time)
+    return HttpResponse(json.dumps(time))
 
 
 

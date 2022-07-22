@@ -1,0 +1,181 @@
+{% extends 'dashboard/teacher/base.html' %}
+{% block main %}
+<div class="row">
+    <div class="col-md-12">
+        <div class="card">
+            <div class="card-body">
+                <div class="row">
+                    <div class="col-md-12">
+                        <table border="1" style="width: 100%;">
+                            <thead>
+                                <tr class="text-center">
+                                    <th scope="row"></th>
+                                    {% for i in time %}
+                                    <th scope="row">{{i}}</th>
+                                    {% endfor %}
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <th scope="col">Saturday</th>
+                                    {% for i in saturday %}
+                                        {% if request.user.profile == i.teacher.profile %}
+                                            {% if i.subject %}
+                                            <td align='center'>
+                                                <strong style='color: green;'>{{i.subject}}</strong>
+                                                <br>
+                                                <strong>{{i.teacher}}</strong>
+                                            </td>
+                                            {% else %}
+                                                {% if request.user.profile.role == 'teacher' %}
+                                                <td></td>
+                                                {% else %}
+                                                <td>Free</td>
+                                                {% endif %}
+                                            {% endif %}
+                                        {% else %}
+                                            <td></td>
+                                        {% endif %}
+                                    {% endfor %}
+                                </tr>
+                                <tr>
+                                    <th scope="col">Sunday</th>
+                                    {% for i in sunday %}
+                                        {% if request.user.profile == i.teacher.profile %}
+                                            {% if i.subject %}
+                                            <td align='center'>
+                                                <strong style='color: green;'>{{i.subject}}</strong>
+                                                <br>
+                                                <strong>{{i.teacher}}</strong>
+                                            </td>
+                                            {% else %}
+                                                {% if request.user.profile.role == 'teacher' %}
+                                                <td></td>
+                                                {% else %}
+                                                <td>Free</td>
+                                                {% endif %}
+                                            {% endif %}
+                                        {% else %}
+                                            <td></td>
+                                        {% endif %}
+                                    {% endfor %}
+                                </tr>
+                                <tr>
+                                    <th scope="col">Monday</th>
+                                    {% for i in monday %}
+                                        {% if request.user.profile == i.teacher.profile %}
+                                            {% if i.subject %}
+                                            <td align='center'>
+                                                <strong style='color: green;'>{{i.subject}}</strong>
+                                                <br>
+                                                <strong>{{i.teacher}}</strong>
+                                            </td>
+                                            {% else %}
+                                                {% if request.user.profile.role == 'teacher' %}
+                                                <td></td>
+                                                {% else %}
+                                                <td>Free</td>
+                                                {% endif %}
+                                            {% endif %}
+                                        {% else %}
+                                            <td></td>
+                                        {% endif %}
+                                    {% endfor %}
+                                </tr>
+                                <tr>
+                                    <th scope="col">Tuesday</th>
+                                    {% for i in tuesday %}
+                                        {% if request.user.profile == i.teacher.profile %}
+                                            {% if i.subject %}
+                                            <td align='center'>
+                                                <strong style='color: green;'>{{i.subject}}</strong>
+                                                <br>
+                                                <strong>{{i.teacher}}</strong>
+                                            </td>
+                                            {% else %}
+                                                {% if request.user.profile.role == 'teacher' %}
+                                                <td></td>
+                                                {% else %}
+                                                <td>Free</td>
+                                                {% endif %}
+                                            {% endif %}
+                                        {% else %}
+                                            <td></td>
+                                        {% endif %}
+                                    {% endfor %}
+                                </tr>
+                                <tr>
+                                    <th scope="col">Wednesday</th>
+                                    {% for i in wednesday %}
+                                        {% if request.user.profile == i.teacher.profile %}
+                                            {% if i.subject %}
+                                            <td align='center'>
+                                                <strong style='color: green;'>{{i.subject}}</strong>
+                                                <br>
+                                                <strong>{{i.teacher}}</strong>
+                                            </td>
+                                            {% else %}
+                                                {% if request.user.profile.role == 'teacher' %}
+                                                <td></td>
+                                                {% else %}
+                                                <td>Free</td>
+                                                {% endif %}
+                                            {% endif %}
+                                        {% else %}
+                                            <td></td>
+                                        {% endif %}
+                                    {% endfor %}
+                                </tr>
+                                <tr>
+                                    <th scope="col">Thursday</th>
+                                    {% for i in thursday %}
+                                        {% if request.user.profile == i.teacher.profile %}
+                                            {% if i.subject %}
+                                            <td align='center'>
+                                                <strong style='color: green;'>{{i.subject}}</strong>
+                                                <br>
+                                                <strong>{{i.teacher}}</strong>
+                                            </td>
+                                            {% else %}
+                                                {% if request.user.profile.role == 'teacher' %}
+                                                <td></td>
+                                                {% else %}
+                                                <td>Free</td>
+                                                {% endif %}
+                                            {% endif %}
+                                        {% else %}
+                                            <td></td>
+                                        {% endif %}
+                                    {% endfor %}
+                                </tr>
+                                <tr>
+                                    <th scope="col">Friday</th>
+                                    {% for i in friday %}
+                                        {% if request.user.profile == i.teacher.profile %}
+                                            {% if i.subject %}
+                                            <td align='center'>
+                                                <strong style='color: green;'>{{i.subject}}</strong>
+                                                <br>
+                                                <strong>{{i.teacher}}</strong>
+                                            </td>
+                                            {% else %}
+                                                {% if request.user.profile.role == 'teacher' %}
+                                                <td></td>
+                                                {% else %}
+                                                <td>Free</td>
+                                                {% endif %}
+                                            {% endif %}
+                                        {% else %}
+                                            <td></td>
+                                        {% endif %}
+                                    {% endfor %}
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

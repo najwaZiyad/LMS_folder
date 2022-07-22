@@ -1,0 +1,58 @@
+{% extends 'dashboard/teacher/base.html' %}
+{% block main %}
+<div class="row">
+    <div class="col-md-12">
+        <div class="card">
+            <div class="card-body">
+                <div class="row">
+                    <div class="col-md-4">
+                        <label for="date">Select Date</label>
+                        <input type="date" class="form-control" name="date" id="date">
+                    </div>
+                    <div class="col-md-4">
+                        <label for="time">Time</label>
+                        <select required class="form-control" name="time" id="time">
+                            <option value='' selected disabled>-- Please Select --</option>
+                        </select>
+                    </div>
+                    <div class="col-md-4">
+                        <label for="link">Zoom Link</label>
+                        <input type="text" class="form-control" name="link" id="link">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% csrf_token %}
+{% endblock %}
+
+{% block script %}
+<script>
+$('#date').change(function(){
+    $csrf = $('[name="csrfmiddlewaretoken"]').val();
+    $.ajax({
+      type: "POST",
+      url: "get-teacher-subject",
+      data: {
+        date: this.value,
+        csrfmiddlewaretoken: $csrf
+      },
+      success: function(data) {
+        var time = eval('(' + data + ')');
+        options = "<option value='' selected disabled>-- Please Select --</option>"
+        if (time.length == 0) {
+            alert('You are not assigned to any class on selected date');
+        }
+        for (var i = 0; i < time.length; i++ ){
+            options += "<option value="+time[i]+">"+time[i]+"</option>";
+        }
+        $("#time").html(options);
+      },
+      error:function(e){
+          alert("something wrong "+ e) // this will alert an error
+      }
+    });
+});
+</script>
+{% endblock %}

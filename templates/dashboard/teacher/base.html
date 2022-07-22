@@ -29,8 +29,9 @@
 
     <!-- Custom Theme Style -->
     <link href="{% static 'assets/dashboard/build/css/custom.css' %}" rel="stylesheet">
-    
-    
+
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css" rel="stylesheet">
+
     
     <link href="{% static 'assets/dashboard/vendors/datatables.net-bs/css/dataTables.bootstrap.min.css' %}" rel="stylesheet">
     <link href="{% static 'assets/dashboard/vendors/datatables.net-buttons-bs/css/buttons.bootstrap.min.css' %}" rel="stylesheet">
@@ -79,27 +80,10 @@
               <div class="menu_section">
                 <h3>General</h3>
                 <ul class="nav side-menu">
-                  <li><a href="/admin-dashboard"><i class="fa fa-home"></i> Dashboard</a></li>
-                  <li><a><i class="fa fa-users"></i> Users <span class="fa fa-chevron-down"></span></a>
-                    <ul class="nav child_menu">
-                      <li><a href="/add-user">Add User</a></li>
-                      <li><a href="/view-user">View Users</a></li>
-                    </ul>
-                  </li>
-                  <li><a><i class="fa fa-book"></i> Subjects <span class="fa fa-chevron-down"></span></a>
-                    <ul class="nav child_menu">
-                      <li><a href="/add-subjects">Add Subject</a></li>
-                      <li><a href="/view-subjects">View Subjects</a></li>
-                    </ul>
-                  </li>
-                  <li><a href="/view-TeacherSubjectAssign"><i class="fa fa-book"></i> Teacher Subject Assign</a></li>
-
-                  <li><a><i class="fa fa-table"></i> Time Table <span class="fa fa-chevron-down"></span></a>
-                    <ul class="nav child_menu">
-                      <li><a href="/add-time-table">Add / Edit Time Table</a></li>
-                      <li><a href="/view-subjects">View Time Table</a></li>
-                    </ul>
-                  </li>
+                  <li><a href="/student-dashboard"><i class="fa fa-home"></i> Dashboard</a></li>
+                  <li><a href="/attendance"><i class="fa fa-calendar"></i> Attendance</a></li>
+                  <li><a href="/assignments"><i class="fa fa-book"></i> Assignments</a></li>
+                  <li><a href="/classes"><i class="fas fa-chalkboard-teacher"></i> Classes</a></li>
                   <li><a href="javascript:void(0)"><i class="fa fa-gears"></i> Settings</a></li>
                 </ul>
               </div>

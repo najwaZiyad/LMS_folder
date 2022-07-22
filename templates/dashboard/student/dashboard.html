@@ -1,4 +1,4 @@
-{% extends 'dashboard/base.html' %}
+{% extends 'dashboard/student/base.html' %}
 {% block main %}
 <div class="row">
     <div class="col-md-12">
@@ -13,7 +13,6 @@
                                     {% for i in time %}
                                     <th scope="row">{{i}}</th>
                                     {% endfor %}
-                                    <th scope="row">Action</th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -30,13 +29,6 @@
                                     <td>Free</td>
                                     {% endif %}
                                     {% endfor %}
-                                    <td>
-                                        <form action="/edit-timetable" method="POST" enctype="multipart/form-data">
-                                            {% csrf_token %}
-                                            <input type="hidden" name="day" value="Saturday">
-                                            <button class="btn btn-sm btn-success">Add/Edit</button>
-                                        </form>
-                                    </td>
                                 </tr>
                                 <tr>
                                     <th scope="col">Sunday</th>
@@ -51,13 +43,6 @@
                                     <td>Free</td>
                                     {% endif %}
                                     {% endfor %}
-                                    <td>
-                                        <form action="/edit-timetable" method="POST" enctype="multipart/form-data">
-                                            {% csrf_token %}
-                                            <input type="hidden" name="day" value="Sunday">
-                                            <button class="btn btn-sm btn-success">Add/Edit</button>
-                                        </form>
-                                    </td>
                                 </tr>
                                 <tr>
                                     <th scope="col">Monday</th>
@@ -72,13 +57,6 @@
                                     <td>Free</td>
                                     {% endif %}
                                     {% endfor %}
-                                    <td>
-                                        <form action="/edit-timetable" method="POST" enctype="multipart/form-data">
-                                            {% csrf_token %}
-                                            <input type="hidden" name="day" value="Monday">
-                                            <button class="btn btn-sm btn-success">Add/Edit</button>
-                                        </form>
-                                    </td>
                                 </tr>
                                 <tr>
                                     <th scope="col">Tuesday</th>
@@ -93,13 +71,6 @@
                                     <td>Free</td>
                                     {% endif %}
                                     {% endfor %}
-                                    <td>
-                                        <form action="/edit-timetable" method="POST" enctype="multipart/form-data">
-                                            {% csrf_token %}
-                                            <input type="hidden" name="day" value="Tuesday">
-                                            <button class="btn btn-sm btn-success">Add/Edit</button>
-                                        </form>
-                                    </td>
                                 </tr>
                                 <tr>
                                     <th scope="col">Wednesday</th>
@@ -114,13 +85,6 @@
                                     <td>Free</td>
                                     {% endif %}
                                     {% endfor %}
-                                    <td>
-                                        <form action="/edit-timetable" method="POST" enctype="multipart/form-data">
-                                            {% csrf_token %}
-                                            <input type="hidden" name="day" value="Wednesday">
-                                            <button class="btn btn-sm btn-success">Add/Edit</button>
-                                        </form>
-                                    </td>
                                 </tr>
                                 <tr>
                                     <th scope="col">Thursday</th>
@@ -135,13 +99,6 @@
                                     <td>Free</td>   
                                     {% endif %}
                                     {% endfor %}
-                                    <td>
-                                        <form action="/edit-timetable" method="POST" enctype="multipart/form-data">
-                                            {% csrf_token %}
-                                            <input type="hidden" name="day" value="Thursday">
-                                            <button class="btn btn-sm btn-success">Add/Edit</button>
-                                        </form>
-                                    </td>
                                 </tr>
                                 <tr>
                                     <th scope="col">Friday</th>
@@ -156,13 +113,6 @@
                                     <td>Free</td>
                                     {% endif %}
                                     {% endfor %}
-                                    <td>
-                                        <form action="/edit-timetable" method="POST" enctype="multipart/form-data">
-                                            {% csrf_token %}
-                                            <input type="hidden" name="day" value="Friday">
-                                            <button class="btn btn-sm btn-success">Add/Edit</button>
-                                        </form>
-                                    </td>
                                 </tr>
                             </tbody>
                         </table>

@@ -59,5 +59,14 @@ class TeacherSubjectAssign(models.Model):
 class TimeTabel(models.Model):
     teacher = models.ForeignKey(Teacher, on_delete=models.CASCADE, null=True, blank=True)
     subject = models.ForeignKey(Subjects, on_delete=models.CASCADE, null=True, blank=True)
+    subject_alt = models.CharField(max_length=100, null=True, blank=True)
     day = models.CharField(max_length=20, choices=DAYS_OF_WEEK)
     time = models.CharField(max_length=50, choices=time_slots)
+
+class Classes(models.Model):
+    added_on = models.DateTimeField()
+    date = models.DateField()
+    cls = models.CharField(max_length=200)
+    time = models.CharField(max_length=100, choices=time_slots)
+    zoom_link = models.CharField(max_length=200)
+    status = models.BooleanField(default=False)

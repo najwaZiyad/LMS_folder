@@ -5,27 +5,29 @@
         <div class="card">
             <div class="card-body">
                 <div class="col-md-12">
-                    <h4>Sunday</h4>
+                    <h4>{{day}}</h4>
                 </div>
-				<form class="validate-form" action="" method="POST" enctype="multipart/form-data">
+				<form class="validate-form" action="/add-time-table" method="POST" enctype="multipart/form-data">
 					{% csrf_token %}
                     {% for j in time %}
+                    <input type="hidden" name="day" value="{{day}}">
                     <div class="row border-bottom pb-3 pt-3">
                         <div class="col-md-12">
-                            <h6>{{j}}</h6>
+                            <h6>{{j.time}}</h6>
                         </div>
                         <div class="col-md-6 form-group">
-                            <label for="subject_{{j}}">Subject <span class="required">*</span></label>
-                            <select id="subject_{{j}}" name="subject" class="form-control select2" required>
+                            <label for="subject_{{j.n}}">Subject <span class="required">*</span></label>
+                            <select id="subject_{{j.n}}" name="subject_{{j.n}}" class="form-control select2" required>
                                 <option value="" selected disabled>-- Please Select --</option>
                                 {% for i in subjects %}
                                 <option value="{{i.id}}">{{i.name}}</option>
                                 {% endfor %}
+                                <option value="Free">Free</option>
                             </select>
                         </div>
                         <div class="col-md-6 form-group">
-                            <label for="teacher_{{j}}">Teacher <span class="required">*</span></label>
-                            <select id="teacher_{{j}}" name="teacher" class="form-control select2" required>
+                            <label for="teacher_{{j.n}}">Teacher <span class="required">*</span></label>
+                            <select id="teacher_{{j.n}}" name="teacher_{{j.n}}" class="form-control select2" required>
                                 <option value="" selected disabled>-- Please Select --</option>
                             </select>
                         </div>
@@ -43,27 +45,32 @@
 {% block script %}
 <script>
 {% for j in time %}
-$('#subject_{{j}}').change(function(){
-    $csrf = $('[name="csrfmiddlewaretoken"]').val();
-    $.ajax({
-      type: "POST",
-      url: "get-subject",
-      data: {
-        id: this.value,
-        csrfmiddlewaretoken: $csrf
-      },
-      success: function(data) {
-        var teachers = eval('(' + data + ')');
-        options = "<option value='' selected disabled>-- Please Select --</option>"
-        for (var i = 0; i < teachers.length; i++ ){
-            options += "<option value="+teachers[i].id+">"+teachers[i].name+"</option>";
-        }
-        $("#teacher_{{j}}").html(options);
-      },
-      error:function(e){
-          alert("something wrong "+ e) // this will alert an error
-      }
-    });
+$('#subject_{{j.n}}').change(function(){
+    if ( this.value == 'Free' ) {
+        $("#teacher_{{j.n}}").removeAttr('required');
+    } else {
+        $("#teacher_{{j.n}}").attr('required', '');
+        $csrf = $('[name="csrfmiddlewaretoken"]').val();
+        $.ajax({
+          type: "POST",
+          url: "get-subject",
+          data: {
+            id: this.value,
+            csrfmiddlewaretoken: $csrf
+          },
+          success: function(data) {
+            var teachers = eval('(' + data + ')');
+            options = "<option value='' selected disabled>-- Please Select --</option>"
+            for (var i = 0; i < teachers.length; i++ ){
+                options += "<option value="+teachers[i].id+">"+teachers[i].name+"</option>";
+            }
+            $("#teacher_{{j.n}}").html(options);
+          },
+          error:function(e){
+              alert("something wrong "+ e) // this will alert an error
+          }
+        });
+    }
 });
 {% endfor %}
 </script>
