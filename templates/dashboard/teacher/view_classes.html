@@ -23,8 +23,8 @@
                                 <td>{{i.cls}}</td>
                                 <td>{{i.zoom_link}}</td>
                                 <td>
-                                    <a href="/edit-subject/{{i.id}}" class="btn btn-sm btn-primary">Edit</a>
-                                    <a href="/delete-subjects/{{i.id}}" class="btn btn-danger" >delete</a>
+                                    <a href="/edit-Links/{{i.id}}" class="btn btn-sm btn-primary"  data-toggle="modal" data-target="#exampleModalCenter">Edit</a>
+                                    <a href="/delete-classLink/{{i.id}}" class="btn btn-danger" >delete</a>
                                 </td>
                             </tr>
                             {% endfor %}
@@ -35,6 +35,49 @@
         </div>
     </div>
 </div>
+
+
+<!-- Modal -->
+<div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLongTitle">Modal title</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+       <form>
+  <div class="form-row">
+    <div class="form-group col-md-6">
+      <label for="date">Date</label>
+      <input type="date"name="date" class="form-control" id="date" placeholder="">
+    </div>
+    <div class="form-group col-md-6">
+      <label for="time">Time</label>
+      <input type="time" name="time" class="form-control" id="time" placeholder="">
+    </div>
+  </div>
+  <div class="form-group">
+    <label for="classSubject">Subject</label>
+    <input type="text" name="cls" class="form-control" id="classSubject" placeholder="">
+  </div>
+  <div class="form-group">
+    <label for="link">Zoom Link</label>
+    <input type="text" name="link" class="form-control" id="link" placeholder="">
+  </div>
+
+
+
+  <button type="submit" class="btn btn-primary">Submit</button>
+</form>
+      </div>
+
+  </div>
+</div>
+
+
 {% csrf_token %}
 {% endblock %}
 

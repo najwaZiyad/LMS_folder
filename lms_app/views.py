@@ -41,8 +41,6 @@ def DashboardRedirect(request):
         return redirect('/admin-dashboard')
 
 
-
-
 def AdminDashboard(request):
     time = []
     for i in time_slots:
@@ -196,6 +194,9 @@ def DeleteUser(request, user_id):
     return redirect('/view-user')
 
 
+
+
+
 def DeleteTeacherSubjectAssign(request, TeacherSubjectAssign_id):
     teacher = TeacherSubjectAssign.objects.get(id=TeacherSubjectAssign_id)
     name = teacher.teacher.profile.first_name
@@ -306,12 +307,37 @@ def addClass(request):
         cls = time.subject
         time = time.time
         Classes.objects.create(
-            added_on=added_on, date=my_date, zoom_link=zoom_link, time=time, cls=cls
+            added_on=added_on, date=my_date, zoom_link=zoom_link, time=time, cls=cls, added_by=request.user.profile
         )
         messages.info(request, 'Zoom Link Added Successfully!')
         return redirect('/add-class')
     else:
         return render(request, 'dashboard/teacher/classes.html')
+
+
+def editLinks(request, id):
+    if request.method == 'POST':
+        my_date = request.POST['date']
+        time_id = request.POST['time']
+        zoom_link = request.POST['link']
+        time = TimeTabel.objects.get(id=time_id)
+        cls = time.subject
+        time = time.time
+
+        e = Subjects.objects.get(id=id)
+        e.date = my_date
+        e.time = time_id
+        e.link = zoom_link
+        e.save()
+        messages.info(request, 'data  updated successfully!')
+        return redirect('/view-class')
+
+    else:
+        links = Classes.objects.get(id=id)
+        data = {'links': links}
+        return render(request, '/view-class', data)
+
+
 
 def viewClass(request):
     if request.method == 'POST':
@@ -320,6 +346,16 @@ def viewClass(request):
         links = Classes.objects.filter(added_by=request.user.profile)
         data = {'links': links}
         return render(request, 'dashboard/teacher/view_classes.html', data)
+
+
+
+def DeleteClassLink(request, i_id):
+    classs = Classes.objects.get(id=i_id)
+    date = classs.date
+    classs.delete()
+    messages.success(request, 'classs ' + str(date) + ' deleted Successfully!')
+    return redirect('/view-class')
+
 
 
 def getSubject(request):

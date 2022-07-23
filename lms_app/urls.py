@@ -33,4 +33,5 @@ urlpatterns = [
 
     path('get-teacher-subject', getTeacherSubject),
     path('create-empty-timetable', createTimetable),
+    path('delete-classLink/<int:i_id>', DeleteClassLink),
 ]
