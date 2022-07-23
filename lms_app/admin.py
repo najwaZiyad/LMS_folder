@@ -29,9 +29,13 @@ class AssignSearch(admin.ModelAdmin):
 class TeacherTimeTabelSearch(admin.ModelAdmin):
     list_display = ['teacher', 'subject', 'day', 'time']
 
+class ClassesSearch(admin.ModelAdmin):
+    list_display = ['date', 'time', 'cls', 'zoom_link']
+
 admin.site.register(AutoUsername, UsernameSearch)
 admin.site.register(Profile, ProfileSearch)
 admin.site.register(Subjects, SubjectSearch)
 admin.site.register(Teacher, TeacherSearch)
 admin.site.register(TeacherSubjectAssign, AssignSearch)
 admin.site.register(TimeTabel, TeacherTimeTabelSearch)
+admin.site.register(Classes, ClassesSearch)

@@ -65,6 +65,7 @@ class TimeTabel(models.Model):
 
 class Classes(models.Model):
     added_on = models.DateTimeField()
+    added_by = models.ForeignKey(Profile, on_delete=models.CASCADE, null=True, blank=True)
     date = models.DateField()
     cls = models.CharField(max_length=200)
     time = models.CharField(max_length=100, choices=time_slots)

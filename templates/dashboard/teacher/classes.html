@@ -4,22 +4,28 @@
     <div class="col-md-12">
         <div class="card">
             <div class="card-body">
-                <div class="row">
-                    <div class="col-md-4">
-                        <label for="date">Select Date</label>
-                        <input type="date" class="form-control" name="date" id="date">
+                <form action="" method="POST" enctype="multipart/form-data">
+                    {% csrf_token %}
+                    <div class="row">
+                        <div class="col-md-4">
+                            <label for="date">Select Date</label>
+                            <input type="date" class="form-control" name="date" id="date" required>
+                        </div>
+                        <div class="col-md-4">
+                            <label for="time">Time</label>
+                            <select required class="form-control" name="time" id="time">
+                                <option value='' selected disabled>-- Please Select --</option>
+                            </select>
+                        </div>
+                        <div class="col-md-4">
+                            <label for="link">Zoom Link</label>
+                            <input type="text" class="form-control" name="link" id="link" required>
+                        </div>
+                        <div class="col-md-12 mt-3">
+                            <input type="submit" class="form-control btn btn-success">
+                        </div>
                     </div>
-                    <div class="col-md-4">
-                        <label for="time">Time</label>
-                        <select required class="form-control" name="time" id="time">
-                            <option value='' selected disabled>-- Please Select --</option>
-                        </select>
-                    </div>
-                    <div class="col-md-4">
-                        <label for="link">Zoom Link</label>
-                        <input type="text" class="form-control" name="link" id="link">
-                    </div>
-                </div>
+                </form>
             </div>
         </div>
     </div>
@@ -45,7 +51,7 @@ $('#date').change(function(){
             alert('You are not assigned to any class on selected date');
         }
         for (var i = 0; i < time.length; i++ ){
-            options += "<option value="+time[i]+">"+time[i]+"</option>";
+            options += "<option value="+time[i]['id']+">"+time[i]['subject']+" ("+time[i]['time']+")</option>";
         }
         $("#time").html(options);
       },

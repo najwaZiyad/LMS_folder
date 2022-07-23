@@ -218,49 +218,63 @@ def AddSubjects(request):
 
 def AddTimeTable(request):
     if request.method == 'POST':
-        subject_1 = request.POST['subject_1']
-        subject_1 = Subjects.objects.get(id=subject_1)
-        subject_2 = request.POST['subject_2']
-        subject_2 = Subjects.objects.get(id=subject_2)
-        subject_3 = request.POST['subject_3']
-        subject_3 = Subjects.objects.get(id=subject_3)
-        subject_4 = request.POST['subject_4']
-        subject_4 = Subjects.objects.get(id=subject_4)
-        subject_5 = request.POST['subject_5']
-        subject_5 = Subjects.objects.get(id=subject_5)
-        teacher_1 = request.POST['teacher_1']
-        teacher_1 = Teacher.objects.get(id=teacher_1)
-        teacher_2 = request.POST['teacher_2']
-        teacher_2 = Teacher.objects.get(id=teacher_2)
-        teacher_3 = request.POST['teacher_3']
-        teacher_3 = Teacher.objects.get(id=teacher_3)
-        teacher_4 = request.POST['teacher_4']
-        teacher_4 = Teacher.objects.get(id=teacher_4)
-        teacher_5 = request.POST['teacher_5']
-        teacher_5 = Teacher.objects.get(id=teacher_5)
         day = request.POST['day']
 
-        assign1 = TimeTabel.objects.get(day=day, time='7:00 - 7:30')
-        assign2 = TimeTabel.objects.get(day=day, time='7:30 - 8:05')
-        assign3 = TimeTabel.objects.get(day=day, time='8:05 - 8:45')
-        assign4 = TimeTabel.objects.get(day=day, time='8:45 - 9:00')
-        assign5 = TimeTabel.objects.get(day=day, time='9:00 - 9:15')
-        assign1.subject = subject_1
-        assign2.subject = subject_2
-        assign3.subject = subject_3
-        assign4.subject = subject_4
-        assign5.subject = subject_5
-
-        assign1.teacher = teacher_1
-        assign2.teacher = teacher_2
-        assign3.teacher = teacher_3
-        assign4.teacher = teacher_4
-        assign5.teacher = teacher_5
-        assign1.save()
-        assign2.save()
-        assign3.save()
-        assign4.save()
-        assign5.save()
+        subject_1 = request.POST['subject_1']
+        teacher_1 = request.POST['teacher_1']
+        if subject_1 == 'Free':
+            pass
+        else:
+            subject_1 = Subjects.objects.get(id=subject_1)
+            teacher_1 = Teacher.objects.get(id=teacher_1)
+            assign1 = TimeTabel.objects.get(day=day, time='7:00 - 7:30')
+            assign1.subject = subject_1
+            assign1.teacher = teacher_1
+            assign1.save()
+        subject_2 = request.POST['subject_2']
+        teacher_2 = request.POST['teacher_2']
+        if subject_2 == 'Free':
+            pass
+        else:
+            subject_2 = Subjects.objects.get(id=subject_2)
+            teacher_2 = Teacher.objects.get(id=teacher_2)
+            assign2 = TimeTabel.objects.get(day=day, time='7:30 - 8:05')
+            assign2.subject = subject_2
+            assign2.teacher = teacher_2
+            assign2.save()
+        subject_3 = request.POST['subject_3']
+        teacher_3 = request.POST['teacher_3']
+        if subject_3 == 'Free':
+            pass
+        else:
+            subject_3 = Subjects.objects.get(id=subject_3)
+            teacher_3 = Teacher.objects.get(id=teacher_3)
+            assign3 = TimeTabel.objects.get(day=day, time='8:05 - 8:45')
+            assign3.subject = subject_3
+            assign3.teacher = teacher_3
+            assign3.save()
+        subject_4 = request.POST['subject_4']
+        teacher_4 = request.POST['teacher_4']
+        if subject_4 == 'Free':
+            pass
+        else:
+            subject_4 = Subjects.objects.get(id=subject_4)
+            teacher_4 = Teacher.objects.get(id=teacher_4)
+            assign4 = TimeTabel.objects.get(day=day, time='8:45 - 9:00')
+            assign4.subject = subject_4
+            assign4.teacher = teacher_4
+            assign4.save()
+        subject_5 = request.POST['subject_5']
+        teacher_5 = request.POST['teacher_5']
+        if subject_5 == 'Free':
+            pass
+        else:
+            subject_5 = Subjects.objects.get(id=subject_5)
+            teacher_5 = Teacher.objects.get(id=teacher_5)
+            assign5 = TimeTabel.objects.get(day=day, time='9:00 - 9:15')
+            assign5.subject = subject_5
+            assign5.teacher = teacher_5
+            assign5.save()
         return redirect('/admin-dashboard')
     else:
         pass
@@ -283,7 +297,30 @@ def AssignTimeTable(request):
         return redirect('/add-subjects')
 
 def addClass(request):
-    return render(request, 'dashboard/teacher/classes.html')
+    if request.method == 'POST':
+        added_on = datetime.now()
+        my_date = request.POST['date']
+        time_id = request.POST['time']
+        zoom_link = request.POST['link']
+        time = TimeTabel.objects.get(id=time_id)
+        cls = time.subject
+        time = time.time
+        Classes.objects.create(
+            added_on=added_on, date=my_date, zoom_link=zoom_link, time=time, cls=cls
+        )
+        messages.info(request, 'Zoom Link Added Successfully!')
+        return redirect('/add-class')
+    else:
+        return render(request, 'dashboard/teacher/classes.html')
+
+def viewClass(request):
+    if request.method == 'POST':
+        pass
+    else:
+        links = Classes.objects.filter(added_by=request.user.profile)
+        data = {'links': links}
+        return render(request, 'dashboard/teacher/view_classes.html', data)
+
 
 def getSubject(request):
     id = request.POST['id']
@@ -305,7 +342,7 @@ def getTeacherSubject(request):
     time_table = TimeTabel.objects.filter(day=day, teacher=request.user.profile.teacher)
     time = []
     for i in time_table:
-        time.append(i.time)
+        time.append({'id': i.id, 'time': str(i.time), 'subject': str(i.subject)})
     return HttpResponse(json.dumps(time))
 
 
@@ -331,3 +368,14 @@ def ViewTeacherSubjectAssign(request):
         teachers = Teacher.objects.all()
         data = {'assignments': assignment, 'subjects': najwa, 'teachers': teachers}
         return render(request, 'dashboard/TeacherSubjectAssign.html', data)
+
+
+def createTimetable(request):
+    for i in DAYS_OF_WEEK:
+        for j in time_slots:
+            try:
+                TimeTabel.objects.get(day=i[0], time=j[0])
+            except TimeTabel.DoesNotExist:
+                TimeTabel.objects.create(
+                    day=i[0], time=j[0]
+                )

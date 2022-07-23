@@ -27,6 +27,10 @@ urlpatterns = [
     path('view-TeacherSubjectAssign', ViewTeacherSubjectAssign),
     path('add-time-table', AddTimeTable),
     path('get-subject', getSubject),
+
     path('add-class', addClass),
+    path('view-class', viewClass),
+
     path('get-teacher-subject', getTeacherSubject),
+    path('create-empty-timetable', createTimetable),
 ]
