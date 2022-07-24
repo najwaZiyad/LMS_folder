@@ -1,0 +1,119 @@
+{% extends 'dashboard/teacher/base.html' %}
+{% block main %}
+<div class="row">
+    <div class="col-md-12">
+        <div class="card">
+            <div class="card-body">
+                {% csrf_token %}
+                <div class="row">
+                    <div class="col-md-12">
+                        {% if n != 0 %}
+                        <table id="datatable" class="table table-striped" style="width:100%;">
+                            <thead>
+                                <tr>
+                                    <th>Student</th>
+                                    <th>Action</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {% for i in students %}
+                                <tr>
+                                    <td>{{i.student.profile}}</td>
+                                    <td>
+                                        <input type="hidden" name="student" value="{{i.student.id}}">
+                                        <input type="radio" name="att_{{i.n}}" value="Present" id="att_{{i.n}}_yes">
+                                        <label for="att_{{i.n}}_yes">Present</label>
+                                        <input type="radio" name="att_{{i.n}}" value="Absent" id="att_{{i.n}}_no">
+                                        <label for="att_{{i.n}}_no">Absent</label>
+                                    </td>
+                                </tr>
+                                {% endfor %}
+                            </tbody>
+                        </table>
+                        {% else %}
+                        <table id="datatable" class="table table-striped" style="width:100%;">
+                            <thead>
+                                <tr>
+                                    <th>Student marked</th>
+                                    <th>Action</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {% for i in attendance %}
+                                <tr>
+                                    <td>{{i.student}}</td>
+                                    <td>
+                                        <input type="radio" name="att_{{i.id}}" value="Present" id="att_{{i.id}}_yes" {% if i.status == 'Present' %}checked{% endif %}>
+                                        <label for="att_{{i.id}}_yes">Present</label>
+                                        <input type="radio" name="att_{{i.id}}" value="Absent" id="att_{{i.id}}_no" {% if i.status == 'Absent' %}checked{% endif %}>
+                                        <label for="att_{{i.id}}_no">Absent</label>
+                                    </td>
+                                </tr>
+                                {% endfor %}
+                            </tbody>
+                        </table>
+                        {% endif %}
+                    </div>
+                    <div class="col-md-12 mt-3">
+                        <a href="/select-subject" class="btn btn-sm btn-success form-control">Back</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+{% endblock %}
+
+{% block script %}
+<script>
+{% for i in attendance %}
+$('[name=att_{{i.id}}]').change(function(){
+    $csrf = $('[name="csrfmiddlewaretoken"]').val();
+    $.ajax({
+      type: "POST",
+      url: "mark-attendance",
+      data: {
+        student_id: '{{i.student_id}}',
+        status: this.value,
+        subject_id: '{{subject_id}}',
+        date: '{{date}}',
+        time: '{{time}}',
+        csrfmiddlewaretoken: $csrf
+      },
+      success: function(data) {
+
+      },
+      error:function(e){
+          alert("something wrong "+ e) // this will alert an error
+      }
+    });
+});
+{% endfor %}
+
+
+{% for i in students %}
+$('[name=att_{{i.n}}]').change(function(){
+    $csrf = $('[name="csrfmiddlewaretoken"]').val();
+    $.ajax({
+      type: "POST",
+      url: "mark-attendance",
+      data: {
+        student_id: '{{i.student.student_id}}',
+        status: this.value,
+        subject_id: '{{subject_id}}',
+        date: '{{date}}',
+        time: '{{time}}',
+        csrfmiddlewaretoken: $csrf
+      },
+      success: function(data) {
+
+      },
+      error:function(e){
+          alert("something wrong "+ e) // this will alert an error
+      }
+    });
+});
+{% endfor %}
+</script>
+{% endblock %}

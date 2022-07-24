@@ -21,9 +21,11 @@ DAYS_OF_WEEK = (
     ('Saturday', 'Saturday'),
 )
 
+
 class AutoUsername(models.Model):
     type = models.CharField(max_length=50)
     last = models.CharField(max_length=50)
+
 
 class Profile(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE)
@@ -37,6 +39,7 @@ class Profile(models.Model):
     def __str__(self):
         return self.user.username
 
+
 class Teacher(models.Model):
     profile = models.OneToOneField(Profile, on_delete=models.CASCADE)
     teacher_id = models.CharField(max_length=50)
@@ -46,15 +49,26 @@ class Teacher(models.Model):
     def __str__(self):
         return self.profile.first_name
 
+
+class Student(models.Model):
+    profile = models.OneToOneField(Profile, on_delete=models.CASCADE)
+    student_id = models.CharField(max_length=50)
+
+    def __str__(self):
+        return self.profile.first_name
+
 class Subjects(models.Model):
     name = models.CharField(max_length=150)
     description = models.TextField()
+
     def __str__(self):
         return self.name
+
 
 class TeacherSubjectAssign(models.Model):
     teacher = models.ForeignKey(Teacher, on_delete=models.CASCADE)
     subject = models.ForeignKey(Subjects, on_delete=models.CASCADE)
+
 
 class TimeTabel(models.Model):
     teacher = models.ForeignKey(Teacher, on_delete=models.CASCADE, null=True, blank=True)
@@ -62,6 +76,7 @@ class TimeTabel(models.Model):
     subject_alt = models.CharField(max_length=100, null=True, blank=True)
     day = models.CharField(max_length=20, choices=DAYS_OF_WEEK)
     time = models.CharField(max_length=50, choices=time_slots)
+
 
 class Classes(models.Model):
     added_on = models.DateTimeField()
@@ -71,3 +86,16 @@ class Classes(models.Model):
     time = models.CharField(max_length=100, choices=time_slots)
     zoom_link = models.CharField(max_length=200)
     status = models.BooleanField(default=False)
+
+
+class Attendance(models.Model):
+    date = models.DateField()
+    time = models.CharField(max_length=150)
+    marked_on = models.DateTimeField(null=True, blank=True)
+    student = models.CharField(max_length=150)
+    student_id = models.CharField(max_length=150)
+    teacher = models.CharField(max_length=150)
+    teacher_id = models.CharField(max_length=150)
+    subject = models.CharField(max_length=150)
+    subject_id = models.CharField(max_length=150, null=True, blank=True)
+    status = models.CharField(max_length=100)

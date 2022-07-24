@@ -26,12 +26,18 @@ urlpatterns = [
 
     path('view-TeacherSubjectAssign', ViewTeacherSubjectAssign),
     path('add-time-table', AddTimeTable),
-    path('get-subject', getSubject),
 
+
+    # Teacher
     path('add-class', addClass),
     path('view-class', viewClass),
-
-    path('get-teacher-subject', getTeacherSubject),
-    path('create-empty-timetable', createTimetable),
     path('delete-classLink/<int:i_id>', DeleteClassLink),
+    path('select-subject', selectSubject),
+    path('mark-attendance', markAttendance),
+
+    path('get-subject', getSubject),
+    path('get-teacher-subject', getTeacherSubject),
+    path('get-classes', getClasses),
+
+    path('create-empty-timetable', createTimetable),
 ]

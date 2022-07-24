@@ -1,6 +1,6 @@
 import json
 import calendar
-from datetime import datetime
+from datetime import datetime, date, timedelta
 
 from django.contrib import messages
 from django.contrib.auth.hashers import make_password
@@ -9,6 +9,7 @@ from django.shortcuts import render, redirect
 from .models import *
 from django.contrib.auth import authenticate, login, logout
 
+
 def IndexPage(request):
     return render(request, 'front/index.html')
 
@@ -16,6 +17,7 @@ def IndexPage(request):
 def LogoutFun(request):
     logout(request)
     return redirect('/login')
+
 
 def LoginPage(request):
     if request.method == 'POST':
@@ -30,6 +32,7 @@ def LoginPage(request):
             return redirect("/login")
     else:
         return render(request, 'dashboard/login.html')
+
 
 def DashboardRedirect(request):
     role = request.user.profile.role
@@ -72,6 +75,7 @@ def StudentDashboard(request):
             'wednesday': wednesday, 'thursday': thursday, 'friday': friday}
     return render(request, 'dashboard/student/dashboard.html', data)
 
+
 def TeacherDashboard(request):
     time = []
     for i in time_slots:
@@ -86,6 +90,7 @@ def TeacherDashboard(request):
     data = {'saturday': saturday, 'sunday': sunday, 'time': time, 'monday': monday, 'tuesday': tuesday,
             'wednesday': wednesday, 'thursday': thursday, 'friday': friday}
     return render(request, 'dashboard/teacher/dashboard.html', data)
+
 
 def AddUser(request):
     if request.method == 'POST':
@@ -104,7 +109,7 @@ def AddUser(request):
             last = AutoUsername.objects.get(type='Teacher')
             experience = request.POST['experience']
             subjects = request.POST.getlist('subject')
-            teacher= Teacher.objects.create(
+            teacher = Teacher.objects.create(
                 profile=profile, teacher_id=profile.user.username, experience=experience,
                 subject=subjects
             )
@@ -114,6 +119,9 @@ def AddUser(request):
                 )
         else:
             last = AutoUsername.objects.get(type='Student')
+            Student.objects.create(
+                profile=profile, student_id=profile.user.username
+            )
         last.last = int(last.last) + 1
         last.save()
         return redirect('/add-user')
@@ -128,6 +136,7 @@ def AddUser(request):
 def viewUser(request):
     data = {'profiles': Profile.objects.all()}
     return render(request, 'dashboard/view_users.html', data)
+
 
 def editUser(request, id):
     if request.method == 'POST':
@@ -154,6 +163,7 @@ def editUser(request, id):
         profile = Profile.objects.get(id=id)
         data = {'profile': profile}
         return render(request, 'dashboard/edit_user.html', data)
+
 
 def ViewSubjects(request):
     data = {'subjects': Subjects.objects.all()}
@@ -182,7 +192,7 @@ def DeleteSubjects(request, subject_id):
     subject = Subjects.objects.get(id=subject_id)
     name = subject.name
     subject.delete()
-    messages.success(request, 'Subject '+name+' deleted Successfully!')
+    messages.success(request, 'Subject ' + name + ' deleted Successfully!')
     return redirect('/view-subjects')
 
 
@@ -190,19 +200,17 @@ def DeleteUser(request, user_id):
     user = Profile.objects.get(id=user_id)
     name = user.first_name
     user.delete()
-    messages.success(request, 'user '+name+' deleted Successfully!')
+    messages.success(request, 'user ' + name + ' deleted Successfully!')
     return redirect('/view-user')
-
-
-
 
 
 def DeleteTeacherSubjectAssign(request, TeacherSubjectAssign_id):
     teacher = TeacherSubjectAssign.objects.get(id=TeacherSubjectAssign_id)
     name = teacher.teacher.profile.first_name
     teacher.delete()
-    messages.success(request, 'teacher '+str(name)+' deleted Successfully!')
+    messages.success(request, 'teacher ' + str(name) + ' deleted Successfully!')
     return redirect('/view-TeacherSubjectAssign')
+
 
 def AddSubjects(request):
     if request.method == 'POST':
@@ -211,7 +219,7 @@ def AddSubjects(request):
         Subjects.objects.create(
             name=name, description=description
         )
-        messages.info(request, 'Subject '+name+' added Successfully!')
+        messages.info(request, 'Subject ' + name + ' added Successfully!')
         return redirect('/add-subjects')
     else:
         return render(request, 'dashboard/add_subject.html')
@@ -222,7 +230,7 @@ def AddTimeTable(request):
         day = request.POST['day']
 
         subject_1 = request.POST['subject_1']
-        teacher_1 = request.POST['teacher_1']
+        teacher_1 = request.POST.get('teacher_1')
         if subject_1 == 'Free':
             pass
         else:
@@ -233,7 +241,7 @@ def AddTimeTable(request):
             assign1.teacher = teacher_1
             assign1.save()
         subject_2 = request.POST['subject_2']
-        teacher_2 = request.POST['teacher_2']
+        teacher_2 = request.POST.get('teacher_2')
         if subject_2 == 'Free':
             pass
         else:
@@ -244,7 +252,7 @@ def AddTimeTable(request):
             assign2.teacher = teacher_2
             assign2.save()
         subject_3 = request.POST['subject_3']
-        teacher_3 = request.POST['teacher_3']
+        teacher_3 = request.POST.get('teacher_3')
         if subject_3 == 'Free':
             pass
         else:
@@ -255,7 +263,7 @@ def AddTimeTable(request):
             assign3.teacher = teacher_3
             assign3.save()
         subject_4 = request.POST['subject_4']
-        teacher_4 = request.POST['teacher_4']
+        teacher_4 = request.POST.get('teacher_4')
         if subject_4 == 'Free':
             pass
         else:
@@ -266,7 +274,7 @@ def AddTimeTable(request):
             assign4.teacher = teacher_4
             assign4.save()
         subject_5 = request.POST['subject_5']
-        teacher_5 = request.POST['teacher_5']
+        teacher_5 = request.POST.get('teacher_5')
         if subject_5 == 'Free':
             pass
         else:
@@ -279,6 +287,7 @@ def AddTimeTable(request):
         return redirect('/admin-dashboard')
     else:
         pass
+
 
 def AssignTimeTable(request):
     if request.method == 'POST':
@@ -297,6 +306,7 @@ def AssignTimeTable(request):
     else:
         return redirect('/add-subjects')
 
+
 def addClass(request):
     if request.method == 'POST':
         added_on = datetime.now()
@@ -306,13 +316,21 @@ def addClass(request):
         time = TimeTabel.objects.get(id=time_id)
         cls = time.subject
         time = time.time
-        Classes.objects.create(
-            added_on=added_on, date=my_date, zoom_link=zoom_link, time=time, cls=cls, added_by=request.user.profile
-        )
-        messages.info(request, 'Zoom Link Added Successfully!')
-        return redirect('/add-class')
+        try:
+            Classes.objects.get(date=my_date, time=time)
+            messages.info(request, 'Zoom Link was already assigned on selected date and time!')
+        except Classes.DoesNotExist:
+            Classes.objects.create(
+                added_on=added_on, date=my_date, zoom_link=zoom_link, time=time, cls=cls, added_by=request.user.profile
+            )
+            Classes.objects.filter(date__lt=(date.today() - timedelta(days=2))).delete()
+            messages.info(request, 'Zoom Link Added Successfully!')
+        return redirect('/view-class')
     else:
-        return render(request, 'dashboard/teacher/classes.html')
+        today = date.today()
+        last_date = date.today() + timedelta(days=1)
+        data = {'today': str(today), 'last_date': str(last_date)}
+        return render(request, 'dashboard/teacher/classes.html', data)
 
 
 def editLinks(request, id):
@@ -338,7 +356,6 @@ def editLinks(request, id):
         return render(request, '/view-class', data)
 
 
-
 def viewClass(request):
     if request.method == 'POST':
         pass
@@ -346,7 +363,6 @@ def viewClass(request):
         links = Classes.objects.filter(added_by=request.user.profile)
         data = {'links': links}
         return render(request, 'dashboard/teacher/view_classes.html', data)
-
 
 
 def DeleteClassLink(request, i_id):
@@ -357,6 +373,87 @@ def DeleteClassLink(request, i_id):
     return redirect('/view-class')
 
 
+def selectSubject(request):
+    profile = request.user.profile
+    if request.method == "POST":
+        subject_id = request.POST['id']
+        my_date = request.POST['date']
+        time = request.POST['time']
+        time = TimeTabel.objects.get(id=time).time
+        students_query = Student.objects.all()
+        students = []
+        n = 0
+        for i in students_query:
+            n += 1
+            students.append({'student': i, 'n': n})
+        attendance = Attendance.objects.filter(date=my_date, time=time)
+        att_list = []
+        if attendance:
+            n = 'num_'
+            m = 0
+            for i in Student.objects.all():
+                m += 1
+                dic = {}
+                att = Attendance.objects.filter(date=my_date, time=time, student_id=i.student_id).first()
+                if att:
+                    dic['student'] = i.profile.first_name
+                    dic['student_id'] = i.student_id
+                    dic['id'] = att.id
+                    dic['status'] = att.status
+                else:
+                    dic['student'] = i.profile.first_name
+                    dic['student_id'] = i.student_id
+                    dic['id'] = n + str(m)
+                    dic['status'] = 'Unmarked'
+                att_list.append(dic)
+            n = 0
+
+        data = {'date': my_date, 'subject_id': subject_id, 'time': time, 'students': students,
+                'n': n, 'attendance': att_list}
+        return render(request, 'dashboard/teacher/mark_attendance.html', data)
+    else:
+        subjects = TeacherSubjectAssign.objects.filter(teacher=profile.teacher)
+        data = {'subjects': subjects}
+        return render(request, 'dashboard/teacher/select_class.html', data)
+
+
+def markAttendance(request):
+    profile = request.user.profile
+    if request.method == "POST":
+        subject_id = request.POST['subject_id']
+        subject = Subjects.objects.get(id=int(subject_id))
+        my_date = request.POST['date']
+        time = request.POST['time']
+        student_id = request.POST['student_id']
+        student = Student.objects.get(student_id=student_id)
+        status = request.POST['status']
+        try:
+            att = Attendance.objects.get(date=my_date, time=time, student_id=student.student_id)
+            att.status = status
+            att.marked_on = datetime.now()
+            att.save()
+        except Attendance.DoesNotExist:
+            Attendance.objects.create(
+                subject=subject.name, subject_id=subject.id, date=my_date, time=time,
+                student=student.profile, student_id=student.student_id, teacher=profile,
+                teacher_id=profile.teacher.teacher_id, status=status, marked_on=datetime.now()
+            )
+        return HttpResponse('Success')
+
+
+def getClasses(request):
+    profile = request.user.profile.teacher
+    subject_id = request.POST['id']
+    my_date = request.POST['date']
+    my_date = datetime.strptime(my_date, '%Y-%m-%d')
+    day = calendar.day_name[my_date.weekday()]
+    subject = Subjects.objects.get(id=subject_id)
+    time_table = TimeTabel.objects.filter(teacher=profile, day=day, subject=subject)
+    time = []
+    for i in time_table:
+        time.append({'id': i.id, 'time': str(i.time), 'subject': str(i.subject)})
+    return HttpResponse(json.dumps(time))
+
 
 def getSubject(request):
     id = request.POST['id']
@@ -366,7 +463,8 @@ def getSubject(request):
     for i in teachers:
         dic = {}
         dic['id'] = i.teacher.id
-        dic['name'] = i.teacher.profile.first_name +" "+ i.teacher.profile.second_name +" "+ i.teacher.profile.third_name +" "+ i.teacher.profile.last_name
+        dic[
+            'name'] = i.teacher.profile.first_name + " " + i.teacher.profile.second_name + " " + i.teacher.profile.third_name + " " + i.teacher.profile.last_name
         teacher.append(dic)
     return HttpResponse(json.dumps(teacher))
 
@@ -380,7 +478,6 @@ def getTeacherSubject(request):
     for i in time_table:
         time.append({'id': i.id, 'time': str(i.time), 'subject': str(i.subject)})
     return HttpResponse(json.dumps(time))
-
 
 
 def ViewTeacherSubjectAssign(request):

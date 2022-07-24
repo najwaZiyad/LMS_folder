@@ -20,8 +20,17 @@ class SubjectSearch(admin.ModelAdmin):
 
 
 class TeacherSearch(admin.ModelAdmin):
-    search_fields = ('profile', 'teacher_id')
+    search_fields = ('profile__first_name', 'teacher_id')
     list_display = ('profile', 'teacher_id', 'subject')
+
+class StudentSearch(admin.ModelAdmin):
+    search_fields = ('profile__first_name', 'student_id')
+    list_display = ('profile', 'student_id')
+
+class AttendanceSearch(admin.ModelAdmin):
+    search_fields = ('date', 'student_id', 'student', 'teacher', 'teacher_id')
+    list_display = ('date', 'time', 'subject', 'student', 'teacher', 'marked_on', 'status')
+    list_filter = ['time']
 
 class AssignSearch(admin.ModelAdmin):
     list_display = ('teacher', 'subject')
@@ -39,3 +48,5 @@ admin.site.register(Teacher, TeacherSearch)
 admin.site.register(TeacherSubjectAssign, AssignSearch)
 admin.site.register(TimeTabel, TeacherTimeTabelSearch)
 admin.site.register(Classes, ClassesSearch)
+admin.site.register(Student, StudentSearch)
+admin.site.register(Attendance, AttendanceSearch)

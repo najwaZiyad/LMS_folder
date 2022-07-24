@@ -1,0 +1,103 @@
+{% extends 'dashboard/teacher/base.html' %}
+{% block main %}
+<div class="row">
+    <div class="col-md-12">
+        <div class="card">
+            <div class="card-body">
+                <div class="row">
+                    <table id="datatable" class="table table-striped" style="width:100%;">
+                        <thead>
+                            <tr>
+                                <th>Subject</th>
+                                <th>Action</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for i in subjects %}
+                            <tr>
+                                <td>{{i.subject}}</td>
+                                <td>
+                                    <button type="button" class="btn btn-sm btn-primary"  data-toggle="modal" data-target="#mark_{{i.id}}">Mark Attendance</button>
+                                </td>
+                            </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<!-- Modal -->
+{% for i in subjects %}
+<div class="modal fade" id="mark_{{i.id}}" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLongTitle">Modal title</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <form action="" method="POST" enctype="multipart/form-data">
+         {% csrf_token %}
+         <input type="hidden" name="id" value="{{i.subject.id}}">
+         <div class="modal-body">
+            <div class="row">
+                <div class="col-md-6 form-group">
+                    <label for="date_{{i.id}}">Select Date <span class="required">*</span></label>
+                    <input type="date" name="date" id="date_{{i.id}}" required class="form-control">
+                </div>
+                <div class="col-md-6 form-group">
+                    <label for="time_{{i.id}}">Time <span class="required">*</span></label>
+                    <select name="time" id="time_{{i.id}}" required class="form-control">
+                        <option value="" selected disabled>-- Select Date 1st --</option>
+                    </select>
+                </div>
+            </div>
+         </div>
+          <div class="modal-footer">
+            <button type="submit" class="btn btn-primary">Mark Attendance</button>
+            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+          </div>
+      </form>
+    </div>
+  </div>
+</div>
+{% endfor %}
+{% endblock %}
+
+{% block script %}
+<script>
+{% for i in subjects %}
+$('#date_{{i.id}}').change(function(){
+    $csrf = $('[name="csrfmiddlewaretoken"]').val();
+    $.ajax({
+      type: "POST",
+      url: "get-classes",
+      data: {
+        id: {{i.subject.id}},
+        date: this.value,
+        csrfmiddlewaretoken: $csrf
+      },
+      success: function(data) {
+        var time = eval('(' + data + ')');
+        options = "<option value='' selected disabled>-- Please Select --</option>"
+        if (time.length == 0) {
+            alert('You are not assigned to any class on selected date');
+        }
+        for (var i = 0; i < time.length; i++ ){
+            options += "<option value="+time[i]['id']+">"+time[i]['subject']+" ("+time[i]['time']+")</option>";
+        }
+        $("#time_{{i.id}}").html(options);
+      },
+      error:function(e){
+          alert("something wrong "+ e) // this will alert an error
+      }
+    });
+});
+{% endfor %}
+</script>
+{% endblock %}
