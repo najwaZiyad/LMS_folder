@@ -20,12 +20,12 @@ urlpatterns = [
     path('delete-subjects/<int:subject_id>', DeleteSubjects),
 
     path('edit-timetable', AssignTimeTable),
+    path('add-time-table', AddTimeTable),
 
     path('delete-user/<int:user_id>', DeleteUser),
     path('delete-TeacherSubjectAssign/<int:TeacherSubjectAssign_id>', DeleteTeacherSubjectAssign),
 
     path('view-TeacherSubjectAssign', ViewTeacherSubjectAssign),
-    path('add-time-table', AddTimeTable),
 
 
     # Teacher

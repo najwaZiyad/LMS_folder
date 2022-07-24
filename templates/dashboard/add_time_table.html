@@ -13,12 +13,16 @@
                     <input type="hidden" name="day" value="{{day}}">
                     <div class="row border-bottom pb-3 pt-3">
                         <div class="col-md-12">
-                            <h6>{{j.time}}</h6>
+                            <h6>{{j.time}} {{current}}</h6>
                         </div>
                         <div class="col-md-6 form-group">
                             <label for="subject_{{j.n}}">Subject <span class="required">*</span></label>
                             <select id="subject_{{j.n}}" name="subject_{{j.n}}" class="form-control select2" required>
+                                {% if current.1.n.subject  %}
+                                <option value="{{current.0.n.subject.id}}" selected>{{current.j.n.subject.name}}</option>
+                                {% else %}
                                 <option value="" selected disabled>-- Please Select --</option>
+                                {% endif %}
                                 {% for i in subjects %}
                                 <option value="{{i.id}}">{{i.name}}</option>
                                 {% endfor %}
@@ -28,7 +32,11 @@
                         <div class="col-md-6 form-group">
                             <label for="teacher_{{j.n}}">Teacher <span class="required">*</span></label>
                             <select id="teacher_{{j.n}}" name="teacher_{{j.n}}" class="form-control select2" required>
+                                {% if current.1.n.subject  %}
+                                <option value="{{current.0.n.teacher.id}}" selected>{{current.0.n.teacher.name}}</option>
+                                {% else %}
                                 <option value="" selected disabled>-- Please Select --</option>
+                                {% endif %}
                             </select>
                         </div>
                     </div>

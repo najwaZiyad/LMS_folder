@@ -301,7 +301,11 @@ def AssignTimeTable(request):
             n += 1
             time.append({'n': n, 'time': i[0]})
         day = request.POST['day']
-        data = {'days': days, 'subjects': subjects, 'time': time, 'day': day}
+        current = TimeTabel.objects.get(day=day, time='9:00 - 9:15')
+        # current_timetable = []
+        # for i in current:
+        #     current_timetable.append(i)
+        data = {'days': days, 'subjects': subjects, 'time': time, 'day': day, 'current': current}
         return render(request, 'dashboard/add_time_table.html', data)
     else:
         return redirect('/add-subjects')
@@ -463,8 +467,7 @@ def getSubject(request):
     for i in teachers:
         dic = {}
         dic['id'] = i.teacher.id
-        dic[
-            'name'] = i.teacher.profile.first_name + " " + i.teacher.profile.second_name + " " + i.teacher.profile.third_name + " " + i.teacher.profile.last_name
+        dic['name'] = i.teacher.profile.first_name + " " + i.teacher.profile.second_name + " " + i.teacher.profile.third_name + " " + i.teacher.profile.last_name
         teacher.append(dic)
     return HttpResponse(json.dumps(teacher))
 
