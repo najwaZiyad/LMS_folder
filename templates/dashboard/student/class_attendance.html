@@ -1,0 +1,36 @@
+{% extends 'dashboard/student/base.html' %}
+{% block main %}
+<div class="row">
+    <div class="col-md-12">
+        <div class="card">
+            <div class="card-body">
+                <div class="row">
+                    <table id="datatable" class="table table-striped" style="width:100%;">
+                        <thead>
+                            <tr>
+                                <th>Date</th>
+                                <th>Time</th>
+                                <th>Marked By</th>
+                                <th>Marked on</th>
+                                <th>Status</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for i in att %}
+                            <tr>
+                                <td>{{i.date}}</td>
+                                <td>{{i.time}}</td>
+                                <td>{{i.teacher}}</td>
+                                <td>{{i.marked_on}}</td>
+                                <td>{{i.status}}</td>
+                            </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+{% endblock %}

@@ -33,11 +33,12 @@ class Profile(models.Model):
     second_name = models.CharField(max_length=150, null=True, blank=True)
     third_name = models.CharField(max_length=150, null=True, blank=True)
     last_name = models.CharField(max_length=150, null=True, blank=True)
+    img = models.ImageField(upload_to='users/', default="users/default.png")
     address = models.TextField()
     role = models.CharField(max_length=150)
 
     def __str__(self):
-        return self.user.username
+        return str(self.first_name)+" "+str(self.second_name)+" "+str(self.third_name)+" "+str(self.last_name)
 
 
 class Teacher(models.Model):
@@ -47,7 +48,7 @@ class Teacher(models.Model):
     subject = models.TextField(null=True, blank=True)
 
     def __str__(self):
-        return self.profile.first_name
+        return str(self.profile.first_name)+" "+str(self.profile.second_name)+" "+str(self.profile.third_name)+" "+str(self.profile.last_name)
 
 
 class Student(models.Model):
@@ -55,7 +56,7 @@ class Student(models.Model):
     student_id = models.CharField(max_length=50)
 
     def __str__(self):
-        return self.profile.first_name
+        return str(self.profile.first_name)+" "+str(self.profile.second_name)+" "+str(self.profile.third_name)+" "+str(self.profile.last_name)
 
 class Subjects(models.Model):
     name = models.CharField(max_length=150)

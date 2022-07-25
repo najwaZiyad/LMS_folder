@@ -64,11 +64,11 @@
             <!-- menu profile quick info -->
             <div class="profile clearfix">
               <div class="profile_pic">
-                <img src="{% static 'assets/dashboard/images/img.jpg' %}" alt="..." class="img-circle profile_img">
+                <img src="media/{{request.user.profile.img}}" alt="..." class="img-circle profile_img">
               </div>
               <div class="profile_info">
                 <span>Welcome,</span>
-                <h2>{{request.user.profile.first_name}}</h2>
+                <h2>{{request.user.profile}}</h2>
               </div>
             </div>
             <!-- /menu profile quick info -->
@@ -81,10 +81,10 @@
                 <h3>General</h3>
                 <ul class="nav side-menu">
                   <li><a href="/dashboard"><i class="fa fa-home"></i> Dashboard</a></li>
-                  <li><a href="/attendance"><i class="fa fa-calendar"></i> Attendance</a></li>
-                  <li><a href="/assignments"><i class="fa fa-book"></i> Assignments</a></li>
+                  <li><a href="/attendance-subject"><i class="fa fa-calendar"></i> Attendance</a></li>
+                  <li><a href="#" onclick="alert('Coming Soon :)')"><i class="fa fa-book"></i> Assignments</a></li>
                   <li><a href="/classes"><i class="fas fa-chalkboard-teacher"></i> Classes</a></li>
-                  <li><a href="javascript:void(0)"><i class="fa fa-gears"></i> Settings</a></li>
+                  <li><a href="/settings"><i class="fa fa-gears"></i> Settings</a></li>
                 </ul>
               </div>
 
@@ -96,8 +96,8 @@
               <a data-toggle="tooltip" data-placement="top" title="Settings">
                 <span class="glyphicon glyphicon-cog" aria-hidden="true"></span>
               </a>
-              <a data-toggle="tooltip" data-placement="top" title="FullScreen">
-                <span class="glyphicon glyphicon-fullscreen" aria-hidden="true"></span>
+              <a data-toggle="tooltip" data-placement="top" onclick="toggleFullScreen();" title="FullScreen">
+                <span class="glyphicon glyphicon-fullscreen" onclick="toggleFullScreen();" aria-hidden="true"></span>
               </a>
               <a data-toggle="tooltip" data-placement="top" title="Lock">
                 <span class="glyphicon glyphicon-eye-close" aria-hidden="true"></span>
@@ -120,11 +120,11 @@
               <ul class=" navbar-right">
                 <li class="nav-item dropdown open" style="padding-left: 15px;">
                   <a href="javascript:;" class="user-profile dropdown-toggle" aria-haspopup="true" id="navbarDropdown" data-toggle="dropdown" aria-expanded="false">
-                    <img src="{% static 'assets/dashboard/images/img.jpg' %}" alt="">{{request.user.profile.first_name}}
+                    <img src="media/{{request.user.profile.img}}" alt="">{{request.user.profile}}
                   </a>
                   <div class="dropdown-menu dropdown-usermenu pull-right" aria-labelledby="navbarDropdown">
-                    <a class="dropdown-item"  href="javascript:;"> Profile</a>
-                      <a class="dropdown-item"  href="javascript:;">
+
+                      <a class="dropdown-item"  href="/settings">
                         <span>Settings</span>
                       </a>
                     <a class="dropdown-item"  href="/logout"><i class="fa fa-sign-out pull-right"></i> Log Out</a>
@@ -146,7 +146,7 @@
         <!-- footer content -->
         <footer>
           <div class="text-center">
-            Powered By <a href="https://gowebkart.com">Gowebkart</a>
+            Powered By <a target="_blank" href="https://gowebkart.com">Gowebkart</a>
           </div>
           <div class="clearfix"></div>
         </footer>
@@ -205,6 +205,26 @@
       $(document).ready(function() {
           $('.select2').select2();
       });
+      function toggleFullScreen() {
+        if ((document.fullScreenElement && document.fullScreenElement !== null) ||
+         (!document.mozFullScreen && !document.webkitIsFullScreen)) {
+          if (document.documentElement.requestFullScreen) {
+            document.documentElement.requestFullScreen();
+          } else if (document.documentElement.mozRequestFullScreen) {
+            document.documentElement.mozRequestFullScreen();
+          } else if (document.documentElement.webkitRequestFullScreen) {
+            document.documentElement.webkitRequestFullScreen(Element.ALLOW_KEYBOARD_INPUT);
+          }
+        } else {
+          if (document.cancelFullScreen) {
+            document.cancelFullScreen();
+          } else if (document.mozCancelFullScreen) {
+            document.mozCancelFullScreen();
+          } else if (document.webkitCancelFullScreen) {
+            document.webkitCancelFullScreen();
+          }
+        }
+      }
 
       {% if messages %}
       {% for i in messages %}

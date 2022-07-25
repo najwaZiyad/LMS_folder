@@ -1,0 +1,44 @@
+{% extends 'dashboard/student/base.html' %}
+{% block main %}
+<div class="row">
+    <div class="col-md-12">
+        <div class="card">
+            <div class="card-body">
+                <div class="row">
+                    <table id="datatable" class="table table-striped" style="width:100%;">
+                        <thead>
+                            <tr>
+                                <th>Subject</th>
+                                <th>Total</th>
+                                <th>Present</th>
+                                <th>Absent</th>
+                                <th>Attendance %</th>
+                                <th>Action</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for i in subjects %}
+                            <tr>
+                                <td>{{i.subject.name}}</td>
+                                <td>{{i.total}}</td>
+                                <td>{{i.present}}</td>
+                                <td>{{i.absent}}</td>
+                                <td>{{i.percentage}} %</td>
+                                <td>
+                                    <form action="" method="POST" enctype="multipart/form-data">
+                                        {% csrf_token %}
+                                        <input type="hidden" name="subject_id" value="{{i.subject.id}}">
+                                        <button type="submit" class="btn btn-sm btn-primary">View Details</button>
+                                    </form>
+                                </td>
+                            </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+{% endblock %}

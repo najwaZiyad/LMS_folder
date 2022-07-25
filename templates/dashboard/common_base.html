@@ -80,20 +80,6 @@
                 <h3>General</h3>
                 <ul class="nav side-menu">
                   <li><a href="/dashboard"><i class="fa fa-home"></i> Dashboard</a></li>
-                  <li><a><i class="fa fa-users"></i> Users <span class="fa fa-chevron-down"></span></a>
-                    <ul class="nav child_menu">
-                      <li><a href="/add-user">Add User</a></li>
-                      <li><a href="/view-user">View Users</a></li>
-                    </ul>
-                  </li>
-                  <li><a><i class="fa fa-book"></i> Subjects <span class="fa fa-chevron-down"></span></a>
-                    <ul class="nav child_menu">
-                      <li><a href="/add-subjects">Add Subject</a></li>
-                      <li><a href="/view-subjects">View Subjects</a></li>
-                    </ul>
-                  </li>
-                  <li><a href="/view-TeacherSubjectAssign"><i class="fa fa-book"></i> Teacher Subject Assign</a></li>
-                  <li><a href="/settings"><i class="fa fa-gears"></i> Settings</a></li>
                 </ul>
               </div>
 
@@ -133,7 +119,7 @@
                   </a>
                   <div class="dropdown-menu dropdown-usermenu pull-right" aria-labelledby="navbarDropdown">
 
-                      <a class="dropdown-item"  href="/settings">
+                      <a class="dropdown-item"  href="javascript:;">
                         <span>Settings</span>
                       </a>
                     <a class="dropdown-item"  href="/logout"><i class="fa fa-sign-out pull-right"></i> Log Out</a>
@@ -234,7 +220,6 @@
           }
         }
       }
-
       {% if messages %}
       {% for i in messages %}
       alert('{{i}}');

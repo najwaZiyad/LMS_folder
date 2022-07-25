@@ -17,7 +17,6 @@ urlpatterns = [
     path('add-subjects', AddSubjects),
     path('view-subjects', ViewSubjects),
     path('edit-subject/<int:id>', editSubjects),
-    path('delete-subjects/<int:subject_id>', DeleteSubjects),
 
     path('edit-timetable', AssignTimeTable),
     path('add-time-table', AddTimeTable),
@@ -35,9 +34,16 @@ urlpatterns = [
     path('select-subject', selectSubject),
     path('mark-attendance', markAttendance),
 
+    # Student
+    path('attendance-subject', attendanceSubject),
+    path('classes', studentClasses),
+
     path('get-subject', getSubject),
     path('get-teacher-subject', getTeacherSubject),
     path('get-classes', getClasses),
+    path('settings', Settings),
+    path('change-password', change_password),
+    path('upload-image', uploadImage),
 
     path('create-empty-timetable', createTimetable),
 ]

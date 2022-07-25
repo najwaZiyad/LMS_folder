@@ -23,8 +23,8 @@
                                 <td>{{i.cls}}</td>
                                 <td>{{i.zoom_link}}</td>
                                 <td>
-                                    <a href="/edit-Links/{{i.id}}" class="btn btn-sm btn-primary"  data-toggle="modal" data-target="#exampleModalCenter">Edit</a>
-                                    <a href="/delete-classLink/{{i.id}}" class="btn btn-danger" >delete</a>
+                                    <button class="btn btn-sm btn-primary"  data-toggle="modal" data-target="#edit_{{i.id}}">Edit</button>
+                                    <a href="/delete-classLink/{{i.id}}" class="btn btn-sm btn-danger" >Delete</a>
                                 </td>
                             </tr>
                             {% endfor %}
@@ -38,7 +38,8 @@
 
 
 <!-- Modal -->
-<div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+{% for i in links %}
+<div class="modal fade" id="edit_{{i.id}}" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
   <div class="modal-dialog modal-dialog-centered" role="document">
     <div class="modal-content">
       <div class="modal-header">
@@ -47,32 +48,38 @@
           <span aria-hidden="true">&times;</span>
         </button>
       </div>
-      <div class="modal-body">
-       <form>
-          <div class="form-row">
-            <div class="form-group col-md-6">
-              <label for="date">Date</label>
-              <input type="date"name="date" class="form-control" id="date" placeholder="">
+      <form action="" method="POST" enctype="multipart/form-data">
+         {% csrf_token %}
+         <input type="hidden" name="id" value="{{i.id}}">
+         <div class="modal-body">
+            <div class="row">
+                <div class="col-md-6 form-group">
+                    <label for="date_{{i.id}}">Date</label>
+                    <input type="text" value="{{i.date}}" id="date_{{i.id}}" disabled class="form-control">
+                </div>
+                <div class="col-md-6 form-group">
+                    <label for="time_{{i.id}}">Time</label>
+                    <input type="text" value="{{i.time}}" id="time_{{i.id}}" disabled class="form-control">
+                </div>
+                <div class="col-md-12 form-group">
+                    <label for="cls_{{i.id}}">Subject</label>
+                    <input type="text" value="{{i.cls}}" id="cls_{{i.id}}" disabled class="form-control">
+                </div>
+                <div class="col-md-12 form-group">
+                    <label for="zoom_link{{i.id}}">Link</label>
+                    <input type="text" name="zoom_link" value="{{i.zoom_link}}" id="zoom_link{{i.id}}" class="form-control">
+                </div>
             </div>
-            <div class="form-group col-md-6">
-              <label for="time">Time</label>
-              <input type="time" name="time" class="form-control" id="time" placeholder="">
-            </div>
-          </div>
-          <div class="form-group">
-            <label for="classSubject">Subject</label>
-            <input type="text" name="cls" class="form-control" id="classSubject" placeholder="">
-          </div>
-          <div class="form-group">
-            <label for="link">Zoom Link</label>
-            <input type="text" name="link" class="form-control" id="link" placeholder="">
-          </div>
-          <button type="submit" class="btn btn-primary">Submit</button>
-        </form>
-      </div>
+         </div>
+         <div class="modal-footer">
+            <button type="submit" class="btn btn-primary">Submit</button>
+            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+         </div>
+      </form>
     </div>
   </div>
 </div>
+{% endfor %}
 
 
 {% csrf_token %}

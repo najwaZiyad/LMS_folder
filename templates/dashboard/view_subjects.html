@@ -6,7 +6,7 @@
             <div class="card-body">
                 <div class="row">
                     <div class="col-md-12 mb-2" align="right">
-                        <button>Add New</button>
+                        <a href="/add-subjects" class="btn btn-success btn-sm">Add New</a>
                     </div>
                     <div class="col-md-12">
                         <table id="datatable" class="table table-striped" style="width:100%;">
@@ -22,8 +22,8 @@
                                 <tr>
                                     <td>{{subject.name}}</td>
                                     <td>{{subject.description}}</td>
-                                    <td><a href="/edit-subject/{{subject.id}}" class="btn btn-sm btn-primary">Edit</a>
-                                    <a href="/delete-subjects/{{subject.id}}" class="btn btn-danger" >delete</a>
+                                    <td>
+                                        <a href="/edit-subject/{{subject.id}}" class="btn btn-sm btn-primary">Edit</a>
                                     </td>
 
                                 </tr>
