@@ -6,25 +6,29 @@
             <div class="card-body">
                 <div class="row">
                     <div class="col-md-12 mb-2" align="right">
-                        <a href="/add-subjects" class="btn btn-success btn-sm">Add New</a>
+                        <a href="/add-subjects" class="btn btn-primary btn-sm"> إضافة مادة</a>
                     </div>
-                    <div class="col-md-12">
-                        <table id="datatable" class="table table-striped" style="width:100%;">
+                    <div class="col-md-12" >
+                        <table id="datatable" class="table table-striped text-center " style="width:100%;">
                             <thead>
                                 <tr>
-                                    <th>Subject Name</th>
-                                    <th>Description </th>
-                                    <th>Action</th>
+                                    <th>الإجراءات</th>
+                                    <th>وصف المادة </th>
+                                    <th>اسم المادة</th>
+
+
                                 </tr>
                             </thead>
                             <tbody>
                                 {% for subject in subjects %}
                                 <tr>
-                                    <td>{{subject.name}}</td>
-                                    <td>{{subject.description}}</td>
-                                    <td>
-                                        <a href="/edit-subject/{{subject.id}}" class="btn btn-sm btn-primary">Edit</a>
+                                     <td>
+                                        <a href="/edit-subject/{{subject.id}}" class="btn btn-sm btn-success glyphicon glyphicon-edit">تعديل</a>
                                     </td>
+                                    <td class="text-right">{{subject.description}}</td>
+                                    <td class="text-right">{{subject.name}}</td>
+
+
 
                                 </tr>
                                 {% endfor %}

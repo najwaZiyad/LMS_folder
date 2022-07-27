@@ -17,7 +17,7 @@
                             </thead>
                             <tbody>
                                 <tr>
-                                    <th scope="col">Saturday</th>
+                                    <th scope="col">السبت</th>
                                     {% for i in saturday %}
                                         {% if request.user.profile == i.teacher.profile %}
                                             {% if i.subject %}
@@ -30,7 +30,7 @@
                                                 {% if request.user.profile.role == 'teacher' %}
                                                 <td></td>
                                                 {% else %}
-                                                <td>Free</td>
+                                                <td>لا يوجد</td>
                                                 {% endif %}
                                             {% endif %}
                                         {% else %}
@@ -39,7 +39,7 @@
                                     {% endfor %}
                                 </tr>
                                 <tr>
-                                    <th scope="col">Sunday</th>
+                                    <th scope="col">الأحد</th>
                                     {% for i in sunday %}
                                         {% if request.user.profile == i.teacher.profile %}
                                             {% if i.subject %}
@@ -52,7 +52,7 @@
                                                 {% if request.user.profile.role == 'teacher' %}
                                                 <td></td>
                                                 {% else %}
-                                                <td>Free</td>
+                                                <td>لا يوجد</td>
                                                 {% endif %}
                                             {% endif %}
                                         {% else %}
@@ -61,7 +61,7 @@
                                     {% endfor %}
                                 </tr>
                                 <tr>
-                                    <th scope="col">Monday</th>
+                                    <th scope="col">الأثنين</th>
                                     {% for i in monday %}
                                         {% if request.user.profile == i.teacher.profile %}
                                             {% if i.subject %}
@@ -74,7 +74,7 @@
                                                 {% if request.user.profile.role == 'teacher' %}
                                                 <td></td>
                                                 {% else %}
-                                                <td>Free</td>
+                                                <td>لا يوجد</td>
                                                 {% endif %}
                                             {% endif %}
                                         {% else %}
@@ -83,7 +83,7 @@
                                     {% endfor %}
                                 </tr>
                                 <tr>
-                                    <th scope="col">Tuesday</th>
+                                    <th scope="col">الثلاثاء</th>
                                     {% for i in tuesday %}
                                         {% if request.user.profile == i.teacher.profile %}
                                             {% if i.subject %}
@@ -96,7 +96,7 @@
                                                 {% if request.user.profile.role == 'teacher' %}
                                                 <td></td>
                                                 {% else %}
-                                                <td>Free</td>
+                                                <td>لا يوجد</td>
                                                 {% endif %}
                                             {% endif %}
                                         {% else %}
@@ -105,7 +105,7 @@
                                     {% endfor %}
                                 </tr>
                                 <tr>
-                                    <th scope="col">Wednesday</th>
+                                    <th scope="col">الأربعاء</th>
                                     {% for i in wednesday %}
                                         {% if request.user.profile == i.teacher.profile %}
                                             {% if i.subject %}
@@ -118,7 +118,7 @@
                                                 {% if request.user.profile.role == 'teacher' %}
                                                 <td></td>
                                                 {% else %}
-                                                <td>Free</td>
+                                                <td>لا يوجد</td>
                                                 {% endif %}
                                             {% endif %}
                                         {% else %}
@@ -127,7 +127,7 @@
                                     {% endfor %}
                                 </tr>
                                 <tr>
-                                    <th scope="col">Thursday</th>
+                                    <th scope="col">الخميس</th>
                                     {% for i in thursday %}
                                         {% if request.user.profile == i.teacher.profile %}
                                             {% if i.subject %}
@@ -140,7 +140,7 @@
                                                 {% if request.user.profile.role == 'teacher' %}
                                                 <td></td>
                                                 {% else %}
-                                                <td>Free</td>
+                                                <td>لا يوجد</td>
                                                 {% endif %}
                                             {% endif %}
                                         {% else %}
@@ -149,7 +149,7 @@
                                     {% endfor %}
                                 </tr>
                                 <tr>
-                                    <th scope="col">Friday</th>
+                                    <th scope="col">الجمعة</th>
                                     {% for i in friday %}
                                         {% if request.user.profile == i.teacher.profile %}
                                             {% if i.subject %}

@@ -5,19 +5,19 @@
         <div class="card">
             <div class="card-body">
                 <div class="row">
-                    <table id="datatable" class="table table-striped" style="width:100%;">
+                    <table id="datatable" class="table table-striped text-center"  style="width:100%;">
                         <thead>
                             <tr>
-                                <th>Date</th>
-                                <th>Time</th>
-                                <th>Marked By</th>
-                                <th>Marked on</th>
-                                <th>Status</th>
+                                <th>اليوم</th>
+                                <th>التوقيت</th>
+                                <th>حُدد بواسطه..</th>
+                                <th>حُدد في</th>
+                                <th>الحالة</th>
                             </tr>
                         </thead>
                         <tbody>
                             {% for i in att %}
-                            <tr>
+                            <tr class="text-right">
                                 <td>{{i.date}}</td>
                                 <td>{{i.time}}</td>
                                 <td>{{i.teacher}}</td>

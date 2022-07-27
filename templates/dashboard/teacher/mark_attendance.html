@@ -11,8 +11,8 @@
                         <table id="datatable" class="table table-striped" style="width:100%;">
                             <thead>
                                 <tr>
-                                    <th>Student</th>
-                                    <th>Action</th>
+                                    <th>الطالب/ة</th>
+                                    <th>الإجراء</th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -22,9 +22,9 @@
                                     <td>
                                         <input type="hidden" name="student" value="{{i.student.id}}">
                                         <input type="radio" name="att_{{i.n}}" value="Present" id="att_{{i.n}}_yes">
-                                        <label for="att_{{i.n}}_yes">Present</label>
+                                        <label for="att_{{i.n}}_yes">حاضر/ه</label>
                                         <input type="radio" name="att_{{i.n}}" value="Absent" id="att_{{i.n}}_no">
-                                        <label for="att_{{i.n}}_no">Absent</label>
+                                        <label for="att_{{i.n}}_no">غائب/ه</label>
                                     </td>
                                 </tr>
                                 {% endfor %}
@@ -34,8 +34,8 @@
                         <table id="datatable" class="table table-striped" style="width:100%;">
                             <thead>
                                 <tr>
-                                    <th>Student marked</th>
-                                    <th>Action</th>
+                                    <th>تحديد الطالب/ة</th>
+                                    <th>الإجراء</th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -44,9 +44,9 @@
                                     <td>{{i.student}}</td>
                                     <td>
                                         <input type="radio" name="att_{{i.id}}" value="Present" id="att_{{i.id}}_yes" {% if i.status == 'Present' %}checked{% endif %}>
-                                        <label for="att_{{i.id}}_yes">Present</label>
+                                        <label for="att_{{i.id}}_yes">حاضر/ه</label>
                                         <input type="radio" name="att_{{i.id}}" value="Absent" id="att_{{i.id}}_no" {% if i.status == 'Absent' %}checked{% endif %}>
-                                        <label for="att_{{i.id}}_no">Absent</label>
+                                        <label for="att_{{i.id}}_no">غائب/ه</label>
                                     </td>
                                 </tr>
                                 {% endfor %}
@@ -55,7 +55,7 @@
                         {% endif %}
                     </div>
                     <div class="col-md-12 mt-3">
-                        <a href="/select-subject" class="btn btn-sm btn-success form-control">Back</a>
+                        <a href="/select-subject" class="btn btn-sm btn-success form-control">العودة</a>
                     </div>
                 </div>
             </div>

@@ -13,33 +13,33 @@
                             {% csrf_token %}
                             <div class="row">
                                 <div class="col-md-3 form-group">
-                                    <label for="password">Password
+                                    <label for="password">كلمة السر
                                     <small>(Leave blank if don't want to change)</small>
                                     </label>
                                     <input type="text" value="" id="password" name="password" class="form-control">
                                 </div>
                                 <div class="col-md-3 form-group">
-                                    <label for="name1">First Name <span class="required">*</span></label>
+                                    <label for="name1">الأسم الأول <span class="required">*</span></label>
                                     <input type="text" id="name1" value="{{profile.first_name}}" name="name1" class="form-control" required>
                                 </div>
                                 <div class="col-md-3 form-group">
-                                    <label for="name2">Second Name</label>
+                                    <label for="name2">الأسم الثاني</label>
                                     <input type="text" id="name2" value="{{profile.second_name}}" name="name2" class="form-control">
                                 </div>
                                 <div class="col-md-3 form-group">
-                                    <label for="name3">Third Name</label>
+                                    <label for="name3">الأسم الثالث</label>
                                     <input type="text" id="name3" value="{{profile.third_name}}" name="name3" class="form-control">
                                 </div>
                                 <div class="col-md-3 form-group">
-                                    <label for="name4">Last Name <span class="required">*</span></label>
+                                    <label for="name4">الأسم الأخير<span class="required">*</span></label>
                                     <input type="text" id="name4" value="{{profile.last_name}}" name="name4" class="form-control" required>
                                 </div>
                                 <div class="col-md-4 form-group">
-                                    <label for="address">Address <span class="required">*</span></label>
+                                    <label for="address">العنوان <span class="required">*</span></label>
                                     <textarea rows="4" id="address" name="address" class="form-control" required>{{profile.address}}</textarea>
                                 </div>
                                 <div class="col-md-12 form-group">
-                                    <button type="submit" class="btn btn-success form-control">Submit</button>
+                                    <button type="submit" class="btn btn-success form-control">إرسال</button>
                                 </div>
                             </div>
                         </form>

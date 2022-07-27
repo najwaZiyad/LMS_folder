@@ -55,7 +55,7 @@
         <div class="col-md-3 left_col">
           <div class="left_col scroll-view">
             <div class="navbar nav_title" style="border: 0;">
-              <a href="" class="site_title"><i class="fa fa-paw"></i> <span>Dhad LMS</span></a>
+              <a href="" class="site_title"><i class="fa fa-paw"></i> <span>منصة ضاد</span></a>
             </div>
 
             <div class="clearfix"></div>
@@ -66,7 +66,7 @@
                 <img src="media/{{request.user.profile.img}}" alt="..." class="img-circle profile_img">
               </div>
               <div class="profile_info">
-                <span>Welcome,</span>
+                <span>مرحبا,</span>
                 <h2>{{request.user.profile}}</h2>
               </div>
             </div>
@@ -77,23 +77,23 @@
             <!-- sidebar menu -->
             <div id="sidebar-menu" class="main_menu_side hidden-print main_menu">
               <div class="menu_section">
-                <h3>General</h3>
+                <h3>عام</h3>
                 <ul class="nav side-menu">
-                  <li><a href="/dashboard"><i class="fa fa-home"></i> Dashboard</a></li>
-                  <li><a><i class="fa fa-users"></i> Users <span class="fa fa-chevron-down"></span></a>
+                  <li><a href="/dashboard"><i class="fa fa-home"></i> لوحة التحكم</a></li>
+                  <li><a><i class="fa fa-users"></i> الأعضاء <span class="fa fa-chevron-down"></span></a>
                     <ul class="nav child_menu">
-                      <li><a href="/add-user">Add User</a></li>
-                      <li><a href="/view-user">View Users</a></li>
+                      <li><a href="/add-user">إضافة عضو</a></li>
+                      <li><a href="/view-user">عرض الأعضاء</a></li>
                     </ul>
                   </li>
-                  <li><a><i class="fa fa-book"></i> Subjects <span class="fa fa-chevron-down"></span></a>
+                  <li><a><i class="fa fa-book"></i> المواد <span class="fa fa-chevron-down"></span></a>
                     <ul class="nav child_menu">
-                      <li><a href="/add-subjects">Add Subject</a></li>
-                      <li><a href="/view-subjects">View Subjects</a></li>
+                      <li><a href="/add-subjects">إضافة مادة</a></li>
+                      <li><a href="/view-subjects">عرض المواد</a></li>
                     </ul>
                   </li>
-                  <li><a href="/view-TeacherSubjectAssign"><i class="fa fa-book"></i> Teacher Subject Assign</a></li>
-                  <li><a href="/settings"><i class="fa fa-gears"></i> Settings</a></li>
+                  <li><a href="/view-TeacherSubjectAssign"><i class="fa fa-book"></i> تعيين مادة لمعلم/ة</a></li>
+                  <li><a href="/settings"><i class="fa fa-gears"></i> التعديلات</a></li>
                 </ul>
               </div>
 
@@ -134,9 +134,9 @@
                   <div class="dropdown-menu dropdown-usermenu pull-right" aria-labelledby="navbarDropdown">
 
                       <a class="dropdown-item"  href="/settings">
-                        <span>Settings</span>
+                        <span>التعديلات</span>
                       </a>
-                    <a class="dropdown-item"  href="/logout"><i class="fa fa-sign-out pull-right"></i> Log Out</a>
+                    <a class="dropdown-item"  href="/logout"><i class="fa fa-sign-out pull-right"></i> تسجيل الخروج</a>
                   </div>
                 </li>
               </ul>

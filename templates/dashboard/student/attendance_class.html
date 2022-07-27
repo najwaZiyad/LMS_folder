@@ -5,32 +5,38 @@
         <div class="card">
             <div class="card-body">
                 <div class="row">
-                    <table id="datatable" class="table table-striped" style="width:100%;">
+                    <table id="datatable" class="table table-striped text-center" style="width:100%;">
                         <thead>
                             <tr>
-                                <th>Subject</th>
-                                <th>Total</th>
-                                <th>Present</th>
-                                <th>Absent</th>
-                                <th>Attendance %</th>
-                                <th>Action</th>
+                                <th>الإجراءات</th>
+                                <th>نسبة الحضور %</th>
+                                <th>الغياب</th>
+                                <th>الحضور</th>
+                                <th>الإجمالي</th>
+                                <th>المادة</th>
+
                             </tr>
                         </thead>
                         <tbody>
                             {% for i in subjects %}
-                            <tr>
-                                <td>{{i.subject.name}}</td>
-                                <td>{{i.total}}</td>
-                                <td>{{i.present}}</td>
-                                <td>{{i.absent}}</td>
-                                <td>{{i.percentage}} %</td>
+                            <tr class="text-right">
                                 <td>
                                     <form action="" method="POST" enctype="multipart/form-data">
                                         {% csrf_token %}
                                         <input type="hidden" name="subject_id" value="{{i.subject.id}}">
-                                        <button type="submit" class="btn btn-sm btn-primary">View Details</button>
+                                        <button type="submit" class="btn btn-sm btn-primary">عرض التفاصيل</button>
                                     </form>
                                 </td>
+                                <td>{{i.percentage}} %</td>
+                                <td>{{i.absent}}</td>
+                                <td>{{i.present}}</td>
+                                <td>{{i.total}}</td>
+                                <td>{{i.subject.name}}</td>
+
+
+
+
+
                             </tr>
                             {% endfor %}
                         </tbody>

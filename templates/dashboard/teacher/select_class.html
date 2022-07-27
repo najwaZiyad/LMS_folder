@@ -8,17 +8,17 @@
                     <table id="datatable" class="table table-striped" style="width:100%;">
                         <thead>
                             <tr>
-                                <th>Subject</th>
-                                <th>Action</th>
+                                <th>الإجراءات</th>
+                                <th>المادة</th>
                             </tr>
                         </thead>
                         <tbody>
                             {% for i in subjects %}
                             <tr>
-                                <td>{{i.subject}}</td>
                                 <td>
-                                    <button type="button" class="btn btn-sm btn-primary"  data-toggle="modal" data-target="#mark_{{i.id}}">Mark Attendance</button>
+                                    <button type="button" class="btn btn-sm btn-primary"  data-toggle="modal" data-target="#mark_{{i.id}}">تحديد الحضور</button>
                                 </td>
+                                <td>{{i.subject}}</td>
                             </tr>
                             {% endfor %}
                         </tbody>
@@ -36,7 +36,7 @@
   <div class="modal-dialog modal-dialog-centered" role="document">
     <div class="modal-content">
       <div class="modal-header">
-        <h5 class="modal-title" id="exampleModalLongTitle">Modal title</h5>
+        <h5 class="modal-title" id="exampleModalLongTitle">تعديل</h5>
         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
           <span aria-hidden="true">&times;</span>
         </button>
@@ -47,20 +47,20 @@
          <div class="modal-body">
             <div class="row">
                 <div class="col-md-6 form-group">
-                    <label for="date_{{i.id}}">Select Date <span class="required">*</span></label>
+                    <label for="date_{{i.id}}">حدد الوقت <span class="required">*</span></label>
                     <input type="date" name="date" id="date_{{i.id}}" required class="form-control">
                 </div>
                 <div class="col-md-6 form-group">
-                    <label for="time_{{i.id}}">Time <span class="required">*</span></label>
+                    <label for="time_{{i.id}}">الوقت <span class="required">*</span></label>
                     <select name="time" id="time_{{i.id}}" required class="form-control">
-                        <option value="" selected disabled>-- Select Date 1st --</option>
+                        <option value="" selected disabled>-- حدد الوقت --</option>
                     </select>
                 </div>
             </div>
          </div>
           <div class="modal-footer">
-            <button type="submit" class="btn btn-primary">Mark Attendance</button>
-            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+            <button type="submit" class="btn btn-primary">تحديد الحضور</button>
+            <button type="button" class="btn btn-secondary" data-dismiss="modal">إغلاق</button>
           </div>
       </form>
     </div>
@@ -84,7 +84,7 @@ $('#date_{{i.id}}').change(function(){
       },
       success: function(data) {
         var time = eval('(' + data + ')');
-        options = "<option value='' selected disabled>-- Please Select --</option>"
+        options = "<option value='' selected disabled>-- فضلا اختر --</option>"
         if (time.length == 0) {
             alert('You are not assigned to any class on selected date');
         }

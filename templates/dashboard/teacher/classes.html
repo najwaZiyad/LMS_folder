@@ -8,17 +8,17 @@
                     {% csrf_token %}
                     <div class="row">
                         <div class="col-md-4">
-                            <label for="date">Select Date</label>
+                            <label for="date">تحديد البيانات</label>
                             <input type="date" max="{{last_date}}" min="{{today}}" class="form-control" name="date" id="date" required>
                         </div>
                         <div class="col-md-4">
-                            <label for="time">Time</label>
+                            <label for="time">الوقت</label>
                             <select required class="form-control" name="time" id="time">
-                                <option value='' selected disabled>-- Please Select --</option>
+                                <option value='' selected disabled>-- فضلا اختر الوقت  --</option>
                             </select>
                         </div>
                         <div class="col-md-4">
-                            <label for="link">Zoom Link</label>
+                            <label for="link">رابط الزوم</label>
                             <input type="text" class="form-control" name="link" id="link" required>
                         </div>
                         <div class="col-md-12 mt-3">

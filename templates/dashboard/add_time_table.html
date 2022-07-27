@@ -16,21 +16,21 @@
                             <h6>7:00 - 7:30 {{current.0.subject.id}}</h6>
                         </div>
                         <div class="col-md-6 form-group">
-                            <label for="subject_1">Subject <span class="required">*</span></label>
+                            <label for="subject_1">المادة <span class="required">*</span></label>
                             <select id="subject_1" name="subject_1" class="form-control select2" required>
-                                <option value="" selected disabled>-- Please Select --</option>
+                                <option value="" selected disabled>-- فضلا اختر--</option>
                                 {% for i in subjects %}
                                 <option value="{{i.id}}" {% if current.0.subject.id == i.id %}selected{% endif %}>{{i.name}}</option>
                                 {% endfor %}
                                 {% if current.0.subject == None %}
-                                <option value="Free" selected>Free</option>
+                                <option value="Free" selected>لا يوجد</option>
                                 {% else %}
-                                <option value="Free">Free</option>
+                                <option value="Free">لا يوجد</option>
                                 {% endif %}
                             </select>
                         </div>
                         <div class="col-md-6 form-group">
-                            <label for="teacher_1">Teacher <span class="required">*</span></label>
+                            <label for="teacher_1">المعلم/ة <span class="required">*</span></label>
                             {% if current.0.subject == None %}
                             <select id="teacher_1" name="teacher_1" class="form-control select2">
                             {% else %}
@@ -39,7 +39,7 @@
                                 {% if current.0.teacher  %}
                                 <option value="{{current.0.teacher.id}}" selected>{{current.0.teacher.profile}}</option>
                                 {% else %}
-                                <option value="" selected disabled>-- Please Select --</option>
+                                <option value="" selected disabled>-- فضلا اختر --</option>
                                 {% endif %}
                             </select>
                         </div>
@@ -50,21 +50,21 @@
                             <h6>7:30 - 8:05</h6>
                         </div>
                         <div class="col-md-6 form-group">
-                            <label for="subject_2">Subject <span class="required">*</span></label>
+                            <label for="subject_2">المادة <span class="required">*</span></label>
                             <select id="subject_2" name="subject_2" class="form-control select2" required>
-                                <option value="" selected disabled>-- Please Select --</option>
+                                <option value="" selected disabled>-- فضلا اختر --</option>
                                 {% for i in subjects %}
                                 <option value="{{i.id}}" {% if current.1.subject.id == i.id %}selected{% endif %}>{{i.name}}</option>
                                 {% endfor %}
                                 {% if current.1.subject == None %}
-                                <option value="Free" selected>Free</option>
+                                <option value="Free" selected>لا يوجد</option>
                                 {% else %}
-                                <option value="Free">Free</option>
+                                <option value="Free">لا يوجد</option>
                                 {% endif %}
                             </select>
                         </div>
                         <div class="col-md-6 form-group">
-                            <label for="teacher_2">Teacher <span class="required">*</span></label>
+                            <label for="teacher_2">المعلم/ة <span class="required">*</span></label>
                             {% if current.1.subject == None %}
                             <select id="teacher_2" name="teacher_2" class="form-control select2">
                             {% else %}
@@ -73,7 +73,7 @@
                                 {% if current.1.teacher  %}
                                 <option value="{{current.1.teacher.id}}" selected>{{current.1.teacher.profile}}</option>
                                 {% else %}
-                                <option value="" selected disabled>-- Please Select --</option>
+                                <option value="" selected disabled>--فضلا اختر --</option>
                                 {% endif %}
                             </select>
                         </div>
@@ -84,21 +84,21 @@
                             <h6>8:05 - 8:45</h6>
                         </div>
                         <div class="col-md-6 form-group">
-                            <label for="subject_3">Subject <span class="required">*</span></label>
+                            <label for="subject_3">المادة <span class="required">*</span></label>
                             <select id="subject_3" name="subject_3" class="form-control select2" required>
-                                <option value="" selected disabled>-- Please Select --</option>
+                                <option value="" selected disabled>-- فضلا اختر--</option>
                                 {% for i in subjects %}
                                 <option value="{{i.id}}" {% if current.2.subject.id == i.id %}selected{% endif %}>{{i.name}}</option>
                                 {% endfor %}
                                 {% if current.2.subject == None %}
-                                <option value="Free" selected>Free</option>
+                                <option value="Free" selected>لا يوجد</option>
                                 {% else %}
-                                <option value="Free">Free</option>
+                                <option value="Free">لا يوجد</option>
                                 {% endif %}
                             </select>
                         </div>
                         <div class="col-md-6 form-group">
-                            <label for="teacher_3">Teacher <span class="required">*</span></label>
+                            <label for="teacher_3">المعلم/ة <span class="required">*</span></label>
                             {% if current.2.subject == None %}
                             <select id="teacher_3" name="teacher_3" class="form-control select2">
                             {% else %}
@@ -107,7 +107,7 @@
                                 {% if current.2.teacher  %}
                                 <option value="{{current.2.teacher.id}}" selected>{{current.2.teacher.profile}}</option>
                                 {% else %}
-                                <option value="" selected disabled>-- Please Select --</option>
+                                <option value="" selected disabled>-- فضلا اختر--</option>
                                 {% endif %}
                             </select>
                         </div>
@@ -118,21 +118,21 @@
                             <h6>8:45 - 9:00</h6>
                         </div>
                         <div class="col-md-6 form-group">
-                            <label for="subject_4">Subject <span class="required">*</span></label>
+                            <label for="subject_4">المادة <span class="required">*</span></label>
                             <select id="subject_4" name="subject_4" class="form-control select2" required>
-                                <option value="" selected disabled>-- Please Select --</option>
+                                <option value="" selected disabled>-- فضلا اختر --</option>
                                 {% for i in subjects %}
                                 <option value="{{i.id}}" {% if current.3.subject.id == i.id %}selected{% endif %}>{{i.name}}</option>
                                 {% endfor %}
                                 {% if current.3.subject == None %}
-                                <option value="Free" selected>Free</option>
+                                <option value="Free" selected>لا يوجد</option>
                                 {% else %}
-                                <option value="Free">Free</option>
+                                <option value="Free">لا يوجد</option>
                                 {% endif %}
                             </select>
                         </div>
                         <div class="col-md-6 form-group">
-                            <label for="teacher_4">Teacher <span class="required">*</span></label>
+                            <label for="teacher_4">المعلم/ة <span class="required">*</span></label>
                             {% if current.3.subject == None %}
                             <select id="teacher_4" name="teacher_4" class="form-control select2">
                             {% else %}
@@ -141,7 +141,7 @@
                                 {% if current.3.teacher  %}
                                 <option value="{{current.3.teacher.id}}" selected>{{current.3.teacher.profile}}</option>
                                 {% else %}
-                                <option value="" selected disabled>-- Please Select --</option>
+                                <option value="" selected disabled>-- فضلا اختر --</option>
                                 {% endif %}
                             </select>
                         </div>
@@ -152,21 +152,21 @@
                             <h6>9:00 - 9:15</h6>
                         </div>
                         <div class="col-md-6 form-group">
-                            <label for="subject_5">Subject <span class="required">*</span></label>
+                            <label for="subject_5">المادة <span class="required">*</span></label>
                             <select id="subject_5" name="subject_5" class="form-control select2" required>
-                                <option value="" selected disabled>-- Please Select --</option>
+                                <option value="" selected disabled>-- فضلا اختر --</option>
                                 {% for i in subjects %}
                                 <option value="{{i.id}}" {% if current.4.subject.id == i.id %}selected{% endif %}>{{i.name}}</option>
                                 {% endfor %}
                                 {% if current.4.subject == None %}
-                                <option value="Free" selected>Free</option>
+                                <option value="Free" selected>لا يوجد</option>
                                 {% else %}
-                                <option value="Free">Free</option>
+                                <option value="Free">لا يوجد</option>
                                 {% endif %}
                             </select>
                         </div>
                         <div class="col-md-6 form-group">
-                            <label for="teacher_5">Teacher <span class="required">*</span></label>
+                            <label for="teacher_5">المعلم/ة <span class="required">*</span></label>
                             {% if current.4.subject == None %}
                             <select id="teacher_5" name="teacher_5" class="form-control select2">
                             {% else %}
@@ -175,14 +175,14 @@
                                 {% if current.4.teacher  %}
                                 <option value="{{current.4.teacher.id}}" selected>{{current.4.teacher.profile}}</option>
                                 {% else %}
-                                <option value="" selected disabled>-- Please Select --</option>
+                                <option value="" selected disabled>-- فضلا اختر --</option>
                                 {% endif %}
                             </select>
                         </div>
                     </div>
 
                     <div class="col-md-12 pt-3 form-group">
-                        <button type="submit" class="btn btn-success form-control">Submit</button>
+                        <button type="submit" class="btn btn-success form-control">إرسال</button>
                     </div>
                 </form>
             </div>
@@ -209,7 +209,7 @@ $('#subject_{{j.n}}').change(function(){
           },
           success: function(data) {
             var teachers = eval('(' + data + ')');
-            options = "<option value='' selected disabled>-- Please Select --</option>"
+            options = "<option value='' selected disabled>--  فضلا اختر --</option>"
             for (var i = 0; i < teachers.length; i++ ){
                 options += "<option value="+teachers[i].id+">"+teachers[i].name+"</option>";
             }

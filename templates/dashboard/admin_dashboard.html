@@ -6,19 +6,26 @@
             <div class="card-body">
                 <div class="row">
                     <div class="col-md-12">
-                        <table border="1" style="width: 100%;">
+                        <table border="1" style="width: 100%;" class="table table-striped">
                             <thead>
                                 <tr class="text-center">
-                                    <th scope="row"></th>
+
+                                    <th scope="row">الإجراءات</th>
                                     {% for i in time %}
                                     <th scope="row">{{i}}</th>
                                     {% endfor %}
-                                    <th scope="row">Action</th>
+                                    <th scope="row">أيام الأسبوع</th>
                                 </tr>
                             </thead>
                             <tbody>
                                 <tr>
-                                    <th scope="col">Saturday</th>
+                                     <td>
+                                        <form action="/edit-timetable" method="POST" enctype="multipart/form-data">
+                                            {% csrf_token %}
+                                            <input type="hidden" name="day" value="Saturday">
+                                            <button class="btn btn-sm btn-success glyphicon glyphicon-edit">إضافة/تعديل</button>
+                                        </form>
+                                    </td>
                                     {% for i in saturday %}
                                     {% if i.subject %}
                                     <td align='center'>
@@ -27,19 +34,19 @@
                                         <strong>{{i.teacher}}</strong>
                                     </td>
                                     {% else %}
-                                    <td>Free</td>
+                                    <td>لا يوجد</td>
                                     {% endif %}
                                     {% endfor %}
-                                    <td>
-                                        <form action="/edit-timetable" method="POST" enctype="multipart/form-data">
-                                            {% csrf_token %}
-                                            <input type="hidden" name="day" value="Saturday">
-                                            <button class="btn btn-sm btn-success">Add/Edit</button>
-                                        </form>
-                                    </td>
+                                    <th scope="col">السبت</th>
                                 </tr>
                                 <tr>
-                                    <th scope="col">Sunday</th>
+                                      <td>
+                                        <form action="/edit-timetable" method="POST" enctype="multipart/form-data">
+                                            {% csrf_token %}
+                                            <input type="hidden" name="day" value="Sunday">
+                                            <button class="btn btn-sm btn-success glyphicon glyphicon-edit">إضافة/تعديل</button>
+                                        </form>
+                                    </td>
                                     {% for i in sunday %}
                                     {% if i.subject %}
                                     <td align='center'>
@@ -48,19 +55,19 @@
                                         <strong>{{i.teacher}}</strong>
                                     </td>
                                     {% else %}
-                                    <td>Free</td>
+                                    <td>لا يوجد</td>
                                     {% endif %}
                                     {% endfor %}
-                                    <td>
-                                        <form action="/edit-timetable" method="POST" enctype="multipart/form-data">
-                                            {% csrf_token %}
-                                            <input type="hidden" name="day" value="Sunday">
-                                            <button class="btn btn-sm btn-success">Add/Edit</button>
-                                        </form>
-                                    </td>
+                                   <th scope="col">الأحد</th>
                                 </tr>
                                 <tr>
-                                    <th scope="col">Monday</th>
+                                     <td>
+                                        <form action="/edit-timetable" method="POST" enctype="multipart/form-data">
+                                            {% csrf_token %}
+                                            <input type="hidden" name="day" value="Monday">
+                                            <button class="btn btn-sm btn-success glyphicon glyphicon-edit">إضافة/تعديل</button>
+                                        </form>
+                                    </td>
                                     {% for i in monday %}
                                     {% if i.subject %}
                                     <td align='center'>
@@ -69,19 +76,19 @@
                                         <strong>{{i.teacher}}</strong>
                                     </td>
                                     {% else %}
-                                    <td>Free</td>
+                                    <td>لايوجد</td>
                                     {% endif %}
                                     {% endfor %}
-                                    <td>
-                                        <form action="/edit-timetable" method="POST" enctype="multipart/form-data">
-                                            {% csrf_token %}
-                                            <input type="hidden" name="day" value="Monday">
-                                            <button class="btn btn-sm btn-success">Add/Edit</button>
-                                        </form>
-                                    </td>
+                                    <th scope="col">الأثنين</th>
                                 </tr>
                                 <tr>
-                                    <th scope="col">Tuesday</th>
+                                      <td>
+                                        <form action="/edit-timetable" method="POST" enctype="multipart/form-data">
+                                            {% csrf_token %}
+                                            <input type="hidden" name="day" value="Tuesday">
+                                            <button class="btn btn-sm btn-success glyphicon glyphicon-edit">إضافة/تعديل</button>
+                                        </form>
+                                    </td>
                                     {% for i in tuesday %}
                                     {% if i.subject %}
                                     <td align='center'>
@@ -90,19 +97,19 @@
                                         <strong>{{i.teacher}}</strong>
                                     </td>
                                     {% else %}
-                                    <td>Free</td>
+                                    <td>لا يوجد</td>
                                     {% endif %}
                                     {% endfor %}
-                                    <td>
-                                        <form action="/edit-timetable" method="POST" enctype="multipart/form-data">
-                                            {% csrf_token %}
-                                            <input type="hidden" name="day" value="Tuesday">
-                                            <button class="btn btn-sm btn-success">Add/Edit</button>
-                                        </form>
-                                    </td>
+                                  <th scope="col">الثلاثاء</th>
                                 </tr>
                                 <tr>
-                                    <th scope="col">Wednesday</th>
+                                      <td>
+                                        <form action="/edit-timetable" method="POST" enctype="multipart/form-data">
+                                            {% csrf_token %}
+                                            <input type="hidden" name="day" value="Wednesday">
+                                            <button class="btn btn-sm btn-success glyphicon glyphicon-edit">إضافة/تعديل</button>
+                                        </form>
+                                    </td>
                                     {% for i in wednesday %}
                                     {% if i.subject %}
                                     <td align='center'>
@@ -111,19 +118,20 @@
                                         <strong>{{i.teacher}}</strong>
                                     </td>
                                     {% else %}
-                                    <td>Free</td>
+                                    <td>لا يوجد</td>
                                     {% endif %}
                                     {% endfor %}
-                                    <td>
-                                        <form action="/edit-timetable" method="POST" enctype="multipart/form-data">
-                                            {% csrf_token %}
-                                            <input type="hidden" name="day" value="Wednesday">
-                                            <button class="btn btn-sm btn-success">Add/Edit</button>
-                                        </form>
-                                    </td>
+                                  <th scope="col">الأربعاء</th>
                                 </tr>
                                 <tr>
-                                    <th scope="col">Thursday</th>
+                                     <td>
+                                        <form action="/edit-timetable" method="POST" enctype="multipart/form-data">
+                                            {% csrf_token %}
+                                            <input type="hidden" name="day" value="Thursday">
+                                            <button class="btn btn-sm btn-success glyphicon glyphicon-edit">إضافة/تعديل</button>
+                                        </form>
+                                    </td>
+
                                     {% for i in thursday %}
                                     {% if i.subject %}
                                     <td align='center'>
@@ -132,19 +140,20 @@
                                         <strong>{{i.teacher}}</strong>
                                     </td>
                                     {% else %}
-                                    <td>Free</td>   
+                                    <td>لا يوجد</td>
                                     {% endif %}
                                     {% endfor %}
-                                    <td>
-                                        <form action="/edit-timetable" method="POST" enctype="multipart/form-data">
-                                            {% csrf_token %}
-                                            <input type="hidden" name="day" value="Thursday">
-                                            <button class="btn btn-sm btn-success">Add/Edit</button>
-                                        </form>
-                                    </td>
+                                    <th scope="col">الخميس</th>
                                 </tr>
                                 <tr>
-                                    <th scope="col">Friday</th>
+                                     <td>
+                                        <form action="/edit-timetable" method="POST" enctype="multipart/form-data">
+                                            {% csrf_token %}
+                                            <input type="hidden" name="day" value="Friday">
+                                            <button class="btn btn-sm btn-success glyphicon glyphicon-edit">إضافة/تعديل</button>
+                                        </form>
+                                    </td>
+
                                     {% for i in friday %}
                                     {% if i.subject %}
                                     <td align='center'>
@@ -153,16 +162,11 @@
                                         <strong>{{i.teacher}}</strong>
                                     </td>
                                     {% else %}
-                                    <td>Free</td>
+                                    <td>لا يوجد</td>
                                     {% endif %}
                                     {% endfor %}
-                                    <td>
-                                        <form action="/edit-timetable" method="POST" enctype="multipart/form-data">
-                                            {% csrf_token %}
-                                            <input type="hidden" name="day" value="Friday">
-                                            <button class="btn btn-sm btn-success">Add/Edit</button>
-                                        </form>
-                                    </td>
+                                     <th scope="col">الجمعة</th>
+
                                 </tr>
                             </tbody>
                         </table>

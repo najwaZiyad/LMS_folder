@@ -6,25 +6,27 @@
             <div class="card-body">
                 <div class="row">
                     <div align="right" class="col-md-12 mb-2">
-                        <button class="btn btn-primary" data-target="#assignSubjectForm" data-toggle="modal">Add New
+                        <button class="btn btn-primary" data-target="#assignSubjectForm" data-toggle="modal">إضافة
                         </button>
                     </div>
                     <div class="col-md-12">
-                        <table class="table table-striped" id="datatable" style="width:100%;">
+                        <table class="table table-striped text-center" id="datatable" style="width:100%;">
                             <thead>
                             <tr>
-                                <th>Subject Name</th>
-                                <th>Teacher Name</th>
-                                <th>Action</th>
+                                <th>الإجراءات</th>
+                                <th>اسم المعلم/ة</th>
+                                <th>اسم المادة</th>
+
                             </tr>
                             </thead>
                             <tbody>
                             {% for i in assignments %}
                             <tr>
-                                <td>{{i.subject}}</td>
-                                <td>{{i.teacher}}</td>
-                                <td><a class="btn btn-danger btn-sm" href="/delete-TeacherSubjectAssign/{{i.id}}">Delete</a>
+                                <td><a class="btn btn-danger btn-sm glyphicon glyphicon-trash" href="/delete-TeacherSubjectAssign/{{i.id}}">حذف</a>
                                 </td>
+                                <td class="text-right">{{i.teacher}}</td>
+                                <td class="text-right">{{i.subject}}</td>
+
                             </tr>
                             {% endfor %}
                             </tbody>
@@ -43,7 +45,7 @@
     <div class="modal-dialog modal-dialog-centered" role="document">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title" id="exampleModalLongTitle">Teacher Subject Assign </h5>
+                <h5 class="modal-title" id="exampleModalLongTitle">تعيين معلم/ة للمادة </h5>
                 <button aria-label="Close" class="close" data-dismiss="modal" type="button">
                     <span aria-hidden="true">&times;</span>
                 </button>
@@ -54,9 +56,9 @@
                     <table style="width:100%">
                         <tr>
                             <td>
-                                <label for="teacher">Teachers <span class="required">*</span></label>
+                                <label for="teacher">المعلمين/المعلمات <span class="required">*</span></label>
                                 <select class="form-control select2" id="teacher" name="teachers" required>
-                                    <option disabled selected value="">-- Please Select --</option>
+                                    <option disabled selected value="">-- فضلا اختر --</option>
                                     {% for i in teachers %}
                                     <option value="{{i.id}}">{{i.profile.first_name}}</option>
                                     {% endfor %}
@@ -82,8 +84,8 @@
 
                 </div>
                 <div class="modal-footer">
-                    <button class="btn btn-secondary" data-dismiss="modal" type="button">Close</button>
-                    <button class="btn btn-primary" type="submit">Submit</button>
+                    <button class="btn btn-secondary" data-dismiss="modal" type="button">إغلاق</button>
+                    <button class="btn btn-primary" type="submit">إرسال</button>
                 </div>
             </form>
         </div>

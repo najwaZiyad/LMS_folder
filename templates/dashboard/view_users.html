@@ -6,24 +6,28 @@
             <div class="card-body">
                 <div class="row">
                     <div class="col-md-12">
-                        <table id="datatable" class="table table-striped" style="width:100%;">
+                        <table id="datatable" class="table table-striped text-center" style="width:100%;">
                             <thead>
                                 <tr>
-                                    <th>Full Name</th>
-                                    <th>User Name</th>
-                                    <th>Role</th>
-                                    <th>Action</th>
+                                    <th>الإجراءات</th>
+                                    <th>الدور</th>
+                                    <th>اسم المستخدم</th>
+                                    <th>الأسم الكامل</th>
+
+
+
                                 </tr>
                             </thead>
                             <tbody>
                                 {% for i in profiles %}
                                 <tr>
-                                    <td>{{i.first_name}} {{i.second_name}} {{i.third_name}} {{i.last_name}} </td>
-                                    <td>{{i.user.username}}</td>
-                                    <td style="text-transform: capitalize;">{{i.role}}</td>
                                     <td>
-                                        <a href="/edit-user/{{i.id}}" class="btn btn-sm btn-primary">Edit</a>
+                                        <a href="/edit-user/{{i.id}}" class="btn btn-sm btn-success glyphicon glyphicon-edit">تعديل</a>
                                     </td>
+                                    <td style="text-transform: capitalize;" class="text-right">{{i.role}}</td>
+                                    <td class="text-right">{{i.user.username}}</td>
+                                    <td class="text-right">{{i.first_name}} {{i.second_name}} {{i.third_name}} {{i.last_name}} </td>
+
                                 </tr>
                                 {% endfor %}
                             </tbody>

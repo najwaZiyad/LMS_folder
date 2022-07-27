@@ -5,27 +5,29 @@
         <div class="card">
             <div class="card-body">
                 <div class="row">
-                    <table id="datatable" class="table table-striped" style="width:100%;">
+                    <table id="datatable" class="table table-striped text-center" style="width:100%;">
                         <thead>
                             <tr>
-                                <th>Date</th>
-                                <th>Time </th>
-                                <th>Subject</th>
-                                <th>Zoom Link</th>
-                                <th>Action</th>
+                                <th>الإجراءات</th>
+                                <th>رابط الزوم</th>
+                                <th>المادة</th>
+                                <th>التوقيت </th>
+                                <th>اليوم</th>
+
                             </tr>
                         </thead>
                         <tbody>
                             {% for i in links %}
                             <tr>
-                                <td>{{i.date}}</td>
-                                <td>{{i.time}}</td>
-                                <td>{{i.cls}}</td>
-                                <td>{{i.zoom_link}}</td>
-                                <td>
-                                    <button class="btn btn-sm btn-primary"  data-toggle="modal" data-target="#edit_{{i.id}}">Edit</button>
-                                    <a href="/delete-classLink/{{i.id}}" class="btn btn-sm btn-danger" >Delete</a>
+                                 <td>
+                                    <button class="btn btn-sm btn-success glyphicon glyphicon-edit"  data-toggle="modal" data-target="#edit_{{i.id}}">تعديل</button>
+                                    <a href="/delete-classLink/{{i.id}}" class="btn btn-sm btn-danger glyphicon glyphicon-trash" >حذف</a>
                                 </td>
+                                <td>{{i.zoom_link}}</td>
+                                <td class="text-right">{{i.cls}}</td>
+                                <td class="text-right">{{i.time}}</td>
+                                <td class="text-right">{{i.date}}</td>
+
                             </tr>
                             {% endfor %}
                         </tbody>
@@ -43,7 +45,7 @@
   <div class="modal-dialog modal-dialog-centered" role="document">
     <div class="modal-content">
       <div class="modal-header">
-        <h5 class="modal-title" id="exampleModalLongTitle">Modal title</h5>
+        <h5 class="modal-title" id="exampleModalLongTitle">تعديل</h5>
         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
           <span aria-hidden="true">&times;</span>
         </button>
@@ -53,28 +55,30 @@
          <input type="hidden" name="id" value="{{i.id}}">
          <div class="modal-body">
             <div class="row">
-                <div class="col-md-6 form-group">
-                    <label for="date_{{i.id}}">Date</label>
-                    <input type="text" value="{{i.date}}" id="date_{{i.id}}" disabled class="form-control">
-                </div>
-                <div class="col-md-6 form-group">
-                    <label for="time_{{i.id}}">Time</label>
-                    <input type="text" value="{{i.time}}" id="time_{{i.id}}" disabled class="form-control">
+                <div class="modal-footer">
+                    <button type="submit" class="btn btn-primary">إرسال</button>
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">إغلاق</button>
                 </div>
                 <div class="col-md-12 form-group">
-                    <label for="cls_{{i.id}}">Subject</label>
-                    <input type="text" value="{{i.cls}}" id="cls_{{i.id}}" disabled class="form-control">
-                </div>
-                <div class="col-md-12 form-group">
-                    <label for="zoom_link{{i.id}}">Link</label>
+                    <label for="zoom_link{{i.id}}">الرابط</label>
                     <input type="text" name="zoom_link" value="{{i.zoom_link}}" id="zoom_link{{i.id}}" class="form-control">
                 </div>
+                <div class="col-md-12 form-group">
+                    <label for="cls_{{i.id}}">المادة</label>
+                    <input type="text" value="{{i.cls}}" id="cls_{{i.id}}" disabled class="form-control">
+                </div>
+                <div class="col-md-6 form-group">
+                    <label for="time_{{i.id}}">التوقت</label>
+                    <input type="text" value="{{i.time}}" id="time_{{i.id}}" disabled class="form-control">
+                </div>
+                <div class="col-md-6 form-group">
+                    <label for="date_{{i.id}}">اليوم</label>
+                    <input type="text" value="{{i.date}}" id="date_{{i.id}}" disabled class="form-control">
+                </div>
+
             </div>
          </div>
-         <div class="modal-footer">
-            <button type="submit" class="btn btn-primary">Submit</button>
-            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-         </div>
+
       </form>
     </div>
   </div>
