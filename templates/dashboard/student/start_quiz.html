@@ -1,0 +1,49 @@
+{% extends 'dashboard/student/base.html' %}
+{% block main %}
+<div class="row">
+    <div class="col-md-12">
+        <div class="card">
+            <div class="card-body">
+                <form action="/submit-quiz" method="POST" enctype="multipart/form-data">
+                    {% csrf_token %}
+                    {% for i in questions %}
+                    <div class="row border-bottom pb-2 mb-2">
+                       <div class="col-md-12">
+                           <h4>{{i.q.question}}</h4>
+                       </div>
+                       <div class="col-md-6">
+                           <input type="radio" required id="question_1_{{i.n}}" name="question_{{i.n}}" value="{{i.q.option_1}}">
+                           <label for="question_1_{{i.n}}">{{i.q.option_1}}</label>
+                       </div>
+                       <div class="col-md-6">
+                           <input type="radio" id="question_2_{{i.n}}" name="question_{{i.n}}" value="{{i.q.option_2}}">
+                           <label for="question_2_{{i.n}}">{{i.q.option_2}}</label>
+                       </div>
+                       <div class="col-md-6">
+                           <input type="radio" id="question_3_{{i.n}}" name="question_{{i.n}}" value="{{i.q.option_3}}">
+                           <label for="question_3_{{i.n}}">{{i.q.option_3}}</label>
+                       </div>
+                       <div class="col-md-6">
+                           <input type="radio" id="question_4_{{i.n}}" name="question_{{i.n}}" value="{{i.q.option_4}}">
+                           <label for="question_4_{{i.n}}">{{i.q.option_4}}</label>
+                       </div>
+                    </div>
+                    <input type="hidden" name="id_{{i.n}}" value="{{i.q.id}}">
+                    {% endfor %}
+                    <div class="row">
+                        <div class="col-md-12">
+                            <button type="submit" class="btn btn-success form-control">Submit</button>
+                        </div>
+                    </div>
+                    <input type="hidden" name="num" value="{{n}}">
+                    <input type="hidden" name="quiz_id" value="{{quiz.id}}">
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block script %}
+
+{% endblock %}

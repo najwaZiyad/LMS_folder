@@ -38,7 +38,8 @@ class Profile(models.Model):
     role = models.CharField(max_length=150)
 
     def __str__(self):
-        return str(self.first_name)+" "+str(self.second_name)+" "+str(self.third_name)+" "+str(self.last_name)
+        return str(self.first_name) + " " + str(self.second_name) + " " + str(self.third_name) + " " + str(
+            self.last_name)
 
 
 class Teacher(models.Model):
@@ -48,7 +49,8 @@ class Teacher(models.Model):
     subject = models.TextField(null=True, blank=True)
 
     def __str__(self):
-        return str(self.profile.first_name)+" "+str(self.profile.second_name)+" "+str(self.profile.third_name)+" "+str(self.profile.last_name)
+        return str(self.profile.first_name) + " " + str(self.profile.second_name) + " " + str(
+            self.profile.third_name) + " " + str(self.profile.last_name)
 
 
 class Student(models.Model):
@@ -56,7 +58,9 @@ class Student(models.Model):
     student_id = models.CharField(max_length=50)
 
     def __str__(self):
-        return str(self.profile.first_name)+" "+str(self.profile.second_name)+" "+str(self.profile.third_name)+" "+str(self.profile.last_name)
+        return str(self.profile.first_name) + " " + str(self.profile.second_name) + " " + str(
+            self.profile.third_name) + " " + str(self.profile.last_name)
+
 
 class Subjects(models.Model):
     name = models.CharField(max_length=150)
@@ -100,3 +104,42 @@ class Attendance(models.Model):
     subject = models.CharField(max_length=150)
     subject_id = models.CharField(max_length=150, null=True, blank=True)
     status = models.CharField(max_length=100)
+
+
+# Assignment / Quiz
+class Quiz(models.Model):
+    created_date = models.DateField()
+    start_date = models.DateField()
+    end_date = models.DateField()
+    teacher = models.CharField(max_length=200, null=True)
+    teacher_id = models.CharField(max_length=50, null=True)
+    subject = models.CharField(max_length=200)
+    subject_id = models.CharField(max_length=20)
+
+
+class QuizQuestion(models.Model):
+    quiz = models.ForeignKey(Quiz, on_delete=models.CASCADE)
+    question = models.TextField()
+    answer = models.TextField()
+    option_1 = models.TextField()
+    option_2 = models.TextField()
+    option_3 = models.TextField(null=True, blank=True)
+    option_4 = models.TextField(null=True, blank=True)
+    score = models.CharField(max_length=20)
+
+
+class QuizStudent(models.Model):
+    student = models.CharField(max_length=150)
+    student_id = models.CharField(max_length=50)
+    subject = models.CharField(max_length=150)
+    subject_id = models.CharField(max_length=20)
+    total_score = models.CharField(max_length=50)
+    obtain_score = models.CharField(max_length=50)
+    date = models.DateField(null=True, blank=True)
+
+
+class QuizAnswers(models.Model):
+    question_id = models.CharField(max_length=50)
+    quiz_student = models.CharField(max_length=50)
+    answer = models.TextField()
+    correct = models.BooleanField()

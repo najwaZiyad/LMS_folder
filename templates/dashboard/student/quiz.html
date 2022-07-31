@@ -1,0 +1,45 @@
+{% extends 'dashboard/student/base.html' %}
+{% block main %}
+<div class="row">
+    <div class="col-md-12">
+        <div class="card">
+            <div class="card-body">
+                <div class="row">
+                    <div class="col-md-12">
+                        <table id="datatable" class="table table-striped text-center" style="width:100%;">
+                            <thead>
+                                <tr>
+                                    <th>Action</th>
+                                    <th>Subject</th>
+                                    <th>Start Date</th>
+                                    <th>Last By</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {% for i in quiz_subjects %}
+                                <tr>
+                                    <td>
+                                        <form action="/start-quiz" method="POST" enctype="multipart/form-data">
+                                            {% csrf_token %}
+                                            <input type="hidden" name="id" value="{{i.id}}">
+                                            <button type="submit" class="btn btn-sm btn-success">Take Quiz</button>
+                                        </form>
+                                    </td>
+                                    <td>{{i.subject}}</td>
+                                    <td class="text-right">{{i.start_date}}</td>
+                                    <td class="text-right">{{i.end_date}}</td>
+                                </tr>
+                                {% endfor %}
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block script %}
+
+{% endblock %}

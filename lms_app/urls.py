@@ -33,10 +33,18 @@ urlpatterns = [
     path('delete-classLink/<int:i_id>', DeleteClassLink),
     path('select-subject', selectSubject),
     path('mark-attendance', markAttendance),
+    path('quiz', quizTeacher),
+    path('view-results', viewResults),
+    path('question/<int:id>', quizQuestion),
+    path('edit-question/<int:id>', quizeditQuestion),
+    path('delete-question/<int:id>', quizDeleteQuestion),
 
     # Student
     path('attendance-subject', attendanceSubject),
     path('classes', studentClasses),
+    path('select-quiz', quizStudent),
+    path('start-quiz', quizStartStudent),
+    path('submit-quiz', quizSubmit),
 
     path('get-subject', getSubject),
     path('get-teacher-subject', getTeacherSubject),

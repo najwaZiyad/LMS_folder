@@ -41,6 +41,20 @@ class TeacherTimeTabelSearch(admin.ModelAdmin):
 class ClassesSearch(admin.ModelAdmin):
     list_display = ['date', 'time', 'cls', 'zoom_link']
 
+
+class QuizSearch(admin.ModelAdmin):
+    list_display = ['created_date', 'start_date', 'end_date', 'subject']
+
+
+class QuizQuestionSearch(admin.ModelAdmin):
+    list_display = ['question', 'answer', 'option_1', 'option_2', 'option_3', 'option_4', 'score']
+
+class QuizStudentSearch(admin.ModelAdmin):
+    list_display = ['student', 'subject', 'total_score', 'obtain_score']
+
+class QuizAnswersSearch(admin.ModelAdmin):
+    list_display = ['question_id', 'quiz_student', 'answer', 'correct']
+
 admin.site.register(AutoUsername, UsernameSearch)
 admin.site.register(Profile, ProfileSearch)
 admin.site.register(Subjects, SubjectSearch)
@@ -50,3 +64,7 @@ admin.site.register(TimeTabel, TeacherTimeTabelSearch)
 admin.site.register(Classes, ClassesSearch)
 admin.site.register(Student, StudentSearch)
 admin.site.register(Attendance, AttendanceSearch)
+admin.site.register(Quiz, QuizSearch)
+admin.site.register(QuizQuestion, QuizQuestionSearch)
+admin.site.register(QuizStudent, QuizStudentSearch)
+admin.site.register(QuizAnswers, QuizAnswersSearch)

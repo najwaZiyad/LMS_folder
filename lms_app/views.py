@@ -58,16 +58,24 @@ def DashboardRedirect(request):
 def AdminDashboard(request):
     role = request.user.profile.role
     if role == 'admin':
-        time = []
+        old_time = []
         for i in time_slots:
-            time.append(i[0])
-        saturday = TimeTabel.objects.filter(day='Saturday').order_by('time')
-        sunday = TimeTabel.objects.filter(day='Sunday').order_by('time')
-        monday = TimeTabel.objects.filter(day='Monday').order_by('time')
-        tuesday = TimeTabel.objects.filter(day='Tuesday').order_by('time')
-        wednesday = TimeTabel.objects.filter(day='Wednesday').order_by('time')
-        thursday = TimeTabel.objects.filter(day='Thursday').order_by('time')
-        friday = TimeTabel.objects.filter(day='Friday').order_by('time')
+            old_time.append(i[0])
+        time = []
+        a = 0
+        n = len(old_time) - 1
+        while a < len(old_time):
+            a += 1
+            time.append(old_time[n])
+            n -= 1
+
+        saturday = TimeTabel.objects.filter(day='Saturday').order_by('-time')
+        sunday = TimeTabel.objects.filter(day='Sunday').order_by('-time')
+        monday = TimeTabel.objects.filter(day='Monday').order_by('-time')
+        tuesday = TimeTabel.objects.filter(day='Tuesday').order_by('-time')
+        wednesday = TimeTabel.objects.filter(day='Wednesday').order_by('-time')
+        thursday = TimeTabel.objects.filter(day='Thursday').order_by('-time')
+        friday = TimeTabel.objects.filter(day='Friday').order_by('-time')
         data = {'saturday': saturday, 'sunday': sunday, 'time': time, 'monday': monday, 'tuesday': tuesday,
                 'wednesday': wednesday, 'thursday': thursday, 'friday': friday}
         return render(request, 'dashboard/admin_dashboard.html', data)
@@ -81,16 +89,23 @@ def AdminDashboard(request):
 def StudentDashboard(request):
     role = request.user.profile.role
     if role == 'student':
-        time = []
+        old_time = []
         for i in time_slots:
-            time.append(i[0])
-        saturday = TimeTabel.objects.filter(day='Saturday').order_by('time')
-        sunday = TimeTabel.objects.filter(day='Sunday').order_by('time')
-        monday = TimeTabel.objects.filter(day='Monday').order_by('time')
-        tuesday = TimeTabel.objects.filter(day='Tuesday').order_by('time')
-        wednesday = TimeTabel.objects.filter(day='Wednesday').order_by('time')
-        thursday = TimeTabel.objects.filter(day='Thursday').order_by('time')
-        friday = TimeTabel.objects.filter(day='Friday').order_by('time')
+            old_time.append(i[0])
+        time = []
+        a = 0
+        n = len(old_time) - 1
+        while a < len(old_time):
+            a += 1
+            time.append(old_time[n])
+            n -= 1
+        saturday = TimeTabel.objects.filter(day='Saturday').order_by('-time')
+        sunday = TimeTabel.objects.filter(day='Sunday').order_by('-time')
+        monday = TimeTabel.objects.filter(day='Monday').order_by('-time')
+        tuesday = TimeTabel.objects.filter(day='Tuesday').order_by('-time')
+        wednesday = TimeTabel.objects.filter(day='Wednesday').order_by('-time')
+        thursday = TimeTabel.objects.filter(day='Thursday').order_by('-time')
+        friday = TimeTabel.objects.filter(day='Friday').order_by('-time')
         data = {'saturday': saturday, 'sunday': sunday, 'time': time, 'monday': monday, 'tuesday': tuesday,
                 'wednesday': wednesday, 'thursday': thursday, 'friday': friday}
         return render(request, 'dashboard/student/dashboard.html', data)
@@ -103,16 +118,23 @@ def StudentDashboard(request):
 def TeacherDashboard(request):
     role = request.user.profile.role
     if role == 'teacher':
-        time = []
+        old_time = []
         for i in time_slots:
-            time.append(i[0])
-        saturday = TimeTabel.objects.filter(day='Saturday').order_by('time')
-        sunday = TimeTabel.objects.filter(day='Sunday').order_by('time')
-        monday = TimeTabel.objects.filter(day='Monday').order_by('time')
-        tuesday = TimeTabel.objects.filter(day='Tuesday').order_by('time')
-        wednesday = TimeTabel.objects.filter(day='Wednesday').order_by('time')
-        thursday = TimeTabel.objects.filter(day='Thursday').order_by('time')
-        friday = TimeTabel.objects.filter(day='Friday').order_by('time')
+            old_time.append(i[0])
+        time = []
+        a = 0
+        n = len(old_time) - 1
+        while a < len(old_time):
+            a += 1
+            time.append(old_time[n])
+            n -= 1
+        saturday = TimeTabel.objects.filter(day='Saturday').order_by('-time')
+        sunday = TimeTabel.objects.filter(day='Sunday').order_by('-time')
+        monday = TimeTabel.objects.filter(day='Monday').order_by('-time')
+        tuesday = TimeTabel.objects.filter(day='Tuesday').order_by('-time')
+        wednesday = TimeTabel.objects.filter(day='Wednesday').order_by('-time')
+        thursday = TimeTabel.objects.filter(day='Thursday').order_by('-time')
+        friday = TimeTabel.objects.filter(day='Friday').order_by('-time')
         data = {'saturday': saturday, 'sunday': sunday, 'time': time, 'monday': monday, 'tuesday': tuesday,
                 'wednesday': wednesday, 'thursday': thursday, 'friday': friday}
         return render(request, 'dashboard/teacher/dashboard.html', data)
@@ -140,7 +162,10 @@ def attendanceSubject(request):
                 dic['absent'] = Attendance.objects.filter(subject_id=i.id, student_id=student_id, status='Absent').count()
                 dic['present'] = Attendance.objects.filter(subject_id=i.id, student_id=student_id, status='Present').count()
                 dic['total'] = Attendance.objects.filter(subject_id=i.id, student_id=student_id ).count()
-                dic['percentage'] = dic['present'] / dic['total'] * 100
+                if dic['total'] > 0:
+                    dic['percentage'] = dic['present'] / dic['total'] * 100
+                else:
+                    dic['percentage'] = '-'
                 subjects.append(dic)
             data = {'subjects': subjects}
             return render(request, 'dashboard/student/attendance_class.html', data)
@@ -528,6 +553,216 @@ def DeleteClassLink(request, i_id):
         messages.warning(request, 'Unauthorized Access!')
         return redirect('/dashboard')
 
+@login_required
+def quizStudent(request):
+    role = request.user.profile.role
+    if role == 'student':
+        student = request.user.profile.student
+        try:
+            done = QuizStudent.objects.get(student_id=student.student_id)
+            quiz_subjects = Quiz.objects.filter(
+                start_date__lte=date.today(), end_date__gte=date.today()
+            ).exclude(subject_id=done.subject_id)
+        except QuizStudent.DoesNotExist:
+            quiz_subjects = Quiz.objects.filter(
+                start_date__lte=date.today(), end_date__gte=date.today()
+            )
+        data = {'quiz_subjects': quiz_subjects, }
+        return render(request, 'dashboard/student/quiz.html', data)
+    else:
+        messages.warning(request, 'Unauthorized Access!')
+        return redirect('/dashboard')
+
+@login_required
+def quizStartStudent(request):
+    role = request.user.profile.role
+    if role == 'student':
+        if request.method == "POST":
+            id = request.POST['id']
+            quiz = Quiz.objects.get(id=id)
+            n = 0
+            questions = QuizQuestion.objects.filter(quiz=quiz)
+            q = []
+            for i in questions:
+                n += 1
+                dic = {}
+                dic['n'] = n
+                dic['q'] = i
+                q.append(dic)
+            data = {'questions': q, 'n': n, 'quiz': quiz}
+            return render(request, 'dashboard/student/start_quiz.html', data)
+        else:
+            messages.warning(request, 'Bad Request!')
+            return redirect('/dashboard')
+    else:
+        messages.warning(request, 'Unauthorized Access!')
+        return redirect('/dashboard')
+
+
+@login_required
+def quizSubmit(request):
+    role = request.user.profile.role
+    if role == 'student':
+        student = request.user.profile.student
+        if request.method == "POST":
+            num = int(request.POST['num'])
+            quiz_id = int(request.POST['quiz_id'])
+            quiz = Quiz.objects.get(id=quiz_id)
+            obtain = 0
+            total = 0
+            for i in range(1, num+1):
+                id = request.POST['id_'+str(i)]
+                answer = request.POST['question_'+str(i)]
+                question = QuizQuestion.objects.get(id=id)
+                if answer == question.answer:
+                    obtain += int(question.score)
+                    total += int(question.score)
+                    correct = True
+                else:
+                    total += int(question.score)
+                    correct = False
+                QuizAnswers.objects.create(
+                    question_id=id, quiz_student=student.student_id, answer=answer,
+                    correct=correct
+                )
+            QuizStudent.objects.create(
+                student=student, student_id=student.student_id, subject=quiz.subject,
+                subject_id=quiz.subject_id, total_score=total, obtain_score=obtain,
+                date=date.today()
+            )
+            messages.info(request, 'Your Responses have been captured Successfully!')
+            return redirect('/dashboard')
+    else:
+        messages.warning(request, 'Unauthorized Access!')
+        return redirect('/dashboard')
+
+
+
+@login_required
+def quizTeacher(request):
+    role = request.user.profile.role
+    if role == 'teacher':
+        profile = request.user.profile
+        if request.method == "POST":
+            subject_id = request.POST['subject']
+            start = request.POST['start']
+            end = request.POST['end']
+            subject = Subjects.objects.get(id=subject_id).name
+            try:
+                Quiz.objects.get(subject_id=subject_id)
+                messages.info(request, 'Sorry quiz for '+subject+' is already created!')
+                return redirect('/quiz')
+            except Quiz.DoesNotExist:
+                Quiz.objects.create(
+                    subject_id=subject_id, subject=subject, created_date=date.today(),
+                    start_date=start, end_date=end, teacher=profile, teacher_id=profile.teacher.teacher_id,
+                )
+                messages.info(request, 'Quiz for '+subject+' Created Successfully!')
+                return redirect('/quiz')
+
+        else:
+            subjects = TeacherSubjectAssign.objects.filter(teacher=profile.teacher)
+            subject = []
+            for i in subjects:
+                subject.append(i.subject.id)
+            quiz_subjects = Quiz.objects.filter(subject_id__in=subject)
+            data = {'quiz_subjects': quiz_subjects, 'subjects': subjects}
+            return render(request, 'dashboard/teacher/quiz.html', data)
+    else:
+        messages.warning(request, 'Unauthorized Access!')
+        return redirect('/dashboard')
+
+@login_required
+def viewResults(request):
+    role = request.user.profile.role
+    if role == 'teacher':
+        profile = request.user.profile
+        subjects = TeacherSubjectAssign.objects.filter(teacher=profile.teacher)
+        results = []
+        for i in subjects:
+            print(i.subject.id, 'i.subject.id')
+            subject_id = i.subject.id
+            result = QuizStudent.objects.filter(subject_id=subject_id)
+            print(result, 'result')
+            results.append(result)
+
+        print(results[0][0], 'results')
+        data = {'results': results}
+        return render(request, 'dashboard/teacher/results.html', data)
+
+@login_required
+def quizQuestion(request, id):
+    role = request.user.profile.role
+    if role == 'teacher':
+        profile = request.user.profile
+        if request.method == "POST":
+            quiz = Quiz.objects.get(id=id)
+            question = request.POST['question']
+            option1 = request.POST['option1']
+            option2 = request.POST['option2']
+            option3 = request.POST.get('option3')
+            option4 = request.POST.get('option4')
+            answer = request.POST['answer']
+            score = request.POST['score']
+            QuizQuestion.objects.create(
+                quiz=quiz, question=question, answer=answer, option_1=option1,
+                option_2=option2, option_3=option3, option_4=option4, score=score
+            )
+            return redirect('/question/'+str(id))
+
+        else:
+            quiz = Quiz.objects.get(id=id)
+            questions = QuizQuestion.objects.filter(quiz=quiz)
+            data = {'questions': questions, 'quiz': quiz}
+            return render(request, 'dashboard/teacher/question.html', data)
+    else:
+        messages.warning(request, 'Unauthorized Access!')
+        return redirect('/dashboard')
+
+@login_required
+def quizeditQuestion(request, id):
+    role = request.user.profile.role
+    if role == 'teacher':
+        profile = request.user.profile
+        if request.method == "POST":
+            quiz = request.POST['quiz']
+            q = QuizQuestion.objects.get(id=id)
+            teacher = q.quiz.teacher_id
+            if teacher == profile.teacher.teacher_id:
+                question = request.POST['question']
+                option1 = request.POST['option1']
+                option2 = request.POST['option2']
+                option3 = request.POST.get('option3')
+                option4 = request.POST.get('option4')
+                answer = request.POST['answer']
+                score = request.POST['score']
+                q.question = question
+                q.option_1 = option1
+                q.option_2 = option2
+                q.option_3 = option3
+                q.option_4 = option4
+                q.answer = answer
+                q.score = score
+                q.save()
+                return redirect('/question/'+str(quiz))
+            else:
+                messages.warning(request, 'You are not authorized to delete this question!')
+                return redirect('/question/'+str(quiz))
+
+@login_required
+def quizDeleteQuestion(request, id):
+    role = request.user.profile.role
+    if role == 'teacher':
+        profile = request.user.profile
+        q = QuizQuestion.objects.get(id=id)
+        teacher = q.quiz.teacher_id
+        quiz = q.quiz.id
+        if teacher == profile.teacher.teacher_id:
+            q.delete()
+            return redirect('/question/'+str(quiz))
+        else:
+            messages.warning(request, 'You are not authorized to delete this question!')
+            return redirect('/question/'+str(quiz))
 
 @login_required
 def selectSubject(request):
@@ -602,6 +837,8 @@ def markAttendance(request):
                 teacher_id=profile.teacher.teacher_id, status=status, marked_on=datetime.now()
             )
         return HttpResponse('Success')
+
+
 
 
 @login_required

@@ -55,10 +55,6 @@
          <input type="hidden" name="id" value="{{i.id}}">
          <div class="modal-body">
             <div class="row">
-                <div class="modal-footer">
-                    <button type="submit" class="btn btn-primary">إرسال</button>
-                    <button type="button" class="btn btn-secondary" data-dismiss="modal">إغلاق</button>
-                </div>
                 <div class="col-md-12 form-group">
                     <label for="zoom_link{{i.id}}">الرابط</label>
                     <input type="text" name="zoom_link" value="{{i.zoom_link}}" id="zoom_link{{i.id}}" class="form-control">
@@ -79,6 +75,10 @@
             </div>
          </div>
 
+        <div class="modal-footer">
+            <button type="submit" class="btn btn-primary">إرسال</button>
+            <button type="button" class="btn btn-secondary" data-dismiss="modal">إغلاق</button>
+        </div>
       </form>
     </div>
   </div>
