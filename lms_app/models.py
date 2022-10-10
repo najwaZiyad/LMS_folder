@@ -143,3 +143,11 @@ class QuizAnswers(models.Model):
     quiz_student = models.CharField(max_length=50)
     answer = models.TextField()
     correct = models.BooleanField()
+
+
+class FrontEndData(models.Model):
+    img = models.ImageField(upload_to='banner', default='banner/banner.png')
+    num1 = models.CharField(max_length=50)
+    num2 = models.CharField(max_length=50)
+    num3 = models.CharField(max_length=50)
+    num4 = models.CharField(max_length=50)

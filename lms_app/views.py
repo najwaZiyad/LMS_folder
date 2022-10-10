@@ -13,7 +13,9 @@ from django.contrib.auth import authenticate, login, logout, update_session_auth
 
 
 def IndexPage(request):
-    return render(request, 'front/index.html')
+    f = FrontEndData.objects.first()
+    data = {'f': f}
+    return render(request, 'front/index.html', data)
 
 
 def LogoutFun(request):
@@ -924,3 +926,35 @@ def createTimetable(request):
                 )
     messages.info(request, 'Empty Timetable Created Successfully!')
     return redirect('/login')
+
+@login_required
+def FrontEnd(request):
+    if request.user.profile.role == 'admin':
+        if request.method == 'POST':
+            img = request.FILES.get('banner')
+            num1 = request.POST['num1']
+            num2 = request.POST['num2']
+            num3 = request.POST['num3']
+            num4 = request.POST['num4']
+            e = FrontEndData.objects.first()
+            if e:
+                f = e
+            else:
+                f = FrontEndData()
+            if img:
+                f.img = img
+            f.num1 = num1
+            f.num2 = num2
+            f.num3 = num3
+            f.num4 = num4
+            f.save()
+            messages.success(request, 'Successfully added.')
+            return redirect('/dashboard')
+        else:
+            f = FrontEndData.objects.first()
+            data = {'f': f}
+            return render(request, 'dashboard/frontend_data.html', data)
+    else:
+        messages.success(request, 'Invalid Request!')
+        return redirect('/dashboard')
+

@@ -1,0 +1,39 @@
+{% extends 'dashboard/base.html' %}
+{% block main %}
+<div class="row">
+    <div class="col-md-12">
+        <div class="card">
+            <div class="card-body">
+				<form class="validate-form" action="" method="POST" enctype="multipart/form-data">
+					{% csrf_token %}
+                    <div class="row">
+                        <div class="col-md-4 form-group">
+                            <label for="banner">Banner Image</label>
+                            <input type="file" class="form-control" id="banner" name="banner">
+                        </div>
+                        <div class="col-md-4 form-group">
+                            <label for="num1">حلقات</label>
+                            <input type="number" class="form-control" id="num1" name="num1" value="{{f.num1}}" required>
+                        </div>
+                        <div class="col-md-4 form-group">
+                            <label for="num2">مدرسين</label>
+                            <input type="number" class="form-control" id="num2" name="num2" value="{{f.num2}}" required>
+                        </div>
+                        <div class="col-md-4 form-group">
+                            <label for="num3">الطالبات</label>
+                            <input type="number" class="form-control" id="num3" name="num3" value="{{f.num3}}" required>
+                        </div>
+                        <div class="col-md-4 form-group">
+                            <label for="num4">المتخرجات</label>
+                            <input type="number" class="form-control" id="num4" name="num4" value="{{f.num4}}" required>
+                        </div>
+                        <div class="col-md-12" align="center">
+                            <button class="btn btn-primary">Submit</button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

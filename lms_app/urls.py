@@ -54,4 +54,8 @@ urlpatterns = [
     path('upload-image', uploadImage),
 
     path('create-empty-timetable', createTimetable),
+
+
+
+    path('front-end', FrontEnd),
 ]
