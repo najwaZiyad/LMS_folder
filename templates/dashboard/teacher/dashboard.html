@@ -6,18 +6,19 @@
             <div class="card-body">
                 <div class="row">
                     <div class="col-md-12">
-                        <table border="1" style="width: 100%;">
+                        <table border="1" style="width: 100%;" class="table table-striped">
                             <thead>
                                 <tr class="text-center">
-                                    <th scope="row"></th>
+
                                     {% for i in time %}
                                     <th scope="row">{{i}}</th>
                                     {% endfor %}
+                                    <th scope="row">أيام الأسبوع</th>
                                 </tr>
                             </thead>
                             <tbody>
                                 <tr>
-                                    <th scope="col">السبت</th>
+
                                     {% for i in saturday %}
                                         {% if request.user.profile == i.teacher.profile %}
                                             {% if i.subject %}
@@ -30,16 +31,17 @@
                                                 {% if request.user.profile.role == 'teacher' %}
                                                 <td></td>
                                                 {% else %}
-                                                <td>لا يوجد</td>
+                                                <td align='center'>لا يوجد</td>
                                                 {% endif %}
                                             {% endif %}
                                         {% else %}
                                             <td></td>
                                         {% endif %}
                                     {% endfor %}
+                                      <th scope="col" class="text-right">السبت</th>
                                 </tr>
                                 <tr>
-                                    <th scope="col">الأحد</th>
+
                                     {% for i in sunday %}
                                         {% if request.user.profile == i.teacher.profile %}
                                             {% if i.subject %}
@@ -52,16 +54,17 @@
                                                 {% if request.user.profile.role == 'teacher' %}
                                                 <td></td>
                                                 {% else %}
-                                                <td>لا يوجد</td>
+                                                <td align='center'>لا يوجد</td>
                                                 {% endif %}
                                             {% endif %}
                                         {% else %}
                                             <td></td>
                                         {% endif %}
                                     {% endfor %}
+                                     <th scope="col" class="text-right">الأحد</th>
                                 </tr>
                                 <tr>
-                                    <th scope="col">الأثنين</th>
+
                                     {% for i in monday %}
                                         {% if request.user.profile == i.teacher.profile %}
                                             {% if i.subject %}
@@ -74,16 +77,16 @@
                                                 {% if request.user.profile.role == 'teacher' %}
                                                 <td></td>
                                                 {% else %}
-                                                <td>لا يوجد</td>
+                                                <td align='center'>لا يوجد</td>
                                                 {% endif %}
                                             {% endif %}
                                         {% else %}
                                             <td></td>
                                         {% endif %}
                                     {% endfor %}
+                                     <th scope="col" class="text-right">الأثنين</th>
                                 </tr>
                                 <tr>
-                                    <th scope="col">الثلاثاء</th>
                                     {% for i in tuesday %}
                                         {% if request.user.profile == i.teacher.profile %}
                                             {% if i.subject %}
@@ -96,16 +99,16 @@
                                                 {% if request.user.profile.role == 'teacher' %}
                                                 <td></td>
                                                 {% else %}
-                                                <td>لا يوجد</td>
+                                                <td align='center'>لا يوجد</td>
                                                 {% endif %}
                                             {% endif %}
                                         {% else %}
                                             <td></td>
                                         {% endif %}
                                     {% endfor %}
+                                    <th scope="col" class="text-right">الثلاثاء</th>
                                 </tr>
                                 <tr>
-                                    <th scope="col">الأربعاء</th>
                                     {% for i in wednesday %}
                                         {% if request.user.profile == i.teacher.profile %}
                                             {% if i.subject %}
@@ -118,16 +121,16 @@
                                                 {% if request.user.profile.role == 'teacher' %}
                                                 <td></td>
                                                 {% else %}
-                                                <td>لا يوجد</td>
+                                                <td align='center'>لا يوجد</td>
                                                 {% endif %}
                                             {% endif %}
                                         {% else %}
                                             <td></td>
                                         {% endif %}
                                     {% endfor %}
+                                     <th scope="col" class="text-right">الأربعاء</th>
                                 </tr>
                                 <tr>
-                                    <th scope="col">الخميس</th>
                                     {% for i in thursday %}
                                         {% if request.user.profile == i.teacher.profile %}
                                             {% if i.subject %}
@@ -140,16 +143,16 @@
                                                 {% if request.user.profile.role == 'teacher' %}
                                                 <td></td>
                                                 {% else %}
-                                                <td>لا يوجد</td>
+                                                <td align='center'>لا يوجد</td>
                                                 {% endif %}
                                             {% endif %}
                                         {% else %}
                                             <td></td>
                                         {% endif %}
                                     {% endfor %}
+                                    <th scope="col" class="text-right">الخميس</th>
                                 </tr>
                                 <tr>
-                                    <th scope="col">الجمعة</th>
                                     {% for i in friday %}
                                         {% if request.user.profile == i.teacher.profile %}
                                             {% if i.subject %}
@@ -162,13 +165,14 @@
                                                 {% if request.user.profile.role == 'teacher' %}
                                                 <td></td>
                                                 {% else %}
-                                                <td>Free</td>
+                                                <td align='center'>لا يوجد</td>
                                                 {% endif %}
                                             {% endif %}
                                         {% else %}
                                             <td></td>
                                         {% endif %}
                                     {% endfor %}
+                                      <th scope="col" class="text-right">الجمعة</th>
                                 </tr>
                             </tbody>
                         </table>

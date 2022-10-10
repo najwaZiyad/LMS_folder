@@ -9,22 +9,25 @@
                         <table id="datatable" class="table table-striped text-center" style="width:100%;">
                             <thead>
                                 <tr>
-                                    <th>Student</th>
-                                    <th>Subject</th>
-                                    <th>Total Marks</th>
-                                    <th>Obtain Marks</th>
-                                    <th>Date</th>
+                                    <th>التاريخ</th>
+                                    <th>الدرجة الطالب/ة</th>
+                                    <th>الدرجة</th>
+                                    <th>المادة</th>
+                                    <th>اسم الطالب/ة</th>
+
+
+
                                 </tr>
                             </thead>
                             <tbody>
                                 {% for j in results %}
                                 {% for i in j %}
                                 <tr>
-                                    <td>{{i.student}}</td>
-                                    <td>{{i.subject}}</td>
-                                    <td>{{i.total_score}}</td>
-                                    <td>{{i.obtain_score}}</td>
                                     <td>{{i.date}}</td>
+                                    <td>{{i.obtain_score}}</td>
+                                    <td>{{i.total_score}}</td>
+                                    <td>{{i.subject}}</td>
+                                    <td>{{i.student}}</td>
                                 </tr>
                                 {% endfor %}
                                 {% endfor %}

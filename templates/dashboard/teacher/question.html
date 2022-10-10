@@ -6,36 +6,38 @@
             <div class="card-body">
                 <div class="row">
                     <div class="col-md-12" align="right">
-                        <button class="btn btn-primary btn-sm" data-toggle="modal" data-target="#add">Add New</button>
+                        <button class="btn btn-primary btn-sm" data-toggle="modal" data-target="#add">اضافة سؤال جديد</button>
                     </div>
                     <div class="col-md-12">
                         <table id="datatable" class="table table-striped" style="width:100%;">
                             <thead>
                                 <tr>
-                                    <th>Action</th>
-                                    <th>Question</th>
-                                    <th>Option 1</th>
-                                    <th>Option 2</th>
-                                    <th>Option 3</th>
-                                    <th>Option 4</th>
-                                    <th>Score</th>
-                                    <th>Answer</th>
+                                    <th>الإجراء</th>
+                                    <th>الإجابة</th>
+                                    <th>النقاط</th>
+                                    <th>الإحتمال 4</th>
+                                    <th>الإحتمال 3</th>
+                                    <th>الإحتمال 2</th>
+                                    <th>الإحتمال 1</th>
+                                    <th>السؤال</th>
+
+
                                 </tr>
                             </thead>
                             <tbody>
                                 {% for i in questions %}
                                 <tr>
                                     <td>
-                                        <a class="btn btn-sm btn-success glyphicon glyphicon-pencil"  data-toggle="modal" data-target="#edit_{{i.id}}"> Edit</a>
-                                        <a href="/delete-question/{{i.id}}" class="btn btn-sm btn-danger glyphicon glyphicon-trash"> Delete</a>
+                                        <a class="btn btn-sm btn-success glyphicon glyphicon-pencil"  data-toggle="modal" data-target="#edit_{{i.id}}"> تعديل</a>
+                                        <a href="/delete-question/{{i.id}}" class="btn btn-sm btn-danger glyphicon glyphicon-trash"> حذف</a>
                                     </td>
-                                    <td>{{i.question}}</td>
-                                    <td>{{i.option_1}}</td>
-                                    <td>{{i.option_2}}</td>
-                                    <td>{{i.option_3}}</td>
-                                    <td>{{i.option_4}}</td>
-                                    <td>{{i.score}}</td>
                                     <td>{{i.answer}}</td>
+                                    <td>{{i.score}}</td>
+                                    <td>{{i.option_4}}</td>
+                                    <td>{{i.option_3}}</td>
+                                    <td>{{i.option_2}}</td>
+                                    <td>{{i.option_1}}</td>
+                                    <td>{{i.question}}</td>
                                 </tr>
                                 {% endfor %}
                             </tbody>
@@ -50,7 +52,7 @@
   <div class="modal-dialog modal-dialog-centered" role="document">
     <div class="modal-content">
       <div class="modal-header">
-        <h5 class="modal-title" id="exampleModalLongTitle">تعديل</h5>
+        <h5 class="modal-title" id="exampleModalLongTitle">إضافة</h5>
         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
           <span aria-hidden="true">&times;</span>
         </button>
@@ -60,30 +62,30 @@
          <div class="modal-body">
             <div class="row">
                 <div class="col-md-12 form-group">
-                    <label for="question">Question</label>
+                    <label for="question">السؤال</label>
                     <textarea id="question" name="question" class="form-control" required></textarea>
 
                 </div>
                 <div class="col-md-6 form-group">
-                    <label for="option1">Option1</label>
+                    <label for="option1">الإحتمال الأول</label>
                     <input type="text" id="option1" name="option1" class="form-control options" required>
                 </div>
                 <div class="col-md-6 form-group">
-                    <label for="option2">Option2</label>
+                    <label for="option2">الإحتمال الثاني</label>
                     <input type="text" id="option2" name="option2" class="form-control options" required>
                 </div>
                  <div class="col-md-6 form-group">
-                    <label for="Option3">Option3</label>
+                    <label for="Option3">الإحتمال الثالث</label>
                     <input type="text" id="Option3" name="option3" class="form-control options">
                 </div>
                 <div class="col-md-6 form-group">
-                    <label for="Option4">Option4</label>
+                    <label for="Option4">الإحتمال الرابع</label>
                     <input type="text" id="Option4" name="option4" class="form-control options">
                 </div>
                 <div class="col-md-12 form-group">
-                    <label for="answer">Answer</label>
+                    <label for="answer">حدد الأجابة الصحيحة</label>
                     <select id="answer" name="answer" class="form-control" required>
-                        <option value="" selected disabled>-- Please Select --</option>
+                        <option value="" selected disabled>-- فضلا اختر --</option>
                         <option value="" id="option_1" class="d-none"></option>
                         <option value="" id="option_2" class="d-none"></option>
                         <option value="" id="option_3" class="d-none"></option>
@@ -91,7 +93,7 @@
                     </select>
                 </div>
                 <div class="col-md-12 form-group">
-                    <label for="score">Score</label>
+                    <label for="score">حدد نقاط لهذا السؤال</label>
                     <input type="number" id="score" name="score" class="form-control options" required>
                 </div>
             </div>
@@ -120,29 +122,29 @@
          <div class="modal-body">
             <div class="row">
                 <div class="col-md-12 form-group">
-                    <label for="edit_question_{{i.id}}">Question</label>
+                    <label for="edit_question_{{i.id}}">السؤال</label>
                     <textarea id="edit_question_{{i.id}}" name="question" class="form-control" required>{{i.question}}</textarea>
                 </div>
                 <div class="col-md-6 form-group">
-                    <label for="edit_option1_{{i.id}}">Option1</label>
+                    <label for="edit_option1_{{i.id}}">الإحتمال الأول</label>
                     <input type="text" id="edit_option1_{{i.id}}" value="{{i.option_1}}" name="option1" class="form-control" required>
                 </div>
                 <div class="col-md-6 form-group">
-                    <label for="edit_option2_{{i.id}}">Option2</label>
+                    <label for="edit_option2_{{i.id}}">الإحتمال الثاني</label>
                     <input type="text" id="edit_option2_{{i.id}}" value="{{i.option_2}}" name="option2" class="form-control" required>
                 </div>
                  <div class="col-md-6 form-group">
-                    <label for="edit_option3_{{i.id}}">Option3</label>
+                    <label for="edit_option3_{{i.id}}">الإحتمال الثالث</label>
                     <input type="text" id="edit_option3_{{i.id}}" value="{{i.option_3}}" name="option3" class="form-control">
                 </div>
                 <div class="col-md-6 form-group">
-                    <label for="edit_option4_{{i.id}}">Option4</label>
+                    <label for="edit_option4_{{i.id}}">الإحتمال الرابع</label>
                     <input type="text" id="edit_option4_{{i.id}}" value="{{i.option_4}}" name="option4" class="form-control">
                 </div>
                 <div class="col-md-12 form-group">
-                    <label for="edit_answer_{{i.id}}">Answer</label>
+                    <label for="edit_answer_{{i.id}}"> حدد الإجابة الصحيحة</label>
                     <select id="edit_answer_{{i.id}}" name="answer" class="form-control" required>
-                        <option value="" selected disabled>-- Please Select --</option>
+                        <option value="" selected disabled>-- فصلا اختر--</option>
                         <option value="{{i.option_1}}" {% if i.answer == i.option_1 %}selected{% endif %} id="edit_option_1_{{i.id}}">{{i.option_1}}</option>
                         <option value="{{i.option_2}}" {% if i.answer == i.option_2 %}selected{% endif %} id="edit_option_2_{{i.id}}">{{i.option_2}}</option>
                         <option value="{{i.option_3}}" {% if i.answer == i.option_3 %}selected{% endif %} id="edit_option_3_{{i.id}}">{{i.option_3}}</option>
@@ -150,7 +152,7 @@
                     </select>
                 </div>
                 <div class="col-md-12 form-group">
-                    <label for="edit_score_{{i.id}}">Score</label>
+                    <label for="edit_score_{{i.id}}">حدد نقاط لهذا السؤال</label>
                     <input type="number" value="{{i.score}}" id="edit_score_{{i.id}}" name="score" class="form-control options" required>
                 </div>
             </div>

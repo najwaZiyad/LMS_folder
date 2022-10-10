@@ -6,23 +6,23 @@
             <div class="card-body">
                 <div class="row">
                     <div class="col-md-12" align="right">
-                        <button class="btn btn-primary btn-sm"  data-toggle="modal" data-target="#add">Add New</button>
+                        <button class="btn btn-primary btn-sm"  data-toggle="modal" data-target="#add">اضافة تمرين جديد</button>
                     </div>
                     <div class="col-md-12">
                         <table id="datatable" class="table table-striped text-center" style="width:100%;">
                             <thead>
                                 <tr>
-                                    <th>Action</th>
-                                    <th>Subject</th>
-                                    <th>Created Date</th>
-                                    <th>Created By</th>
+                                    <th>الإجراء</th>
+                                    <th>المادة</th>
+                                    <th>تاريخ الإنشاء</th>
+                                    <th>...انشأ بواسطه</th>
                                 </tr>
                             </thead>
                             <tbody>
                                 {% for i in quiz_subjects %}
                                 <tr>
                                     <td>
-                                        <a href="/question/{{i.id}}" class="btn btn-sm btn-success glyphicon glyphicon-pencil" >View/Add Questions</a>
+                                        <a href="/question/{{i.id}}" class="btn btn-sm btn-success glyphicon glyphicon-pencil" >إضافة/تعديل الأسئلة</a>
                                     </td>
                                     <td>{{i.subject}}</td>
                                     <td class="text-right">{{i.created_date}}</td>
@@ -41,7 +41,7 @@
   <div class="modal-dialog modal-dialog-centered" role="document">
     <div class="modal-content">
       <div class="modal-header">
-        <h5 class="modal-title" id="exampleModalLongTitle">تعديل</h5>
+        <h5 class="modal-title" id="exampleModalLongTitle">إضافة</h5>
         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
           <span aria-hidden="true">&times;</span>
         </button>
@@ -52,20 +52,20 @@
          <div class="modal-body">
             <div class="row">
                 <div class="col-md-12 form-group">
-                    <label for="subject">Subject</label>
+                    <label for="subject">المادة</label>
                     <select name="subject" required id="subject" class="form-control">
-                        <option value="" selected disabled>-- Please Select --</option>
+                        <option value="" selected disabled>-- فضلا اختر--</option>
                         {% for i in subjects %}
                         <option value="{{i.subject.id}}">{{i.subject}}</option>
                         {% endfor %}
                     </select>
                 </div>
                 <div class="col-md-6 form-group">
-                    <label for="start">Start Date</label>
+                    <label for="start">تاريخ البدء</label>
                     <input type="date" id="start" name="start" class="form-control">
                 </div>
                 <div class="col-md-6 form-group">
-                    <label for="end">End Date</label>
+                    <label for="end">تاريخ الإنتهاء</label>
                     <input type="date" id="end" name="end" class="form-control">
                 </div>
             </div>
