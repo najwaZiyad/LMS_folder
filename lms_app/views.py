@@ -295,7 +295,7 @@ def editUser(request, id):
             e.address = add
             e.save()
             if password:
-                user = User.objects.get(user=e.user)
+                user = User.objects.get(username=e.user)
                 user.password = make_password(password)
                 user.save()
             messages.info(request, 'User information changed successfully!')
@@ -559,10 +559,11 @@ def quizStudent(request):
     if role == 'student':
         student = request.user.profile.student
         try:
-            done = QuizStudent.objects.get(student_id=student.student_id)
+            done = QuizStudent.objects.filter(student_id=student.student_id)
+            done = [i.subject_id for i in done]
             quiz_subjects = Quiz.objects.filter(
                 start_date__lte=date.today(), end_date__gte=date.today()
-            ).exclude(subject_id=done.subject_id)
+            ).exclude(subject_id__in=done)
         except QuizStudent.DoesNotExist:
             quiz_subjects = Quiz.objects.filter(
                 start_date__lte=date.today(), end_date__gte=date.today()

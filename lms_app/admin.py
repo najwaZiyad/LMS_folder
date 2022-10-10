@@ -16,7 +16,7 @@ class ProfileSearch(admin.ModelAdmin):
 
 class SubjectSearch(admin.ModelAdmin):
     search_fields = ('name', )
-    list_display = ('name', 'description', )
+    list_display = ('name', 'description', 'id')
 
 
 class TeacherSearch(admin.ModelAdmin):
