@@ -56,6 +56,7 @@ urlpatterns = [
     path('create-empty-timetable', createTimetable),
 
 
+    path('downloads', download_reports),
 
     path('front-end', FrontEnd),
 ]

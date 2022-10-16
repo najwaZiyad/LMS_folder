@@ -1,7 +1,7 @@
 import json
 import calendar
+import csv
 from datetime import datetime, date, timedelta
-
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.forms import PasswordChangeForm
@@ -958,3 +958,65 @@ def FrontEnd(request):
         messages.success(request, 'Invalid Request!')
         return redirect('/dashboard')
 
+
+@login_required
+def download_reports(request):
+    if request.user.profile.role == 'admin':
+        if request.method == 'POST':
+            typee = request.POST['type']
+            if typee == 'attendance':
+                start_date = request.POST['start_date']
+                end_date = request.POST['end_date']
+                student = request.POST['student']
+                subject = request.POST['subject']
+                columns = ['Date', 'Time', 'Student Name', 'Student Id', 'Subject', 'Marked by', 'Status']
+                response = HttpResponse(content_type='text/csv')
+                response['Content-Disposition'] = 'attachment; filename="'+str(date.today())+' - Attendance Report.csv"'
+                writer = csv.writer(response)
+                writer.writerow(columns)
+                if student == 'all' and subject == 'all':
+                    query = Attendance.objects.filter(date__range=[start_date, end_date])
+                elif student == 'all':
+                    query = Attendance.objects.filter(date__range=[start_date, end_date], subject_id=subject)
+                elif subject == 'all':
+                    query = Attendance.objects.filter(date__range=[start_date, end_date], student_id=student)
+                else:
+                    query = Attendance.objects.filter(date__range=[start_date, end_date],
+                                                      student_id=student, subject_id=subject)
+                for i in query:
+                    data = [
+                        i.date, i.time, i.student, i.student_id, i.subject,
+                        str(i.teacher)+' ('+str(i.teacher_id)+')', i.status
+                    ]
+                    writer.writerow(data)
+                return response
+            else:
+                student = request.POST['student']
+                subject = request.POST['subject']
+                columns = ['Student Name', 'Student_id', 'Subject', 'Total Score', 'Obtained Score', 'Date of Answer']
+                response = HttpResponse(content_type='text/csv')
+                response['Content-Disposition'] = 'attachment; filename="' + str(date.today()) + ' - Marks Report.csv"'
+                writer = csv.writer(response)
+                writer.writerow(columns)
+                if student == 'all' and subject == 'all':
+                    query = QuizStudent.objects.all()
+                elif student == 'all':
+                    query = QuizStudent.objects.filter(subject_id=subject)
+                elif subject == 'all':
+                    query = QuizStudent.objects.filter(student_id=student)
+                else:
+                    query = QuizStudent.objects.filter(student_id=student, subject_id=subject)
+                for i in query:
+                    data = [
+                        i.student, i.student_id, i.subject, i.total_score, i.obtain_score, i.date
+                    ]
+                    writer.writerow(data)
+                return response
+        else:
+            students = Student.objects.all()
+            subjects = Subjects.objects.all()
+            data = {'students': students, 'subjects': subjects}
+            return render(request, 'dashboard/downloads.html', data)
+    else:
+        messages.success(request, 'Invalid Request!')
+        return redirect('/dashboard')

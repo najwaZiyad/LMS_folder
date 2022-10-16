@@ -1,0 +1,112 @@
+{% extends 'dashboard/base.html' %}
+{% block main %}
+{% load static %}
+  <div class="row">
+    <div class="col-md-6">
+      <div class="card">
+        <div class="card-header">
+          <h2>Download Attendance Report</h2>
+        </div>
+        <div class="card-body">
+          <div class="row">
+            <div class="col-md-12">
+              <form method="post" action="/downloads" enctype="multipart/form-data">
+                {% csrf_token %}
+                <div class="row">
+                  <div class="col-md-6">
+                    <label for="start_date">Start Date</label>
+                    <input type="date" name="start_date" onchange="mydate(this)" id="start_date" class="form-control" required>
+                  </div>
+                  <div class="col-md-6">
+                    <label for="end_date">End Date</label>
+                    <input type="date" name="end_date" id="end_date" class="form-control" required>
+                  </div>
+                  <div class="col-md-6">
+                    <label for="student">Student</label>
+                    <select class="form-control select2" name="student" id="student" required>
+                      <option value="" selected disabled>--Please Select--</option>
+                      <option value="all">All</option>
+                      {% for i in students %}
+                      <option value="{{i.student_id}}">{{i.profile.student}} ({{i.student_id}})</option>
+                      {% endfor %}
+                    </select>
+                  </div>
+                  <div class="col-md-6">
+                    <label for="subject">Subject</label>
+                    <select class="form-control select2" name="subject" id="subject" required>
+                      <option value="" selected disabled>--Please Select--</option>
+                      <option value="all">All</option>
+                      {% for i in subjects %}
+                      <option value="{{i.id}}">{{i.name}}</option>
+                      {% endfor %}
+                    </select>
+                  </div>
+                  <div class="col-md-12 mt-3" align="center">
+                    <input type="hidden" name="type" value="attendance">
+                    <button type="submit" class="btn btn-primary">حفظ التعديلات</button>
+                  </div>
+                </div>
+              </form>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="col-md-6">
+      <div class="card">
+        <div class="card-header">
+          <h2>Download Marks</h2>
+        </div>
+        <div class="card-body">
+          <div class="row">
+            <div class="col-md-12">
+              <form method="post" action="/downloads" enctype="multipart/form-data">
+                {% csrf_token %}
+                <div class="row">
+                  <div class="col-md-6">
+                    <label for="marks_student">Student</label>
+                    <select class="form-control select2" name="student" id="marks_student" required>
+                      <option value="" selected disabled>--Please Select--</option>
+                      <option value="all">All</option>
+                      {% for i in students %}
+                      <option value="{{i.student_id}}">{{i.profile.student}} ({{i.student_id}})</option>
+                      {% endfor %}
+                    </select>
+                  </div>
+                  <div class="col-md-6">
+                    <label for="marks_subject">Subject</label>
+                    <select class="form-control select2" name="subject" id="marks_subject" required>
+                      <option value="" selected disabled>--Please Select--</option>
+                      <option value="all">All</option>
+                      {% for i in subjects %}
+                      <option value="{{i.id}}">{{i.name}}</option>
+                      {% endfor %}
+                    </select>
+                  </div>
+                  <div class="col-md-12 mt-3" align="center">
+                    <input type="hidden" name="type" value="marks">
+                    <button type="submit" class="btn btn-primary">حفظ التعديلات</button>
+                  </div>
+                </div>
+              </form>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+{% endblock %}
+{% block script %}
+<script type="text/javascript">
+  $today = new Date();
+  $today = moment($today).format('YYYY-MM-DD');
+  $('#end_date').attr("max", $today);
+  $('#start_date').attr("max", $today);
+  function mydate(e) {
+    $start = $('#start_date').val();
+    $end = $('#end_date');
+    $end.attr("min", $start);
+  }
+</script>
+{% endblock %}
