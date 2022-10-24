@@ -550,7 +550,7 @@ header
 }
 
 .header-area.header-sticky .logo {
-  margin-top: 25px;
+  margin-top: 10px;
 }
 
 .header-area.header-sticky .nav {
@@ -908,7 +908,7 @@ parallax & home seperator
   letter-spacing: 0.25px;
   line-height: 26px;
   font-weight: 400;
-  font-size: 15px;
+  font-size: 20px;
 }
 
 .mini .mini-content .info p span {

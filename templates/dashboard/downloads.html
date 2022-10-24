@@ -5,7 +5,7 @@
     <div class="col-md-6">
       <div class="card">
         <div class="card-header">
-          <h2>Download Attendance Report</h2>
+          <h2> تقرير الحضور</h2>
         </div>
         <div class="card-body">
           <div class="row">
@@ -14,27 +14,27 @@
                 {% csrf_token %}
                 <div class="row">
                   <div class="col-md-6">
-                    <label for="start_date">Start Date</label>
+                    <label for="start_date">...من يوم</label>
                     <input type="date" name="start_date" onchange="mydate(this)" id="start_date" class="form-control" required>
                   </div>
                   <div class="col-md-6">
-                    <label for="end_date">End Date</label>
+                    <label for="end_date">...إلى يوم</label>
                     <input type="date" name="end_date" id="end_date" class="form-control" required>
                   </div>
                   <div class="col-md-6">
-                    <label for="student">Student</label>
+                    <label for="student"> الطالب/الطالبة</label>
                     <select class="form-control select2" name="student" id="student" required>
-                      <option value="" selected disabled>--Please Select--</option>
-                      <option value="all">All</option>
+                      <option value="" selected disabled>--فضلا اختر--</option>
+                      <option value="all">الكل</option>
                       {% for i in students %}
                       <option value="{{i.student_id}}">{{i.profile.student}} ({{i.student_id}})</option>
                       {% endfor %}
                     </select>
                   </div>
                   <div class="col-md-6">
-                    <label for="subject">Subject</label>
+                    <label for="subject">حدد المادة</label>
                     <select class="form-control select2" name="subject" id="subject" required>
-                      <option value="" selected disabled>--Please Select--</option>
+                      <option value="" selected disabled>--فضلا اختر--</option>
                       <option value="all">All</option>
                       {% for i in subjects %}
                       <option value="{{i.id}}">{{i.name}}</option>
@@ -56,7 +56,7 @@
     <div class="col-md-6">
       <div class="card">
         <div class="card-header">
-          <h2>Download Marks</h2>
+          <h2>تقرير الدرجات</h2>
         </div>
         <div class="card-body">
           <div class="row">
@@ -65,19 +65,19 @@
                 {% csrf_token %}
                 <div class="row">
                   <div class="col-md-6">
-                    <label for="marks_student">Student</label>
+                    <label for="marks_student">الطالب/الطالبة</label>
                     <select class="form-control select2" name="student" id="marks_student" required>
-                      <option value="" selected disabled>--Please Select--</option>
-                      <option value="all">All</option>
+                      <option value="" selected disabled>--فضلا اختر--</option>
+                      <option value="all">الكل</option>
                       {% for i in students %}
                       <option value="{{i.student_id}}">{{i.profile.student}} ({{i.student_id}})</option>
                       {% endfor %}
                     </select>
                   </div>
                   <div class="col-md-6">
-                    <label for="marks_subject">Subject</label>
+                    <label for="marks_subject">المادة</label>
                     <select class="form-control select2" name="subject" id="marks_subject" required>
-                      <option value="" selected disabled>--Please Select--</option>
+                      <option value="" selected disabled>--فضلا اختر--</option>
                       <option value="all">All</option>
                       {% for i in subjects %}
                       <option value="{{i.id}}">{{i.name}}</option>
