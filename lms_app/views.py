@@ -1,15 +1,17 @@
-import json
 import calendar
 import csv
+import json
 from datetime import datetime, date, timedelta
+
 from django.contrib import messages
+from django.contrib.auth import authenticate, login, logout, update_session_auth_hash
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.forms import PasswordChangeForm
 from django.contrib.auth.hashers import make_password
 from django.http import HttpResponse
 from django.shortcuts import render, redirect
+
 from .models import *
-from django.contrib.auth import authenticate, login, logout, update_session_auth_hash
 
 
 def IndexPage(request):
@@ -55,7 +57,6 @@ def DashboardRedirect(request):
         return redirect('/logout')
 
 
-
 @login_required
 def AdminDashboard(request):
     role = request.user.profile.role
@@ -84,7 +85,6 @@ def AdminDashboard(request):
     else:
         messages.warning(request, 'Unauthorized Access!')
         return redirect('/dashboard')
-
 
 
 @login_required
@@ -161,9 +161,11 @@ def attendanceSubject(request):
             for i in subject_query:
                 dic = {}
                 dic['subject'] = i
-                dic['absent'] = Attendance.objects.filter(subject_id=i.id, student_id=student_id, status='Absent').count()
-                dic['present'] = Attendance.objects.filter(subject_id=i.id, student_id=student_id, status='Present').count()
-                dic['total'] = Attendance.objects.filter(subject_id=i.id, student_id=student_id ).count()
+                dic['absent'] = Attendance.objects.filter(subject_id=i.id, student_id=student_id,
+                                                          status='Absent').count()
+                dic['present'] = Attendance.objects.filter(subject_id=i.id, student_id=student_id,
+                                                           status='Present').count()
+                dic['total'] = Attendance.objects.filter(subject_id=i.id, student_id=student_id).count()
                 if dic['total'] > 0:
                     dic['percentage'] = dic['present'] / dic['total'] * 100
                 else:
@@ -187,11 +189,13 @@ def studentClasses(request):
         messages.warning(request, 'Unauthorized Access!')
         return redirect('/dashboard')
 
+
 @login_required
 def Settings(request):
     form = PasswordChangeForm(request.user)
     data = {'form': form}
     return render(request, 'dashboard/settings.html', data)
+
 
 @login_required
 def change_password(request):
@@ -208,6 +212,7 @@ def change_password(request):
     else:
         form = PasswordChangeForm(request.user)
     return render(request, 'dashboard/settings.html', {'form': form})
+
 
 @login_required
 def uploadImage(request):
@@ -507,7 +512,8 @@ def addClass(request):
                 messages.info(request, 'Zoom Link was already assigned on selected date and time!')
             except Classes.DoesNotExist:
                 Classes.objects.create(
-                    added_on=added_on, date=my_date, zoom_link=zoom_link, time=time, cls=cls, added_by=request.user.profile
+                    added_on=added_on, date=my_date, zoom_link=zoom_link, time=time, cls=cls,
+                    added_by=request.user.profile
                 )
                 Classes.objects.filter(date__lt=(date.today() - timedelta(days=2))).delete()
                 messages.info(request, 'Zoom Link Added Successfully!')
@@ -520,6 +526,7 @@ def addClass(request):
     else:
         messages.warning(request, 'Unauthorized Access!')
         return redirect('/dashboard')
+
 
 @login_required
 def viewClass(request):
@@ -555,6 +562,7 @@ def DeleteClassLink(request, i_id):
         messages.warning(request, 'Unauthorized Access!')
         return redirect('/dashboard')
 
+
 @login_required
 def quizStudent(request):
     role = request.user.profile.role
@@ -575,6 +583,7 @@ def quizStudent(request):
     else:
         messages.warning(request, 'Unauthorized Access!')
         return redirect('/dashboard')
+
 
 @login_required
 def quizStartStudent(request):
@@ -613,9 +622,9 @@ def quizSubmit(request):
             quiz = Quiz.objects.get(id=quiz_id)
             obtain = 0
             total = 0
-            for i in range(1, num+1):
-                id = request.POST['id_'+str(i)]
-                answer = request.POST['question_'+str(i)]
+            for i in range(1, num + 1):
+                id = request.POST['id_' + str(i)]
+                answer = request.POST['question_' + str(i)]
                 question = QuizQuestion.objects.get(id=id)
                 if answer == question.answer:
                     obtain += int(question.score)
@@ -640,7 +649,6 @@ def quizSubmit(request):
         return redirect('/dashboard')
 
 
-
 @login_required
 def quizTeacher(request):
     role = request.user.profile.role
@@ -653,14 +661,14 @@ def quizTeacher(request):
             subject = Subjects.objects.get(id=subject_id).name
             try:
                 Quiz.objects.get(subject_id=subject_id)
-                messages.info(request, 'Sorry quiz for '+subject+' is already created!')
+                messages.info(request, 'Sorry quiz for ' + subject + ' is already created!')
                 return redirect('/quiz')
             except Quiz.DoesNotExist:
                 Quiz.objects.create(
                     subject_id=subject_id, subject=subject, created_date=date.today(),
                     start_date=start, end_date=end, teacher=profile, teacher_id=profile.teacher.teacher_id,
                 )
-                messages.info(request, 'Quiz for '+subject+' Created Successfully!')
+                messages.info(request, 'Quiz for ' + subject + ' Created Successfully!')
                 return redirect('/quiz')
 
         else:
@@ -675,6 +683,7 @@ def quizTeacher(request):
         messages.warning(request, 'Unauthorized Access!')
         return redirect('/dashboard')
 
+
 @login_required
 def viewResults(request):
     role = request.user.profile.role
@@ -683,15 +692,13 @@ def viewResults(request):
         subjects = TeacherSubjectAssign.objects.filter(teacher=profile.teacher)
         results = []
         for i in subjects:
-            print(i.subject.id, 'i.subject.id')
             subject_id = i.subject.id
             result = QuizStudent.objects.filter(subject_id=subject_id)
-            print(result, 'result')
             results.append(result)
 
-        print(results[0][0], 'results')
         data = {'results': results}
         return render(request, 'dashboard/teacher/results.html', data)
+
 
 @login_required
 def quizQuestion(request, id):
@@ -711,7 +718,7 @@ def quizQuestion(request, id):
                 quiz=quiz, question=question, answer=answer, option_1=option1,
                 option_2=option2, option_3=option3, option_4=option4, score=score
             )
-            return redirect('/question/'+str(id))
+            return redirect('/question/' + str(id))
 
         else:
             quiz = Quiz.objects.get(id=id)
@@ -721,6 +728,7 @@ def quizQuestion(request, id):
     else:
         messages.warning(request, 'Unauthorized Access!')
         return redirect('/dashboard')
+
 
 @login_required
 def quizeditQuestion(request, id):
@@ -747,10 +755,11 @@ def quizeditQuestion(request, id):
                 q.answer = answer
                 q.score = score
                 q.save()
-                return redirect('/question/'+str(quiz))
+                return redirect('/question/' + str(quiz))
             else:
                 messages.warning(request, 'You are not authorized to delete this question!')
-                return redirect('/question/'+str(quiz))
+                return redirect('/question/' + str(quiz))
+
 
 @login_required
 def quizDeleteQuestion(request, id):
@@ -762,10 +771,11 @@ def quizDeleteQuestion(request, id):
         quiz = q.quiz.id
         if teacher == profile.teacher.teacher_id:
             q.delete()
-            return redirect('/question/'+str(quiz))
+            return redirect('/question/' + str(quiz))
         else:
             messages.warning(request, 'You are not authorized to delete this question!')
-            return redirect('/question/'+str(quiz))
+            return redirect('/question/' + str(quiz))
+
 
 @login_required
 def selectSubject(request):
@@ -793,12 +803,14 @@ def selectSubject(request):
                     dic = {}
                     att = Attendance.objects.filter(date=my_date, time=time, student_id=i.student_id).first()
                     if att:
-                        dic['student'] = i.profile.first_name+' '+i.profile.second_name+' '+i.profile.third_name+' '+i.profile.last_name
+                        dic[
+                            'student'] = i.profile.first_name + ' ' + i.profile.second_name + ' ' + i.profile.third_name + ' ' + i.profile.last_name
                         dic['student_id'] = i.student_id
                         dic['id'] = att.id
                         dic['status'] = att.status
                     else:
-                        dic['student'] = i.profile.first_name+' '+i.profile.second_name+' '+i.profile.third_name+' '+i.profile.last_name
+                        dic[
+                            'student'] = i.profile.first_name + ' ' + i.profile.second_name + ' ' + i.profile.third_name + ' ' + i.profile.last_name
                         dic['student_id'] = i.student_id
                         dic['id'] = n + str(m)
                         dic['status'] = 'Unmarked'
@@ -842,8 +854,6 @@ def markAttendance(request):
         return HttpResponse('Success')
 
 
-
-
 @login_required
 def getClasses(request):
     profile = request.user.profile.teacher
@@ -868,7 +878,8 @@ def getSubject(request):
     for i in teachers:
         dic = {}
         dic['id'] = i.teacher.id
-        dic['name'] = i.teacher.profile.first_name + " " + i.teacher.profile.second_name + " " + i.teacher.profile.third_name + " " + i.teacher.profile.last_name
+        dic[
+            'name'] = i.teacher.profile.first_name + " " + i.teacher.profile.second_name + " " + i.teacher.profile.third_name + " " + i.teacher.profile.last_name
         teacher.append(dic)
     return HttpResponse(json.dumps(teacher))
 
@@ -927,6 +938,7 @@ def createTimetable(request):
     messages.info(request, 'Empty Timetable Created Successfully!')
     return redirect('/login')
 
+
 @login_required
 def FrontEnd(request):
     if request.user.profile.role == 'admin':
@@ -971,7 +983,8 @@ def download_reports(request):
                 subject = request.POST['subject']
                 columns = ['Date', 'Time', 'Student Name', 'Student Id', 'Subject', 'Marked by', 'Status']
                 response = HttpResponse(content_type='text/csv')
-                response['Content-Disposition'] = 'attachment; filename="'+str(date.today())+' - Attendance Report.csv"'
+                response['Content-Disposition'] = 'attachment; filename="' + str(
+                    date.today()) + ' - Attendance Report.csv"'
                 writer = csv.writer(response)
                 writer.writerow(columns)
                 if student == 'all' and subject == 'all':
@@ -986,7 +999,7 @@ def download_reports(request):
                 for i in query:
                     data = [
                         i.date, i.time, i.student, i.student_id, i.subject,
-                        str(i.teacher)+' ('+str(i.teacher_id)+')', i.status
+                        str(i.teacher) + ' (' + str(i.teacher_id) + ')', i.status
                     ]
                     writer.writerow(data)
                 return response

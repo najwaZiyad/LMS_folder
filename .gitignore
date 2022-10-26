@@ -1,0 +1,10 @@
+
+# Elastic Beanstalk Files
+.elasticbeanstalk/*
+!.elasticbeanstalk/*.cfg.yml
+!.elasticbeanstalk/*.global.yml
+
+lms_app/migrations/*
+*.sqlite3
+lms/settings.py
+db.sqlite3
