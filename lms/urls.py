@@ -25,4 +25,4 @@ urlpatterns = [
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
 
 
-handler404 = 'lms.views.view_404'
+handler404 = 'lms_app.views.view_404'
