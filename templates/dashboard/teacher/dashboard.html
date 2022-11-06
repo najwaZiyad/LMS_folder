@@ -20,7 +20,7 @@
                                 <tr>
 
                                     {% for i in saturday %}
-                                        {% if request.user.profile == i.teacher.profile %}
+                                        {% if request.user.profile.id == i.teacher.profile.id %}
                                             {% if i.subject %}
                                             <td align='center'>
                                                 <strong style='color: green;'>{{i.subject}}</strong>
@@ -43,7 +43,7 @@
                                 <tr>
 
                                     {% for i in sunday %}
-                                        {% if request.user.profile == i.teacher.profile %}
+                                        {% if request.user.profile.id == i.teacher.profile.id %}
                                             {% if i.subject %}
                                             <td align='center'>
                                                 <strong style='color: green;'>{{i.subject}}</strong>
@@ -66,7 +66,7 @@
                                 <tr>
 
                                     {% for i in monday %}
-                                        {% if request.user.profile == i.teacher.profile %}
+                                        {% if request.user.profile.id == i.teacher.profile.id %}
                                             {% if i.subject %}
                                             <td align='center'>
                                                 <strong style='color: green;'>{{i.subject}}</strong>
@@ -88,7 +88,7 @@
                                 </tr>
                                 <tr>
                                     {% for i in tuesday %}
-                                        {% if request.user.profile == i.teacher.profile %}
+                                        {% if request.user.profile.id == i.teacher.profile.id %}
                                             {% if i.subject %}
                                             <td align='center'>
                                                 <strong style='color: green;'>{{i.subject}}</strong>
@@ -110,7 +110,7 @@
                                 </tr>
                                 <tr>
                                     {% for i in wednesday %}
-                                        {% if request.user.profile == i.teacher.profile %}
+                                        {% if request.user.profile.id == i.teacher.profile.id %}
                                             {% if i.subject %}
                                             <td align='center'>
                                                 <strong style='color: green;'>{{i.subject}}</strong>
@@ -132,7 +132,7 @@
                                 </tr>
                                 <tr>
                                     {% for i in thursday %}
-                                        {% if request.user.profile == i.teacher.profile %}
+                                        {% if request.user.profile.id == i.teacher.profile.id %}
                                             {% if i.subject %}
                                             <td align='center'>
                                                 <strong style='color: green;'>{{i.subject}}</strong>
@@ -154,7 +154,7 @@
                                 </tr>
                                 <tr>
                                     {% for i in friday %}
-                                        {% if request.user.profile == i.teacher.profile %}
+                                        {% if request.user.profile.id == i.teacher.profile.id %}
                                             {% if i.subject %}
                                             <td align='center'>
                                                 <strong style='color: green;'>{{i.subject}}</strong>
