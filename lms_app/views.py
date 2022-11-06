@@ -16,6 +16,10 @@ from django.core.mail import EmailMessage
 from .models import *
 
 
+def view_404(request, exception=None):
+    return render(request, '404.html')
+
+
 def IndexPage(request):
     f = FrontEndData.objects.first()
     testimonials = Testimonials.objects.all()
