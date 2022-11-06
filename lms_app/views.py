@@ -10,6 +10,7 @@ from django.contrib.auth.forms import PasswordChangeForm
 from django.contrib.auth.hashers import make_password
 from django.http import HttpResponse
 from django.shortcuts import render, redirect
+from django.core.mail import EmailMessage
 
 from .models import *
 
@@ -1033,3 +1034,25 @@ def download_reports(request):
     else:
         messages.success(request, 'Invalid Request!')
         return redirect('/dashboard')
+
+
+def send_email(request):
+    name = request.POST['name']
+    email = request.POST['email']
+    message = request.POST['message']
+    subject = 'رسالة جديدة من  '+str(name)
+    try:
+        email_template = "<table border='1'><tr><th>Name</th><td>" + str(
+            name) + "</td></tr><tr><th>Email</th><td>" + str(email) + "</td></tr><tr><th>Message</th><td>" + str(
+            message) + "</td></tr></table>"
+        to = ['swms3902@gmail.com']
+        email_msg = EmailMessage(subject,
+                                 email_template, 'admin@innovatelifesciences.org',
+                                 to,
+                                 reply_to=[email])
+        email_msg.content_subtype = 'html'
+        email_msg.send(fail_silently=False)
+        messages.success(request, 'تم إرسال رسالتك بنجاح')
+    except:
+        messages.success(request, 'حدث خطأ ما, يرجى التواصل مع عهذا الإيميل لمزيد من المعلومات swms3902@gmail.com')
+    return redirect(request.META.get('HTTP_REFERER'))

@@ -59,4 +59,5 @@ urlpatterns = [
     path('downloads', download_reports),
 
     path('front-end', FrontEnd),
+    path('send-email', send_email),
 ]
