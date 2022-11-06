@@ -218,6 +218,27 @@ https://templatemo.com/tm-535-softy-pinko
 
 
             <div class="row">
+                {% if testimonials %}
+                {% for i in testimonials %}
+                <!-- ***** Testimonials Item Start ***** -->
+                <div class="col-lg-4 col-md-6 col-sm-12" >
+                    <div class="team-item" >
+                        <div class="team-content">
+                            <i><img src="{% static 'assets/front/images/testimonial-icon.jpg' %}" alt=""></i>
+                            <p>{{i.testimonial}}</p>
+                            <div class="user-image">
+<!--                                <img src="http://placehold.it/60x60" alt="">-->
+                            </div>
+                            <div class="team-info">
+                                <h3 class="user-name">{{i.name}}</h3>
+                                <span>{{i.designation}}</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- ***** Testimonials Item End ***** -->
+                {% endfor %}
+                {% else %}
 
                 <!-- ***** Testimonials Item Start ***** -->
                 <div class="col-lg-4 col-md-6 col-sm-12" >
@@ -315,7 +336,7 @@ https://templatemo.com/tm-535-softy-pinko
                     </div>
                 </div>
                 <!-- ***** Testimonials Item End ***** -->
-
+                {% endif %}
 
             </div>
         </div>
@@ -447,7 +468,12 @@ https://templatemo.com/tm-535-softy-pinko
             </div>
         </div>
     </footer>
-    
+
+
+<a href="https://wa.me/+966547037632" target="_blank" class="floating-button whatsapp">
+    <i class="fa fa-whatsapp my-float"></i>
+</a>
+
     <!-- jQuery -->
     <script src="{% static 'assets/front/js/jquery-2.1.0.min.js' %}"></script>
 

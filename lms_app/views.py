@@ -8,6 +8,7 @@ from django.contrib.auth import authenticate, login, logout, update_session_auth
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.forms import PasswordChangeForm
 from django.contrib.auth.hashers import make_password
+from django.db import IntegrityError
 from django.http import HttpResponse
 from django.shortcuts import render, redirect
 from django.core.mail import EmailMessage
@@ -17,7 +18,8 @@ from .models import *
 
 def IndexPage(request):
     f = FrontEndData.objects.first()
-    data = {'f': f}
+    testimonials = Testimonials.objects.all()
+    data = {'f': f, 'testimonials': testimonials}
     return render(request, 'front/index.html', data)
 
 
@@ -1056,3 +1058,42 @@ def send_email(request):
     except:
         messages.success(request, 'حدث خطأ ما, يرجى التواصل مع عهذا الإيميل لمزيد من المعلومات swms3902@gmail.com')
     return redirect(request.META.get('HTTP_REFERER'))
+
+
+@login_required
+def add_testimonial(request):
+    if request.user.profile.role == 'admin':
+        if request.method == 'POST':
+            name = request.POST['name']
+            testimonial = request.POST.get('testimonial')
+            designation = request.POST.get('designation')
+            try:
+                Testimonials.objects.create(
+                    name=name, testimonial=testimonial, designation=designation
+                )
+                messages.success(request, 'تم إضافة التقييم بنجاح')
+            except IntegrityError:
+                messages.error(request, 'هذا التقييم موجود مسبقا')
+            return redirect('/add-testimonial')
+        else:
+            testimonial = Testimonials.objects.all()
+            data = {'testimonial': testimonial}
+            return render(request, 'dashboard/add_testimonial.html', data)
+    else:
+        messages.success(request, 'اجراء خاطئ')
+        return redirect('/dashboard')
+
+
+@login_required
+def delete_testimonial(request):
+    if request.user.profile.role == 'admin':
+        if request.method == 'POST':
+            pk = request.POST['id']
+            Testimonials.objects.get(id=pk).delete()
+            return redirect('/add-testimonial')
+        else:
+            messages.error(request, 'اجراء خاطئ')
+            return redirect('/add-testimonial')
+    else:
+        messages.error(request, 'اجراء خاطئ')
+        return redirect('/dashboard')

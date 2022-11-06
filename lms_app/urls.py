@@ -60,4 +60,9 @@ urlpatterns = [
 
     path('front-end', FrontEnd),
     path('send-email', send_email),
+
+    # Testimonials
+    path('add-testimonial', add_testimonial),
+    path('delete-testimonial', delete_testimonial),
+
 ]

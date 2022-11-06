@@ -151,3 +151,9 @@ class FrontEndData(models.Model):
     num2 = models.CharField(max_length=50)
     num3 = models.CharField(max_length=50)
     num4 = models.CharField(max_length=50)
+
+
+class Testimonials(models.Model):
+    name = models.CharField(max_length=200)
+    designation = models.CharField(max_length=200, null=True, blank=True)
+    testimonial = models.TextField()
