@@ -14,9 +14,12 @@ urlpatterns = [
     path('add-user', AddUser),
     path('view-user', viewUser),
     path('edit-user/<int:id>', editUser),
+    path('delete-user/<int:id>', delete_user),
+
     path('add-subjects', AddSubjects),
     path('view-subjects', ViewSubjects),
     path('edit-subject/<int:id>', editSubjects),
+    path('delete-subject/<int:id>', delete_subjects),
 
     path('edit-timetable', AssignTimeTable),
     path('add-time-table', AddTimeTable),
@@ -35,6 +38,9 @@ urlpatterns = [
     path('mark-attendance', markAttendance),
     path('quiz', quizTeacher),
     path('view-results', viewResults),
+
+    path('quiz-delete/<int:id>', quiz_delete),
+
     path('question/<int:id>', quizQuestion),
     path('edit-question/<int:id>', quizeditQuestion),
     path('delete-question/<int:id>', quizDeleteQuestion),

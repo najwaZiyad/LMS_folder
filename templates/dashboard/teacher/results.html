@@ -20,8 +20,7 @@
                                 </tr>
                             </thead>
                             <tbody>
-                                {% for j in results %}
-                                {% for i in j %}
+                                {% for i in results %}
                                 <tr>
                                     <td>{{i.date}}</td>
                                     <td>{{i.obtain_score}}</td>
@@ -29,7 +28,6 @@
                                     <td>{{i.subject}}</td>
                                     <td>{{i.student}}</td>
                                 </tr>
-                                {% endfor %}
                                 {% endfor %}
                             </tbody>
                         </table>

@@ -13,21 +13,20 @@
                                     <th>الدور</th>
                                     <th>اسم المستخدم</th>
                                     <th>الأسم الكامل</th>
-
-
-
                                 </tr>
                             </thead>
                             <tbody>
                                 {% for i in profiles %}
                                 <tr>
                                     <td>
-                                        <a href="/edit-user/{{i.id}}" class="btn btn-sm btn-success glyphicon glyphicon-edit">تعديل</a>
+                                        <div style="display: inline-flex;">
+                                            <a href="/edit-user/{{i.id}}" class="btn btn-sm btn-success glyphicon glyphicon-edit">تعديل</a>
+                                            <a href="/delete-user/{{i.id}}" class="btn btn-sm btn-danger" onclick="return confirmm();">حذف</a>
+                                        </div>
                                     </td>
                                     <td style="text-transform: capitalize;" class="text-right">{{i.role}}</td>
                                     <td class="text-right">{{i.user.username}}</td>
                                     <td class="text-right">{{i.first_name}} {{i.second_name}} {{i.third_name}} {{i.last_name}} </td>
-
                                 </tr>
                                 {% endfor %}
                             </tbody>

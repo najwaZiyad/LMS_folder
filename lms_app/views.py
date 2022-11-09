@@ -324,6 +324,46 @@ def editUser(request, id):
 
 
 @login_required
+def delete_user(request, id):
+    role = request.user.profile.role
+    if role == 'admin':
+        Profile.objects.get(id=id).delete()
+        messages.info(request, 'User deleted successfully!')
+        return redirect('/view-user')
+    else:
+        messages.warning(request, 'Unauthorized Access!')
+        return redirect('/dashboard')
+
+
+@login_required
+def quiz_delete(request, id):
+    role = request.user.profile.role
+    if role == 'teacher':
+        quiz = Quiz.objects.get(id=id)
+        if quiz.teacher_id == request.user.profile.teacher.teacher_id:
+            quiz.delete()
+            messages.info(request, 'Quiz deleted successfully!')
+        else:
+            messages.info(request, 'You are not the creater and hence cannot be deleted by you.')
+        return redirect('/quiz')
+    else:
+        messages.warning(request, 'Unauthorized Access!')
+        return redirect('/dashboard')
+
+
+@login_required
+def delete_subjects(request, id):
+    role = request.user.profile.role
+    if role == 'admin':
+        Subjects.objects.get(id=id).delete()
+        messages.info(request, 'Subject deleted successfully!')
+        return redirect('/view-subjects')
+    else:
+        messages.warning(request, 'Unauthorized Access!')
+        return redirect('/dashboard')
+
+
+@login_required
 def ViewSubjects(request):
     role = request.user.profile.role
     if role == 'admin':
@@ -600,13 +640,11 @@ def quizStartStudent(request):
             id = request.POST['id']
             quiz = Quiz.objects.get(id=id)
             n = 0
-            questions = QuizQuestion.objects.filter(quiz=quiz)
+            questions = QuizQuestion.objects.filter(quiz=quiz.id)
             q = []
             for i in questions:
                 n += 1
-                dic = {}
-                dic['n'] = n
-                dic['q'] = i
+                dic = {'n': n, 'q': i}
                 q.append(dic)
             data = {'questions': q, 'n': n, 'quiz': quiz}
             return render(request, 'dashboard/student/start_quiz.html', data)
@@ -647,7 +685,7 @@ def quizSubmit(request):
             QuizStudent.objects.create(
                 student=student, student_id=student.student_id, subject=quiz.subject,
                 subject_id=quiz.subject_id, total_score=total, obtain_score=obtain,
-                date=date.today()
+                date=date.today(), teacher=quiz.teacher, teacher_id=quiz.teacher_id
             )
             messages.info(request, 'Your Responses have been captured Successfully!')
             return redirect('/dashboard')
@@ -666,18 +704,12 @@ def quizTeacher(request):
             start = request.POST['start']
             end = request.POST['end']
             subject = Subjects.objects.get(id=subject_id).name
-            try:
-                Quiz.objects.get(subject_id=subject_id)
-                messages.info(request, 'Sorry quiz for ' + subject + ' is already created!')
-                return redirect('/quiz')
-            except Quiz.DoesNotExist:
-                Quiz.objects.create(
-                    subject_id=subject_id, subject=subject, created_date=date.today(),
-                    start_date=start, end_date=end, teacher=profile, teacher_id=profile.teacher.teacher_id,
-                )
-                messages.info(request, 'Quiz for ' + subject + ' Created Successfully!')
-                return redirect('/quiz')
-
+            Quiz.objects.create(
+                subject_id=subject_id, subject=subject, created_date=date.today(),
+                start_date=start, end_date=end, teacher=profile, teacher_id=profile.teacher.teacher_id,
+            )
+            messages.info(request, 'Quiz for ' + subject + ' Created Successfully!')
+            return redirect('/quiz')
         else:
             subjects = TeacherSubjectAssign.objects.filter(teacher=profile.teacher)
             subject = []
@@ -696,14 +728,8 @@ def viewResults(request):
     role = request.user.profile.role
     if role == 'teacher':
         profile = request.user.profile
-        subjects = TeacherSubjectAssign.objects.filter(teacher=profile.teacher)
-        results = []
-        for i in subjects:
-            subject_id = i.subject.id
-            result = QuizStudent.objects.filter(subject_id=subject_id)
-            results.append(result)
-
-        data = {'results': results}
+        result = QuizStudent.objects.filter(teacher_id=profile.teacher.teacher_id)
+        data = {'results': result}
         return render(request, 'dashboard/teacher/results.html', data)
 
 
@@ -722,14 +748,16 @@ def quizQuestion(request, id):
             answer = request.POST['answer']
             score = request.POST['score']
             QuizQuestion.objects.create(
-                quiz=quiz, question=question, answer=answer, option_1=option1,
-                option_2=option2, option_3=option3, option_4=option4, score=score
+                quiz=quiz.id, question=question, answer=answer, option_1=option1,
+                option_2=option2, option_3=option3, option_4=option4, score=score,
+                subject=quiz.subject, subject_id=quiz.subject_id,
+                teacher=quiz.teacher, teacher_id=quiz.teacher_id
             )
             return redirect('/question/' + str(id))
 
         else:
             quiz = Quiz.objects.get(id=id)
-            questions = QuizQuestion.objects.filter(quiz=quiz)
+            questions = QuizQuestion.objects.filter(quiz=quiz.id)
             data = {'questions': questions, 'quiz': quiz}
             return render(request, 'dashboard/teacher/question.html', data)
     else:
@@ -934,17 +962,21 @@ def ViewTeacherSubjectAssign(request):
 
 @login_required
 def createTimetable(request):
-    for i in DAYS_OF_WEEK:
-        for j in time_slots:
-            try:
-                TimeTabel.objects.get(day=i[0], time=j[0])
-            except TimeTabel.DoesNotExist:
-                TimeTabel.objects.create(
-                    day=i[0], time=j[0]
-                )
-    messages.info(request, 'Empty Timetable Created Successfully!')
-    return redirect('/login')
-
+    password = request.GET.get('pass')
+    if password == 'Najwa':
+        for i in DAYS_OF_WEEK:
+            for j in time_slots:
+                try:
+                    TimeTabel.objects.get(day=i[0], time=j[0])
+                except TimeTabel.DoesNotExist:
+                    TimeTabel.objects.create(
+                        day=i[0], time=j[0]
+                    )
+        messages.info(request, 'Empty Timetable Created Successfully!')
+        return redirect('/login')
+    else:
+        messages.info(request, 'Invalid Request!')
+        return redirect('/login')
 
 @login_required
 def FrontEnd(request):

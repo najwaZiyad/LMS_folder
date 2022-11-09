@@ -76,8 +76,8 @@ class TeacherSubjectAssign(models.Model):
 
 
 class TimeTabel(models.Model):
-    teacher = models.ForeignKey(Teacher, on_delete=models.CASCADE, null=True, blank=True)
-    subject = models.ForeignKey(Subjects, on_delete=models.CASCADE, null=True, blank=True)
+    teacher = models.ForeignKey(Teacher, on_delete=models.SET_NULL, null=True, blank=True)
+    subject = models.ForeignKey(Subjects, on_delete=models.SET_NULL, null=True, blank=True)
     subject_alt = models.CharField(max_length=100, null=True, blank=True)
     day = models.CharField(max_length=20, choices=DAYS_OF_WEEK)
     time = models.CharField(max_length=50, choices=time_slots)
@@ -118,7 +118,11 @@ class Quiz(models.Model):
 
 
 class QuizQuestion(models.Model):
-    quiz = models.ForeignKey(Quiz, on_delete=models.CASCADE)
+    quiz = models.CharField(max_length=20)
+    subject = models.CharField(max_length=200, null=True, blank=True)
+    subject_id = models.CharField(max_length=20, null=True, blank=True)
+    teacher = models.CharField(max_length=200, null=True, blank=True)
+    teacher_id = models.CharField(max_length=50, null=True, blank=True)
     question = models.TextField()
     answer = models.TextField()
     option_1 = models.TextField()
@@ -131,6 +135,8 @@ class QuizQuestion(models.Model):
 class QuizStudent(models.Model):
     student = models.CharField(max_length=150)
     student_id = models.CharField(max_length=50)
+    teacher = models.CharField(max_length=200, null=True, blank=True)
+    teacher_id = models.CharField(max_length=50, null=True, blank=True)
     subject = models.CharField(max_length=150)
     subject_id = models.CharField(max_length=20)
     total_score = models.CharField(max_length=50)

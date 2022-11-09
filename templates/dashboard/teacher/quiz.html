@@ -22,7 +22,10 @@
                                 {% for i in quiz_subjects %}
                                 <tr>
                                     <td>
-                                        <a href="/question/{{i.id}}" class="btn btn-sm btn-success glyphicon glyphicon-pencil" >إضافة/تعديل الأسئلة</a>
+                                        <div style="display: inline-flex">
+                                            <a href="/question/{{i.id}}" class="btn btn-sm btn-success glyphicon glyphicon-pencil" > إضافة/تعديل الأسئلة </a>
+                                            <a href="/quiz-delete/{{i.id}}" class="btn btn-sm btn-danger glyphicon glyphicon-trash" onclick="return confirmm();"> حذف</a>
+                                        </div>
                                     </td>
                                     <td>{{i.subject}}</td>
                                     <td class="text-right">{{i.created_date}}</td>
