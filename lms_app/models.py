@@ -133,7 +133,7 @@ class QuizQuestion(models.Model):
 
 
 class QuizStudent(models.Model):
-    quiz_id = models.CharField(max_length=20)
+    quiz_id = models.CharField(max_length=20, null=True, blank=True)
     student = models.CharField(max_length=150)
     student_id = models.CharField(max_length=50)
     teacher = models.CharField(max_length=200, null=True, blank=True)
