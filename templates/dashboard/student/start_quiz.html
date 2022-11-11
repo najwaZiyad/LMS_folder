@@ -19,14 +19,19 @@
                            <input type="radio" id="question_2_{{i.n}}" name="question_{{i.n}}" value="{{i.q.option_2}}">
                            <label for="question_2_{{i.n}}">{{i.q.option_2}}</label>
                        </div>
+                       {% if i.q.option_3 %}
                        <div class="col-md-6">
                            <input type="radio" id="question_3_{{i.n}}" name="question_{{i.n}}" value="{{i.q.option_3}}">
                            <label for="question_3_{{i.n}}">{{i.q.option_3}}</label>
                        </div>
+                       {% endif %}
+
+                       {% if i.q.option_4 %}
                        <div class="col-md-6">
                            <input type="radio" id="question_4_{{i.n}}" name="question_{{i.n}}" value="{{i.q.option_4}}">
                            <label for="question_4_{{i.n}}">{{i.q.option_4}}</label>
                        </div>
+                       {% endif %}
                     </div>
                     <input type="hidden" name="id_{{i.n}}" value="{{i.q.id}}">
                     {% endfor %}
