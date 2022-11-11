@@ -617,15 +617,15 @@ def quizStudent(request):
         student = request.user.profile.student
         try:
             done = QuizStudent.objects.filter(student_id=student.student_id)
-            done = [i.subject_id for i in done]
+            done = [i.quiz_id for i in done]
             quiz_subjects = Quiz.objects.filter(
                 start_date__lte=date.today(), end_date__gte=date.today()
-            ).exclude(subject_id__in=done)
+            ).exclude(id__in=done)
         except QuizStudent.DoesNotExist:
             quiz_subjects = Quiz.objects.filter(
                 start_date__lte=date.today(), end_date__gte=date.today()
             )
-        data = {'quiz_subjects': quiz_subjects, }
+        data = {'quiz_subjects': quiz_subjects}
         return render(request, 'dashboard/student/quiz.html', data)
     else:
         messages.warning(request, 'Unauthorized Access!')
@@ -685,7 +685,8 @@ def quizSubmit(request):
             QuizStudent.objects.create(
                 student=student, student_id=student.student_id, subject=quiz.subject,
                 subject_id=quiz.subject_id, total_score=total, obtain_score=obtain,
-                date=date.today(), teacher=quiz.teacher, teacher_id=quiz.teacher_id
+                date=date.today(), teacher=quiz.teacher, teacher_id=quiz.teacher_id,
+                quiz_id=quiz.id
             )
             messages.info(request, 'Your Responses have been captured Successfully!')
             return redirect('/dashboard')
@@ -977,6 +978,7 @@ def createTimetable(request):
     else:
         messages.info(request, 'Invalid Request!')
         return redirect('/login')
+
 
 @login_required
 def FrontEnd(request):
